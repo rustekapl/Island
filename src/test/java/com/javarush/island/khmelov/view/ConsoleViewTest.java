@@ -15,5 +15,6 @@ class ConsoleViewTest {
         String view = consoleView.showMap();
         String statistics = consoleView.getStatistics();
         System.out.println(view + "\n" + statistics);
+
     }
 }
