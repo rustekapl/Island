@@ -27,10 +27,9 @@ public class Cell {
         return getResidents().values().stream()
                 .filter((list) -> list.size() > 0)
                 .sorted((o1, o2) -> o2.size() - o1.size())
-                .map(list -> list.stream().findAny().get().getClass().getSimpleName().substring(0, 1))
+                .map(set -> set.stream().findAny().get().getClass().getSimpleName().substring(0, 1))
                 .map(Object::toString)
                 .collect(Collectors.joining());
-
     }
 }
 

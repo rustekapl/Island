@@ -10,7 +10,7 @@ import java.util.concurrent.locks.ReentrantLock;
 
 public class CheckThreadSpeedTest {
     public static final AtomicInteger counter = new AtomicInteger();
-    public static final int COUNT = 5000;
+    public static final int COUNT = 500000;
     public static final Lock lock = new ReentrantLock();
 
     @Test

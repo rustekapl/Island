@@ -1,7 +1,7 @@
 package com.javarush.island.khmelov.entity;
 
 import com.javarush.island.khmelov.entity.map.GameMap;
-import com.javarush.island.khmelov.repository.EntityFactory;
+import com.javarush.island.khmelov.repository.Factory;
 import com.javarush.island.khmelov.view.View;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -11,7 +11,7 @@ import lombok.Data;
 public class Game {
 
     private final GameMap gameMap;
-    private final EntityFactory entityFactory;
+    private final Factory entityFactory;
     private final View view;
 
 }

@@ -11,13 +11,12 @@ public class GameMap {
         return cells;
     }
 
-    public int getRows(){
+    public int getRows() {
         return cells.length;
     }
 
-    public int getCols(){
+    public int getCols() {
         return cells[0].length;
     }
-
 
 }

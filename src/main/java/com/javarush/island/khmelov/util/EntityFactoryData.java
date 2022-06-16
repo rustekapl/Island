@@ -1,4 +1,4 @@
-package com.javarush.island.khmelov.repository;
+package com.javarush.island.khmelov.util;
 
 import com.javarush.island.khmelov.abstraction.annotations.Setting;
 import com.javarush.island.khmelov.exception.InitGameException;
@@ -9,12 +9,12 @@ import com.javarush.island.khmelov.util.Probably;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 
-class EntityFactoryData {
+public class EntityFactoryData {
 
     private EntityFactoryData() {
     }
 
-    static Organism[] createPrototypes(Class<?>[] TYPES) {
+    public static Organism[] createPrototypes(Class<?>[] TYPES) {
         Organism[] organisms = new Organism[TYPES.length];
         int index = 0;
         for (Class<?> type : TYPES) {
@@ -30,6 +30,7 @@ class EntityFactoryData {
                         setting.maxSpeed(),
                         setting.maxFood()
                 );
+
                 organisms[index++] = generatePrototype(type, name, icon, weight, limit);
             }
         }

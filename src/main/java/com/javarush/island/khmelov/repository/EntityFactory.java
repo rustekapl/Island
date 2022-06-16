@@ -5,6 +5,7 @@ import com.javarush.island.khmelov.entity.organizms.Organism;
 import com.javarush.island.khmelov.entity.organizms.animals.herbivores.Horse;
 import com.javarush.island.khmelov.entity.organizms.animals.predators.Wolf;
 import com.javarush.island.khmelov.entity.organizms.plants.Plant;
+import com.javarush.island.khmelov.util.EntityFactoryData;
 import com.javarush.island.khmelov.util.Probably;
 
 import java.lang.reflect.Type;

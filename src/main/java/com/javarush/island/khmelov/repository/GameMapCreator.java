@@ -6,9 +6,9 @@ import com.javarush.island.khmelov.entity.map.GameMap;
 import java.util.List;
 
 public class GameMapCreator {
-    private final EntityFactory entityFactory;
+    private final Factory entityFactory;
 
-    public GameMapCreator(EntityFactory entityFactory) {
+    public GameMapCreator(Factory entityFactory) {
         this.entityFactory = entityFactory;
     }
 
