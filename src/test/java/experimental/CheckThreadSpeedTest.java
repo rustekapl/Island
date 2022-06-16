@@ -10,7 +10,7 @@ import java.util.concurrent.locks.ReentrantLock;
 
 public class CheckThreadSpeedTest {
     public static final AtomicInteger counter = new AtomicInteger();
-    public static final int COUNT = 500000;
+    public static final int COUNT = 5000;
     public static final Lock lock = new ReentrantLock();
 
     @Test
@@ -19,6 +19,7 @@ public class CheckThreadSpeedTest {
         int parallelism = forkJoinPool.getParallelism();
         System.out.println("parallelism=" + parallelism);
         ExecutorService pool = Executors.newFixedThreadPool(parallelism);
+
         long start = System.nanoTime();
         for (int i = 0; i < COUNT; i++) {
             Thread thread = new Thread("th" + i) {

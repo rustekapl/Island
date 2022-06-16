@@ -13,8 +13,8 @@ class ConsoleViewTest {
         GameMap map = gameMapCreator.createRandomFilledGameMap(4, 20);
         ConsoleView consoleView = new ConsoleView(map);
         String view = consoleView.showMap();
-        String statistics = consoleView.getStatistics();
-        System.out.println(view + "\n" + statistics);
+        String statistics = consoleView.showStatistics();
+
 
     }
 }

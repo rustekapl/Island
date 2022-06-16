@@ -22,11 +22,11 @@ public class EntityFactory implements Factory {
     @Override
     public Cell createRandomCell() {
         Map<Type, Set<Organism>> residents = new HashMap<>();
-        boolean fill = Probably.get(50); //TODO to config
+        boolean fill = Probably.get(50); //TODO need config
         if (fill) {
             for (Organism prototype : PROTOTYPES) {
                 Type type = prototype.getClass();
-                boolean born = Probably.get(50); //TODO to config
+                boolean born = Probably.get(50); //TODO need config
                 if (born) {
                     residents.putIfAbsent(type, new HashSet<>());
                     Set<Organism> organisms = residents.get(prototype.getClass());
@@ -46,8 +46,8 @@ public class EntityFactory implements Factory {
     }
 
     @Override
-    public Organism[] getAllPrototypes() {
-        return PROTOTYPES;
+    public List<Organism> getAllPrototypes() {
+        return Arrays.asList(PROTOTYPES);
     }
 
     @Override

@@ -23,7 +23,7 @@ public class ConsoleView implements View {
 
 
     @Override
-    public String getStatistics() {
+    public String showStatistics() {
         Cell[][] cells = gameMap.getCells();
         Map<String, Integer> map = new HashMap<>();
         for (Cell[] row : cells) {
@@ -34,6 +34,7 @@ public class ConsoleView implements View {
                         .forEach(s->map.put(s.stream().findAny().get().toString(),s.size()));
             }
         }
+        System.out.println(map);
         return map.toString();
     }
 
@@ -57,6 +58,7 @@ public class ConsoleView implements View {
             out.append('║').append("\n");
         }
         out.append(line(cols, '╚', '╩', '╝')).append("\n");
+        System.out.println(out);
         return out.toString();
     }
 

@@ -5,6 +5,7 @@ import com.javarush.island.khmelov.entity.map.GameMap;
 import com.javarush.island.khmelov.entity.organizms.Organism;
 import com.javarush.island.khmelov.entity.organizms.animals.Animal;
 
+import java.lang.reflect.Type;
 import java.util.Set;
 
 public class OrganismWorker implements Runnable {
@@ -22,7 +23,8 @@ public class OrganismWorker implements Runnable {
         Cell[][] cells = gameMap.getCells();
         for (Cell[] row : cells) {
             for (Cell cell : row) {
-                Set<Organism> organisms = cell.getResidents().get(prototype.getClass());
+                Type type = prototype.getClass();
+                Set<Organism> organisms = cell.getResidents().get(type);
                 for (Organism organism : organisms) {
                     if (organism instanceof Animal animal) {
                         Cell destination = animal.move(cell);
