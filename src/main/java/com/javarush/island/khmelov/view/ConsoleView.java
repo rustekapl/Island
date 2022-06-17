@@ -15,7 +15,7 @@ import java.util.stream.IntStream;
 
 public class ConsoleView implements View {
     private final GameMap gameMap;
-    private final int positions = 5;
+    private final int positions = 7;
     private final String border = "═".repeat(positions);
 
     public ConsoleView(GameMap gameMap) {
@@ -73,9 +73,9 @@ public class ConsoleView implements View {
         return cell.getResidents().values().stream()
                 .filter((list) -> list.size() > 0)
                 .sorted((o1, o2) -> o2.size() - o1.size())
-                .limit(1)
-                .map(o->o.stream().findAny().get().getClass().getSimpleName().substring(0, 1)+o.size())
-                .findFirst().orElse("  x  ");
+                .limit(2)
+                .map(o->o.stream().findAny().get().getLetter()+o.size())
+                .collect(Collectors.joining());
 //                .limit(positions)
 //                .map(list -> list.stream().findAny().get().getClass().getSimpleName().substring(0, 1))
 //                .map(Object::toString)

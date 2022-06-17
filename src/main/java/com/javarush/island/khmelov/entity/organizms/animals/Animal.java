@@ -10,14 +10,9 @@ import com.javarush.island.khmelov.entity.tasks.Task;
 
 import java.lang.reflect.Type;
 import java.util.HashSet;
-import java.util.Map;
-import java.util.Objects;
-import java.util.Set;
-import java.util.concurrent.ThreadLocalRandom;
-import java.util.function.Consumer;
 
 public abstract class Animal
-        extends com.javarush.island.khmelov.entity.organizms.Organism
+        extends Organism
         implements Eating, Reproducible, Movable {
 
     public Animal(String name, String icon, double weight, Limit limit) {
@@ -33,44 +28,16 @@ public abstract class Animal
     @Override
     public Task move(Cell startCell) {
         int countCellForStep = this.getLimit().getMaxSpeed();
-        Cell last = findLastCell(startCell, countCellForStep);
-        return removeMe(startCell);//.andThen(addMe(last));
-        //addMe(last);
+        Cell destinationCell = findDestinationCell(startCell, countCellForStep);
+        return moveMe(startCell, destinationCell);
     }
 
-
-
-    private Cell findLastCell(Cell startCell, int countCellForStep) {
-        Set<Cell> visitedCells = new HashSet<>();
-        while (visitedCells.size() < countCellForStep) {
-            var nextCells = startCell
-                    .getNextCell()
-                    .stream()
-                    .filter(cell -> !visitedCells.contains(cell))
-                    .toList();
-            int countDirections = nextCells.size();
-            if (countDirections > 0) {
-                startCell = nextCells.get(ThreadLocalRandom.current().nextInt(countDirections));
-                visitedCells.add(startCell);
-            } else {
-                break;
-            }
-        }
-        return startCell;
-    }
-
-    private Task addMe(Cell cell) {
+    private Task moveMe(Cell from, Cell to) {
         Type type = this.getClass();
-        return new Task(cell, c -> c.getResidents()
-                .computeIfAbsent(type, o -> new HashSet<>())
-                .add(this));
+        to.getResidents().putIfAbsent(type, new HashSet<>());
+        return new Task(from, c -> {
+            c.getResidents().get(type).remove(this);
+            to.getResidents().get(type).add(this);
+        });
     }
-
-    private Task removeMe(Cell cell) {
-        Type type = this.getClass();
-        return new Task(cell, c -> c.getResidents()
-                .computeIfAbsent(type, o -> new HashSet<>())
-                .remove(this));
-    }
-
 }

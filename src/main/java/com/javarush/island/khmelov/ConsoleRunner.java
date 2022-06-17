@@ -13,7 +13,7 @@ public class ConsoleRunner {
     public static void main(String[] args) {
         Factory entityFactory = new EntityFactory();
         GameMapCreator gameMapCreator = new GameMapCreator(entityFactory);
-        GameMap gameMap = gameMapCreator.createRandomFilledGameMap(3, 5);
+        GameMap gameMap = gameMapCreator.createRandomFilledGameMap(10, 50);
         View view=new ConsoleView(gameMap);
         Game game = new Game(gameMap, entityFactory,view);
         GameWorker gameWorker = new GameWorker(game);

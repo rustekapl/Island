@@ -28,6 +28,7 @@ public class OrganismWorker implements Runnable {
         Cell[][] cells = gameMap.getCells();
         for (Cell[] row : cells) {
             for (Cell cell : row) {
+                //cell.getLock().lock();
                 try {
                     Type type = prototype.getClass();
                     Set<Organism> organisms = cell.getResidents().get(type);
@@ -41,11 +42,14 @@ public class OrganismWorker implements Runnable {
                                 //tasks.add(prototype.spawn(cell));
                             }
                         }
-                        tasks.forEach(Task::safeTodoTaskAndSubTasks);
+                        tasks.forEach(Task::run);
                         tasks.clear();
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
+                }
+                finally {
+                    //cell.getLock().unlock();
                 }
 
             }

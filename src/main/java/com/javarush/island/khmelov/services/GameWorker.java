@@ -11,7 +11,7 @@ import java.util.concurrent.TimeUnit;
 
 @RequiredArgsConstructor
 public class GameWorker extends Thread {
-    public static final int PERIOD = 1000;
+    public static final int PERIOD = 500;
     private final Game game;
 
     @Override
@@ -22,7 +22,7 @@ public class GameWorker extends Thread {
 
         List<OrganismWorker> workers = game.getEntityFactory().getAllPrototypes()
                 .stream()
-                .map(o->new OrganismWorker(o,game.getGameMap()))
+                .map(o -> new OrganismWorker(o, game.getGameMap()))
                 .toList();
         mainPool.scheduleAtFixedRate(() -> {
             ExecutorService servicePool = Executors.newFixedThreadPool(4);
@@ -30,8 +30,12 @@ public class GameWorker extends Thread {
             servicePool.shutdown();
             try {
                 if (servicePool.awaitTermination(PERIOD, TimeUnit.MILLISECONDS)) {
-                     game.getView().showMap();
-                     game.getView().showStatistics();
+                    synchronized (System.out) {
+                        System.out.println("\n".repeat(30));
+                        game.getView().showMap();
+                        game.getView().showStatistics();
+                        System.out.flush();
+                    }
                 }
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);

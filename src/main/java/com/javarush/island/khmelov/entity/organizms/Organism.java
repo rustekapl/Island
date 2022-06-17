@@ -8,9 +8,11 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.lang.reflect.Type;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.concurrent.ThreadLocalRandom;
 import java.util.concurrent.atomic.AtomicLong;
 
 @SuppressWarnings("unused")
@@ -72,6 +74,25 @@ public abstract class Organism implements Reproducible, Cloneable {
                 && organisms.size() > 2)
                 ? bornClone(currentCell)
                 : null;
+    }
+
+    protected Cell findDestinationCell(Cell startCell, int countCellForStep) {
+        Set<Cell> visitedCells = new HashSet<>();
+        while (visitedCells.size() < countCellForStep) {
+            var nextCells = startCell
+                    .getNextCell()
+                    .stream()
+                    .filter(cell -> !visitedCells.contains(cell))
+                    .toList();
+            int countDirections = nextCells.size();
+            if (countDirections > 0) {
+                startCell = nextCells.get(ThreadLocalRandom.current().nextInt(countDirections));
+                visitedCells.add(startCell);
+            } else {
+                break;
+            }
+        }
+        return startCell;
     }
     private Task bornClone(Cell cell) {
         return new Task(cell, c -> c.getResidents()
