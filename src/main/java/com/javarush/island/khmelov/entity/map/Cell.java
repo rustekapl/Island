@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
 import java.lang.reflect.Type;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -19,7 +20,7 @@ import java.util.stream.Collectors;
 public class Cell {
 
     private final Map<Type, Set<Organism>> residents;
-    private List<Cell> nextCell;
+    private final List<Cell> nextCell = new ArrayList<>();
     private final Lock lock = new ReentrantLock(true);
 
     @Override

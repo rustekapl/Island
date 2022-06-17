@@ -10,6 +10,8 @@ import com.javarush.island.khmelov.util.Probably;
 
 import java.lang.reflect.Type;
 import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentSkipListMap;
 
 public class EntityFactory implements Factory {
 
@@ -22,7 +24,7 @@ public class EntityFactory implements Factory {
 
     @Override
     public Cell createRandomCell() {
-        Map<Type, Set<Organism>> residents = new HashMap<>();
+        Map<Type, Set<Organism>> residents = new ConcurrentHashMap<>();
         boolean fill = Probably.get(50); //TODO need config
         if (fill) {
             for (Organism prototype : PROTOTYPES) {
@@ -35,15 +37,13 @@ public class EntityFactory implements Factory {
                     int max = prototype.getLimit().getMaxCount() - currentCount;
                     int count = Probably.random(0, max);
                     for (int i = 0; i < count; i++) {
-                        organisms.add(prototype.clone());
+                        organisms.add(Organism.clone(prototype));
                     }
 
                 }
             }
         }
-        Cell cell = new Cell(residents);
-        cell.setNextCell(new ArrayList<>());
-        return cell;
+        return new Cell(residents);
     }
 
     @Override

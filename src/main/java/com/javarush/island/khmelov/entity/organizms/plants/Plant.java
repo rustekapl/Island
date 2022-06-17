@@ -23,7 +23,7 @@ public class Plant extends Organism {
         Map<Type, Set<Organism>> residents = currentCell.getResidents();
         Set<Organism> organisms = residents.get(type);
         if (Objects.nonNull(organisms) && organisms.contains(this)) {
-            organisms.add(this.clone());
+            organisms.add(clone(this));
         } else {
             throw new IllegalStateException(this + " not found at " + currentCell);
         }

@@ -6,6 +6,7 @@ import com.javarush.island.khmelov.entity.organizms.Organism;
 import com.javarush.island.khmelov.entity.organizms.animals.Animal;
 
 import java.lang.reflect.Type;
+import java.util.Objects;
 import java.util.Set;
 
 public class OrganismWorker implements Runnable {
@@ -25,13 +26,16 @@ public class OrganismWorker implements Runnable {
             for (Cell cell : row) {
                 Type type = prototype.getClass();
                 Set<Organism> organisms = cell.getResidents().get(type);
-                for (Organism organism : organisms) {
-                    if (organism instanceof Animal animal) {
-                        Cell destination = animal.move(cell);
-                        //animal.eat(destination);
-                        //animal.spawn(destination);
-                    } else {
-                        prototype.spawn(cell);
+                if (Objects.nonNull(organisms)) {
+                    for (Organism organism : organisms) {
+                        if (organism instanceof Animal animal && !organisms.isEmpty()) {
+                            Cell destination = animal.move(cell);
+                            System.out.print(cell + ">" + destination + " ");
+                            //animal.eat(destination);
+                            //animal.spawn(destination);
+                        } else {
+                            prototype.spawn(cell);
+                        }
                     }
                 }
             }

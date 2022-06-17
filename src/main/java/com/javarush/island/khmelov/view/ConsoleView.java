@@ -7,6 +7,7 @@ import com.javarush.island.khmelov.entity.organizms.Organism;
 import java.lang.reflect.Type;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -24,18 +25,24 @@ public class ConsoleView implements View {
 
     @Override
     public String showStatistics() {
+        Map<String, Integer> statistics = new HashMap<>();
         Cell[][] cells = gameMap.getCells();
-        Map<String, Integer> map = new HashMap<>();
         for (Cell[] row : cells) {
             for (Cell cell : row) {
                 Map<Type, Set<Organism>> residents = cell.getResidents();
-                residents.values().stream()
-                        .filter(s->s.size()>0)
-                        .forEach(s->map.put(s.stream().findAny().get().toString(),s.size()));
+                if (Objects.nonNull(residents)) {
+                    residents.values().stream()
+                            .filter(set -> set.size() > 0)
+                            .forEach(set -> {
+                                        String icon = set.stream().findAny().get().getIcon();
+                                        statistics.put(icon, statistics.getOrDefault(icon,0) + set.size());
+                                    }
+                            );
+                }
             }
         }
-        System.out.println(map);
-        return map.toString();
+        System.out.println(statistics + "\n");
+        return statistics.toString();
     }
 
     @Override
@@ -45,7 +52,7 @@ public class ConsoleView implements View {
         final int rows = gameMap.getRows();
         int oneCellWidth = positions + 1;
         int width = oneCellWidth * cols + 2;
-        StringBuilder out = new StringBuilder();
+        StringBuilder out = new StringBuilder("\n");
         for (int row = 0; row < rows; row++) {
             out.append(row == 0
                     ? line(cols, '╔', '╦', '╗')
@@ -57,7 +64,7 @@ public class ConsoleView implements View {
             }
             out.append('║').append("\n");
         }
-        out.append(line(cols, '╚', '╩', '╝')).append("\n");
+        out.append(line(cols, '╚', '╩', '╝'));
         System.out.println(out);
         return out.toString();
     }

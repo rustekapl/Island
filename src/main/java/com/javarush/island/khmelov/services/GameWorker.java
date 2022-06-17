@@ -11,7 +11,7 @@ import java.util.concurrent.TimeUnit;
 
 @RequiredArgsConstructor
 public class GameWorker extends Thread {
-    public static final int PERIOD = 1000;
+    public static final int PERIOD = 100;
     private final Game game;
 
     @Override

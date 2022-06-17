@@ -67,7 +67,10 @@ public abstract class Animal
     }
 
     private void addMe(Cell cell) {
-        safeModification(cell, c -> c.getResidents().get(this.getClass()).add(this));
+        Type type = this.getClass();
+        safeModification(cell, c -> c.getResidents()
+                .computeIfAbsent(type,o->new HashSet<>())
+                .add(this));
     }
 
     private void removeMe(Cell cell) {
@@ -75,7 +78,7 @@ public abstract class Animal
     }
 
     private void bornClone(Cell cell) {
-        safeModification(cell, c -> c.getResidents().get(this.getClass()).add(this.clone()));
+        safeModification(cell, c -> c.getResidents().get(this.getClass()).add(clone(this)));
     }
 
     private void safeModification(Cell cell, Consumer<Cell> operation) {
