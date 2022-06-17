@@ -6,6 +6,7 @@ import com.javarush.island.khmelov.abstraction.entity.Reproducible;
 import com.javarush.island.khmelov.entity.map.Cell;
 import com.javarush.island.khmelov.entity.organizms.Limit;
 import com.javarush.island.khmelov.entity.organizms.Organism;
+import com.javarush.island.khmelov.entity.tasks.Task;
 
 import java.lang.reflect.Type;
 import java.util.HashSet;
@@ -16,7 +17,7 @@ import java.util.concurrent.ThreadLocalRandom;
 import java.util.function.Consumer;
 
 public abstract class Animal
-        extends Organism
+        extends com.javarush.island.khmelov.entity.organizms.Organism
         implements Eating, Reproducible, Movable {
 
     public Animal(String name, String icon, double weight, Limit limit) {
@@ -28,24 +29,16 @@ public abstract class Animal
 
     }
 
-    @Override
-    public Cell move(Cell startCell) {
-        int countCellForStep = this.getLimit().getMaxSpeed();
-        Cell last = findLastCell(startCell, countCellForStep);
-        removeMe(startCell);
-        addMe(last);
-        return last;
-    }
 
     @Override
-    public void spawn(Cell currentCell) {
-        Type type = this.getClass();
-        Map<Type, Set<Organism>> residents = currentCell.getResidents();
-        Set<Organism> organisms = residents.get(type);
-        if (Objects.nonNull(organisms) && organisms.contains(this) && organisms.size() > 2) {
-            bornClone(currentCell);
-        }
+    public Task move(Cell startCell) {
+        int countCellForStep = this.getLimit().getMaxSpeed();
+        Cell last = findLastCell(startCell, countCellForStep);
+        return removeMe(startCell);//.andThen(addMe(last));
+        //addMe(last);
     }
+
+
 
     private Cell findLastCell(Cell startCell, int countCellForStep) {
         Set<Cell> visitedCells = new HashSet<>();
@@ -66,28 +59,18 @@ public abstract class Animal
         return startCell;
     }
 
-    private void addMe(Cell cell) {
+    private Task addMe(Cell cell) {
         Type type = this.getClass();
-        safeModification(cell, c -> c.getResidents()
-                .computeIfAbsent(type,o->new HashSet<>())
+        return new Task(cell, c -> c.getResidents()
+                .computeIfAbsent(type, o -> new HashSet<>())
                 .add(this));
     }
 
-    private void removeMe(Cell cell) {
-        safeModification(cell, c -> c.getResidents().get(this.getClass()).remove(this));
-    }
-
-    private void bornClone(Cell cell) {
-        safeModification(cell, c -> c.getResidents().get(this.getClass()).add(clone(this)));
-    }
-
-    private void safeModification(Cell cell, Consumer<Cell> operation) {
-        cell.getLock().lock();
-        try {
-            operation.accept(cell);
-        } finally {
-            cell.getLock().unlock();
-        }
+    private Task removeMe(Cell cell) {
+        Type type = this.getClass();
+        return new Task(cell, c -> c.getResidents()
+                .computeIfAbsent(type, o -> new HashSet<>())
+                .remove(this));
     }
 
 }

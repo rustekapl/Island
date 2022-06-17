@@ -4,7 +4,6 @@ import com.javarush.island.khmelov.abstraction.annotations.Setting;
 import com.javarush.island.khmelov.exception.InitGameException;
 import com.javarush.island.khmelov.entity.organizms.Limit;
 import com.javarush.island.khmelov.entity.organizms.Organism;
-import com.javarush.island.khmelov.util.Probably;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;

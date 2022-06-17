@@ -11,16 +11,18 @@ import java.util.concurrent.TimeUnit;
 
 @RequiredArgsConstructor
 public class GameWorker extends Thread {
-    public static final int PERIOD = 100;
+    public static final int PERIOD = 1000;
     private final Game game;
 
     @Override
     public void run() {
+        game.getView().showMap();
+        game.getView().showStatistics();
         ScheduledExecutorService mainPool = Executors.newScheduledThreadPool(4);
 
         List<OrganismWorker> workers = game.getEntityFactory().getAllPrototypes()
                 .stream()
-                .map(p -> new OrganismWorker(p, game.getGameMap()))
+                .map(o->new OrganismWorker(o,game.getGameMap()))
                 .toList();
         mainPool.scheduleAtFixedRate(() -> {
             ExecutorService servicePool = Executors.newFixedThreadPool(4);

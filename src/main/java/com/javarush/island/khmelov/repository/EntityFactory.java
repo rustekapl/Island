@@ -11,7 +11,7 @@ import com.javarush.island.khmelov.util.Probably;
 import java.lang.reflect.Type;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.ConcurrentSkipListMap;
+import java.util.concurrent.CopyOnWriteArraySet;
 
 public class EntityFactory implements Factory {
 
@@ -24,7 +24,7 @@ public class EntityFactory implements Factory {
 
     @Override
     public Cell createRandomCell() {
-        Map<Type, Set<Organism>> residents = new ConcurrentHashMap<>();
+        Map<Type, Set<Organism>> residents = new HashMap<>();
         boolean fill = Probably.get(50); //TODO need config
         if (fill) {
             for (Organism prototype : PROTOTYPES) {
