@@ -8,8 +8,8 @@ import com.javarush.island.khmelov.entity.organizms.Limit;
 public class Wolf extends Predator {
 
 
-    public Wolf(String name, String icon, double weight, Limit limit) {
-        super(name, icon, weight, limit);
+    public Wolf(String name, String icon, Limit limit) {
+        super(name, icon, limit);
     }
 
 }

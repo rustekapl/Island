@@ -14,7 +14,7 @@ class AnimalTest {
     void move() {
         GameMap map = new GameMapCreator(new EntityFactory()).createRandomFilledGameMap(3, 3);
         Limit limit = new Limit(30, 40, 4, 6);
-        new Wolf("testWolf", "w", 10, limit);
+        new Wolf("testWolf", "w", limit);
         Cell[][] cells = map.getCells();
 
     }

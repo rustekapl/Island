@@ -21,8 +21,6 @@ public class EntityFactoryData {
                 Setting setting = type.getAnnotation(Setting.class);
                 String name = setting.name();
                 String icon = setting.icon();
-                double maxWeight = setting.maxWeight();
-                double weight = Probably.random(maxWeight / 2, maxWeight);
                 Limit limit = new Limit(
                         setting.maxWeight(),
                         setting.maxCount(),
@@ -30,16 +28,16 @@ public class EntityFactoryData {
                         setting.maxFood()
                 );
 
-                organisms[index++] = generatePrototype(type, name, icon, weight, limit);
+                organisms[index++] = generatePrototype(type, name, icon, limit);
             }
         }
         return organisms;
     }
 
-    private static Organism generatePrototype(Class<?> type, String name, String icon, double weight, Limit limit) {
+    private static Organism generatePrototype(Class<?> type, String name, String icon, Limit limit) {
         try {
-            Constructor<?> constructor = type.getConstructor(String.class, String.class, double.class, Limit.class);
-            return (Organism) constructor.newInstance(name, icon, weight, limit);
+            Constructor<?> constructor = type.getConstructor(String.class, String.class, Limit.class);
+            return (Organism) constructor.newInstance(name, icon, limit);
         } catch (NoSuchMethodException | InstantiationException | IllegalAccessException | InvocationTargetException e) {
             throw new InitGameException("not found Entity constructor", e);
         }

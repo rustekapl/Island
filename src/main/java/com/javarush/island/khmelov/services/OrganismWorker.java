@@ -4,10 +4,9 @@ import com.javarush.island.khmelov.entity.map.Cell;
 import com.javarush.island.khmelov.entity.map.GameMap;
 import com.javarush.island.khmelov.entity.organizms.Organism;
 import com.javarush.island.khmelov.entity.organizms.animals.Animal;
-import com.javarush.island.khmelov.entity.tasks.Task;
+import com.javarush.island.khmelov.services.tasks.Task;
 
 import java.lang.reflect.Type;
-import java.util.ArrayDeque;
 import java.util.Objects;
 import java.util.Queue;
 import java.util.Set;
@@ -49,17 +48,18 @@ public class OrganismWorker implements Runnable {
                 organisms.forEach(organism -> {
                     tasks.add(organism.spawn(cell));
                     if (organism instanceof Animal animal) {
-                        System.out.print(animal);
+                        //System.out.print(animal); //TODO del
                         tasks.add(animal.eat(cell));
                         tasks.add(animal.move(cell));
                     }
                 });
-                System.out.println();
+                //System.out.println("\ntasks "+tasks.size());//TODO del
+
+            tasks.forEach(Task::run);
+            tasks.clear();
             } finally {
                 cell.getLock().unlock();
             }
-            tasks.forEach(Task::run);
-            tasks.clear();
         }
     }
 }

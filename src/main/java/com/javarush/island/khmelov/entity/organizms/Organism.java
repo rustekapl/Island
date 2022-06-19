@@ -2,20 +2,16 @@ package com.javarush.island.khmelov.entity.organizms;
 
 import com.javarush.island.khmelov.abstraction.entity.Reproducible;
 import com.javarush.island.khmelov.entity.map.Cell;
-import com.javarush.island.khmelov.entity.tasks.Task;
+import com.javarush.island.khmelov.services.tasks.Task;
 import com.javarush.island.khmelov.util.Probably;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.lang.reflect.Type;
-import java.util.HashSet;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Set;
-import java.util.concurrent.ThreadLocalRandom;
 import java.util.concurrent.atomic.AtomicLong;
-import java.util.stream.IntStream;
 
 @SuppressWarnings("unused")
 @Getter
@@ -24,11 +20,11 @@ public abstract class Organism implements Reproducible, Cloneable {
 
     private final static AtomicLong idCounter = new AtomicLong(System.currentTimeMillis());
 
-    public Organism(String name, String icon, double weight, Limit limit) {
+    public Organism(String name, String icon, Limit limit) {
         this.name = name;
         this.icon = icon;
-        this.weight = weight;
         this.limit = limit;
+        weight = Probably.random(limit.getMaxWeight() / 2, limit.getMaxWeight());
     }
 
     private long id = idCounter.incrementAndGet();
@@ -51,6 +47,7 @@ public abstract class Organism implements Reproducible, Cloneable {
         //visible in inherits (cast to Organism)
         Organism clone = (Organism) super.clone();
         clone.id = idCounter.incrementAndGet();
+        clone.weight = Probably.random(limit.getMaxWeight() / 2, limit.getMaxWeight());
         return clone;
     }
 
@@ -70,36 +67,12 @@ public abstract class Organism implements Reproducible, Cloneable {
         Type type = this.getClass();
         Map<Type, Set<Organism>> residents = currentCell.getResidents();
         Set<Organism> organisms = residents.get(type);
-        int count = Probably.random(0,10)<80?0:
+        int count = Probably.random(0,10)<8?0: //TODO 10==off
                 organisms.contains(this)
                 && organisms.size() > 2
                 && organisms.size() < this.getLimit().getMaxCount()
                 ? 1 : 0;
-        return bornClone(currentCell, count);
+        return Task.bornClone(this,currentCell, count);
     }
 
-    protected Cell findDestinationCell(Cell startCell, int countCellForStep) {
-        Set<Cell> visitedCells = new HashSet<>();
-        while (visitedCells.size() < countCellForStep) {
-            var nextCells = startCell
-                    .getNextCell()
-                    .stream()
-                    .filter(cell -> !visitedCells.contains(cell))
-                    .toList();
-            int countDirections = nextCells.size();
-            if (countDirections > 0) {
-                startCell = nextCells.get(ThreadLocalRandom.current().nextInt(countDirections));
-                visitedCells.add(startCell);
-            } else {
-                break;
-            }
-        }
-        return startCell;
-    }
-
-    private Task bornClone(Cell cell, int count) {
-        return new Task(cell, c -> c.getResidents()
-                .get(this.getClass())
-                .addAll(IntStream.range(0, count).mapToObj(v -> clone(this)).toList()));
-    }
 }

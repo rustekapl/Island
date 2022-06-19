@@ -83,6 +83,7 @@ public class ConsoleView implements View {
     }
 
     private String get(Cell cell) {
+        cell.getLock().lock();
         String collect = cell.getResidents().values().stream()
                 .filter((list) -> list.size() > 0)
                 .sorted((o1, o2) -> o2.size() - o1.size())
@@ -109,6 +110,7 @@ public class ConsoleView implements View {
         long count = cell.getResidents().values().stream()
                 .filter((list) -> list.size() > 0).limit(positions).count();
         String blank = count < positions ? ".".repeat((int) (positions - count)) : "";
+        cell.getLock().unlock();
         return collect + blank;
     }
 
