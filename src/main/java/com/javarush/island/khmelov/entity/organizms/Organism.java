@@ -3,6 +3,7 @@ package com.javarush.island.khmelov.entity.organizms;
 import com.javarush.island.khmelov.abstraction.entity.Reproducible;
 import com.javarush.island.khmelov.entity.map.Cell;
 import com.javarush.island.khmelov.entity.tasks.Task;
+import com.javarush.island.khmelov.util.Probably;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -14,6 +15,7 @@ import java.util.Objects;
 import java.util.Set;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.concurrent.atomic.AtomicLong;
+import java.util.stream.IntStream;
 
 @SuppressWarnings("unused")
 @Getter
@@ -56,8 +58,7 @@ public abstract class Organism implements Reproducible, Cloneable {
     public static <T extends Organism> T clone(T original) {
         //for clients (cast to original Type)
         try {
-            Organism clone = original.clone();
-            return (T) clone;
+            return (T) original.clone();
         } catch (CloneNotSupportedException e) {
             throw new AssertionError(e);
         }
@@ -69,11 +70,12 @@ public abstract class Organism implements Reproducible, Cloneable {
         Type type = this.getClass();
         Map<Type, Set<Organism>> residents = currentCell.getResidents();
         Set<Organism> organisms = residents.get(type);
-        return (Objects.nonNull(organisms)
-                && organisms.contains(this)
-                && organisms.size() > 2)
-                ? bornClone(currentCell)
-                : null;
+        int count = Probably.random(0,10)<80?0:
+                organisms.contains(this)
+                && organisms.size() > 2
+                && organisms.size() < this.getLimit().getMaxCount()
+                ? 1 : 0;
+        return bornClone(currentCell, count);
     }
 
     protected Cell findDestinationCell(Cell startCell, int countCellForStep) {
@@ -94,9 +96,10 @@ public abstract class Organism implements Reproducible, Cloneable {
         }
         return startCell;
     }
-    private Task bornClone(Cell cell) {
+
+    private Task bornClone(Cell cell, int count) {
         return new Task(cell, c -> c.getResidents()
                 .get(this.getClass())
-                .add(clone(this)));
+                .addAll(IntStream.range(0, count).mapToObj(v -> clone(this)).toList()));
     }
 }

@@ -14,6 +14,21 @@ import java.util.stream.IntStream;
 
 
 public class ConsoleView implements View {
+
+    private static class Color {
+
+        public static final String RESET = "\u001B[0m";
+        public static final String BLACK = "\u001B[30m";
+        public static final String RED = "\u001B[31m";
+        public static final String GREEN = "\u001B[32m";
+        public static final String YELLOW = "\u001B[33m";
+        public static final String BLUE = "\u001B[34m";
+        public static final String PURPLE = "\u001B[35m";
+        public static final String CYAN = "\u001B[36m";
+        public static final String WHITE = "\u001B[37m";
+
+    }
+
     private final GameMap gameMap;
     private final int positions = 7;
     private final String border = "═".repeat(positions);
@@ -35,7 +50,7 @@ public class ConsoleView implements View {
                             .filter(set -> set.size() > 0)
                             .forEach(set -> {
                                         String icon = set.stream().findAny().get().getIcon();
-                                        statistics.put(icon, statistics.getOrDefault(icon,0) + set.size());
+                                        statistics.put(icon, statistics.getOrDefault(icon, 0) + set.size());
                                     }
                             );
                 }
@@ -47,12 +62,10 @@ public class ConsoleView implements View {
 
     @Override
     public String showMap() {
+        StringBuilder out = new StringBuilder("\n");
         Cell[][] cells = gameMap.getCells();
         final int cols = gameMap.getCols();
         final int rows = gameMap.getRows();
-        int oneCellWidth = positions + 1;
-        int width = oneCellWidth * cols + 2;
-        StringBuilder out = new StringBuilder("\n");
         for (int row = 0; row < rows; row++) {
             out.append(row == 0
                     ? line(cols, '╔', '╦', '╗')
@@ -60,7 +73,7 @@ public class ConsoleView implements View {
             ).append("\n");
             for (int col = 0; col < cols; col++) {
                 String residentSting = get(cells[row][col]);
-                out.append(String.format("║%-" + positions + "s", residentSting));
+                out.append(String.format("║%-" + positions + "s", residentSting)).append(Color.RESET);
             }
             out.append('║').append("\n");
         }
@@ -70,16 +83,33 @@ public class ConsoleView implements View {
     }
 
     private String get(Cell cell) {
-        return cell.getResidents().values().stream()
+        String collect = cell.getResidents().values().stream()
                 .filter((list) -> list.size() > 0)
                 .sorted((o1, o2) -> o2.size() - o1.size())
-                .limit(2)
-                .map(o->o.stream().findAny().get().getLetter()+o.size())
-                .collect(Collectors.joining());
-//                .limit(positions)
-//                .map(list -> list.stream().findAny().get().getClass().getSimpleName().substring(0, 1))
-//                .map(Object::toString)
+//                .limit(2)
+//                .map(o->o.stream().findAny().get().getLetter()+o.size())
 //                .collect(Collectors.joining());
+                .limit(positions)
+                .map(list -> {
+                    Organism organism = list.stream().findAny().get();
+                    int maxCount = organism.getLimit().getMaxCount();
+                    String color = list.size() == maxCount
+                            ? Color.BLACK
+                            : list.size() > maxCount * 3 / 4
+                            ? Color.BLUE
+                            : list.size() > maxCount / 2
+                            ? Color.GREEN
+                            : list.size() > maxCount / 4
+                            ? Color.YELLOW
+                            : Color.RED;
+                    return color + organism.getLetter();
+                })
+                .map(Object::toString)
+                .collect(Collectors.joining());
+        long count = cell.getResidents().values().stream()
+                .filter((list) -> list.size() > 0).limit(positions).count();
+        String blank = count < positions ? ".".repeat((int) (positions - count)) : "";
+        return collect + blank;
     }
 
     private String line(int cols, char left, char center, char right) {

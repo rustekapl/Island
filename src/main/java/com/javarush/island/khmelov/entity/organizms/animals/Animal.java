@@ -10,6 +10,7 @@ import com.javarush.island.khmelov.entity.tasks.Task;
 
 import java.lang.reflect.Type;
 import java.util.HashSet;
+import java.util.Set;
 
 public abstract class Animal
         extends Organism
@@ -20,8 +21,29 @@ public abstract class Animal
     }
 
     @Override
-    public void eat(Cell currentCell) {
+    public Task eat(Cell currentCell) {
+        return die(currentCell);
 
+//        if (this.getWeight() < this.getLimit().getMaxWeight() / 30) {
+//            return die(currentCell);
+//        }
+//        return slim(currentCell);
+    }
+
+    private Task die(Cell currentCell) {
+        return new Task(currentCell, c ->{
+                currentCell.getResidents().get(this.getClass()).
+                        remove(this);
+        }
+        );
+    }
+
+    private Task slim(Cell currentCell) {
+        return new Task(currentCell, c -> {
+            double weight = this.getWeight();
+            weight -= this.getLimit().getMaxWeight() / 5;
+            this.setWeight(weight);
+        });
     }
 
 
@@ -36,8 +58,12 @@ public abstract class Animal
         Type type = this.getClass();
         to.getResidents().putIfAbsent(type, new HashSet<>());
         return new Task(from, c -> {
-            c.getResidents().get(type).remove(this);
-            to.getResidents().get(type).add(this);
+            Set<Organism> source = c.getResidents().get(type);
+            Set<Organism> destination = to.getResidents().get(type);
+            if (destination.size() < getLimit().getMaxCount()) {
+                source.remove(this);
+                destination.add(this);
+            }
         });
     }
 }

@@ -17,12 +17,11 @@ public class Task {
     public void run() {
         Task task = this;
         Lock lock = task.cell.getLock();
-        if (lock.tryLock()) {
-            try {
-                operation.accept(task.cell);
-            } finally {
-                lock.unlock();
-            }
+        lock.lock();
+        try {
+            operation.accept(task.cell);
+        } finally {
+            lock.unlock();
         }
     }
 }

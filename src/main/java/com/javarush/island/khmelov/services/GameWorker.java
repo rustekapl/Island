@@ -31,7 +31,6 @@ public class GameWorker extends Thread {
             try {
                 if (servicePool.awaitTermination(PERIOD, TimeUnit.MILLISECONDS)) {
                     synchronized (System.out) {
-                        System.out.println("\n".repeat(30));
                         game.getView().showMap();
                         game.getView().showStatistics();
                         System.out.flush();

@@ -11,12 +11,13 @@ import java.util.ArrayDeque;
 import java.util.Objects;
 import java.util.Queue;
 import java.util.Set;
+import java.util.concurrent.ConcurrentLinkedQueue;
 
 public class OrganismWorker implements Runnable {
 
     private final Organism prototype;
     private final GameMap gameMap;
-    private final Queue<Task> tasks=new ArrayDeque<>();
+    private final Queue<Task> tasks = new ConcurrentLinkedQueue<>();
 
     public OrganismWorker(Organism prototype, GameMap gameMap) {
         this.prototype = prototype;
@@ -28,33 +29,37 @@ public class OrganismWorker implements Runnable {
         Cell[][] cells = gameMap.getCells();
         for (Cell[] row : cells) {
             for (Cell cell : row) {
-                //cell.getLock().lock();
                 try {
-                    Type type = prototype.getClass();
-                    Set<Organism> organisms = cell.getResidents().get(type);
-                    if (Objects.nonNull(organisms)) {
-                        for (Organism organism : organisms) {
-                            if (organism instanceof Animal animal) {
-                                //animal.eat(destination);
-                                //animal.spawn(destination);
-                                tasks.add(animal.move(cell));
-                            } else {
-                                //tasks.add(prototype.spawn(cell));
-                            }
-                        }
-                        tasks.forEach(Task::run);
-                        tasks.clear();
-                    }
+                    processOneCell(cell);
                 } catch (Exception e) {
                     e.printStackTrace();
+                    System.err.println("Debug it!");
+                    System.exit(0);
                 }
-                finally {
-                    //cell.getLock().unlock();
-                }
-
             }
         }
+    }
 
-
+    private void processOneCell(Cell cell) {
+        Type type = prototype.getClass();
+        Set<Organism> organisms = cell.getResidents().get(type);
+        if (Objects.nonNull(organisms)) {
+            cell.getLock().lock();
+            try {
+                organisms.forEach(organism -> {
+                    tasks.add(organism.spawn(cell));
+                    if (organism instanceof Animal animal) {
+                        System.out.print(animal);
+                        tasks.add(animal.eat(cell));
+                        tasks.add(animal.move(cell));
+                    }
+                });
+                System.out.println();
+            } finally {
+                cell.getLock().unlock();
+            }
+            tasks.forEach(Task::run);
+            tasks.clear();
+        }
     }
 }
