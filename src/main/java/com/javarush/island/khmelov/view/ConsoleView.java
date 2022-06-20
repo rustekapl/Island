@@ -44,7 +44,7 @@ public class ConsoleView implements View {
         Cell[][] cells = gameMap.getCells();
         for (Cell[] row : cells) {
             for (Cell cell : row) {
-                Map<Type, Set<Organism>> residents = cell.getResidents();
+                var residents = cell.getResidents();
                 if (Objects.nonNull(residents)) {
                     residents.values().stream()
                             .filter(set -> set.size() > 0)

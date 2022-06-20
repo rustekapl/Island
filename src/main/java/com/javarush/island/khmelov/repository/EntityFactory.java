@@ -24,15 +24,15 @@ public class EntityFactory implements Factory {
 
     @Override
     public Cell createRandomCell() {
-        Map<Type, Set<Organism>> residents = new HashMap<>();
+        Map<String, Set<Organism>> residents = new HashMap<>();
         boolean fill = Probably.get(50); //TODO need config
         if (fill) {
             for (Organism prototype : PROTOTYPES) {
-                Type type = prototype.getClass();
+                String type = prototype.getType();
                 boolean born = Probably.get(50); //TODO need config
                 if (born) {
                     residents.putIfAbsent(type, new HashSet<>());
-                    Set<Organism> organisms = residents.get(prototype.getClass());
+                    Set<Organism> organisms = residents.get(type);
                     int currentCount = organisms.size();
                     int max = prototype.getLimit().getMaxCount() - currentCount;
                     int count = Probably.random(0, max);

@@ -16,6 +16,7 @@ public abstract class Animal extends Organism implements Eating, Reproducible, M
 
     @Override
     public Task eat(Cell currentCell) {
+//        if ()
         if (this.getWeight() <= 0) {
             return Task.die(this, currentCell);
         }

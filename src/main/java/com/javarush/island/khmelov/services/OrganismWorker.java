@@ -40,7 +40,7 @@ public class OrganismWorker implements Runnable {
     }
 
     private void processOneCell(Cell cell) {
-        Type type = prototype.getClass();
+        String type = prototype.getType();
         Set<Organism> organisms = cell.getResidents().get(type);
         if (Objects.nonNull(organisms)) {
             cell.getLock().lock();

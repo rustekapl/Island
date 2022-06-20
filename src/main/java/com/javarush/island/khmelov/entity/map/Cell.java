@@ -17,7 +17,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class Cell {
 
-    private final Map<Type, Set<Organism>> residents;
+    private final Map<String, Set<Organism>> residents;
     private final List<Cell> nextCell = new ArrayList<>();
     private final Lock lock = new ReentrantLock(true);
 

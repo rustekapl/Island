@@ -5,9 +5,10 @@ import com.javarush.island.khmelov.entity.organizms.Organism;
 import lombok.Getter;
 
 import java.lang.reflect.Type;
-import java.util.*;
+import java.util.HashSet;
+import java.util.Objects;
+import java.util.Set;
 import java.util.function.Consumer;
-import java.util.stream.IntStream;
 
 @Getter
 public class Task {
@@ -24,9 +25,13 @@ public class Task {
         return new Task(cell, c -> {
             c.getLock().lock();
             try {
-                Set<Organism> organisms = c.getResidents().get(organism.getClass());
+                double childWeight = organism.getWeight() / (count+1)*1.1;
+                organism.setWeight(childWeight);
+                Set<Organism> organisms = c.getResidents().get(organism.getType());
                 for (int i = 0; i < count; i++) {
-                    organisms.add(Organism.clone(organism));
+                    Organism clone = Organism.clone(organism);
+                    clone.setWeight(childWeight);
+                    organisms.add(clone);
                 }
             } finally {
                 c.getLock().unlock();
@@ -38,7 +43,7 @@ public class Task {
         return new Task(target, c -> {
             c.getLock().lock();
             try {
-                Set<Organism> organisms = target.getResidents().get(organism.getClass());
+                Set<Organism> organisms = target.getResidents().get(organism.getType());
                 if (Objects.nonNull(organisms)) {
                     organisms.remove(organism);
                 }
@@ -49,26 +54,26 @@ public class Task {
     }
 
     public static Task slim(Organism organism, Cell currentCell, int percent) {
-        return new Task(currentCell, c -> {
-            c.getLock().lock();
+        return new Task(currentCell, cell -> {
+            cell.getLock().lock();
             try {
                 double weight = organism.getWeight();
                 weight -= organism.getLimit().getMaxWeight() / percent;
                 organism.setWeight(weight);
             } finally {
-                c.getLock().unlock();
+                cell.getLock().unlock();
             }
         });
     }
 
     public static Task move(Organism organism, Cell from, Cell to) {
-        return new Task(from, c -> {
-            Type type = organism.getClass();
+        return new Task(from, cell -> {
+            String type = organism.getType();
             to.getResidents().putIfAbsent(type, new HashSet<>());
             boolean extractOrganism = false;
             from.getLock().lock();
             try {
-                Set<Organism> source = c.getResidents().get(type);
+                Set<Organism> source = cell.getResidents().get(type);
                 if (to.getResidents().get(type).size() < organism.getLimit().getMaxCount()) {
                     extractOrganism = source.remove(organism);
                 }
