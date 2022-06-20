@@ -6,7 +6,6 @@ import com.javarush.island.khmelov.entity.organizms.Organism;
 import com.javarush.island.khmelov.entity.organizms.animals.Animal;
 import com.javarush.island.khmelov.services.tasks.Task;
 
-import java.lang.reflect.Type;
 import java.util.Objects;
 import java.util.Queue;
 import java.util.Set;
@@ -31,8 +30,9 @@ public class OrganismWorker implements Runnable {
                 try {
                     processOneCell(cell);
                 } catch (Exception e) {
+                    //TODO replace it -> throw...
                     e.printStackTrace();
-                    System.err.println("Debug it!");
+                    System.err.println("OMG. Debug it!");
                     System.exit(0);
                 }
             }
@@ -43,23 +43,26 @@ public class OrganismWorker implements Runnable {
         String type = prototype.getType();
         Set<Organism> organisms = cell.getResidents().get(type);
         if (Objects.nonNull(organisms)) {
-            cell.getLock().lock();
+            //build tasks (need correct iteration, without any modification)
+            cell.getLock().lock(); //ONLY READ
             try {
                 organisms.forEach(organism -> {
+                    //here possible action-cycle for entity (enum, collection or array)
                     tasks.add(organism.spawn(cell));
                     if (organism instanceof Animal animal) {
-                        //System.out.print(animal); //TODO del
                         tasks.add(animal.eat(cell));
                         tasks.add(animal.move(cell));
                     }
                 });
-                //System.out.println("\ntasks "+tasks.size());//TODO del
-
-            tasks.forEach(Task::run);
-            tasks.clear();
             } finally {
                 cell.getLock().unlock();
             }
+
+            //run tasks
+            //see CORS pattern or CommandBus pattern and Producer-Consumer problem.
+            //This cycle can to run in other thread or threads (pool)
+            tasks.forEach(Task::run);
+            tasks.clear();
         }
     }
 }

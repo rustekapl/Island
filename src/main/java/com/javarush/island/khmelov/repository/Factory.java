@@ -9,6 +9,8 @@ public interface Factory {
 
     Cell createRandomCell();
 
+    Cell createRandomCell(boolean empty);
+
     List<Organism> getAllPrototypes();
 
 }

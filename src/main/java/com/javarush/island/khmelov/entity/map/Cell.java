@@ -6,7 +6,6 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
-import java.lang.reflect.Type;
 import java.util.*;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
@@ -17,7 +16,23 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class Cell {
 
-    private final Map<String, Set<Organism>> residents;
+    private final Map<String, Set<Organism>> residents = new HashMap<>() {
+        private void checkNull(Object key) {
+            this.putIfAbsent(key.toString(), new HashSet<>());
+        }
+
+        @Override
+        public Set<Organism> get(Object key) {
+            checkNull(key);
+            return super.get(key);
+        }
+
+        @Override
+        public Set<Organism> put(String key, Set<Organism> value) {
+            checkNull(key);
+            return super.put(key, value);
+        }
+    };
     private final List<Cell> nextCell = new ArrayList<>();
     private final Lock lock = new ReentrantLock(true);
 

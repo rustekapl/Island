@@ -27,7 +27,7 @@ public abstract class Organism implements Reproducible, Cloneable {
     }
 
     private long id = idCounter.incrementAndGet();
-    private String type = this.getClass().getSimpleName();
+    private final String type = this.getClass().getSimpleName();
     private final String name;
     private final String icon;
 
@@ -47,7 +47,6 @@ public abstract class Organism implements Reproducible, Cloneable {
         //visible in inherits (cast to Organism)
         Organism clone = (Organism) super.clone();
         clone.id = idCounter.incrementAndGet();
-        type = this.getClass().getSimpleName();
         clone.weight = Probably.random(limit.getMaxWeight() / 2, limit.getMaxWeight());
         return clone;
     }
@@ -67,7 +66,7 @@ public abstract class Organism implements Reproducible, Cloneable {
     public Task spawn(Cell currentCell) {
         Map<String, Set<Organism>> residents = currentCell.getResidents();
         Set<Organism> organisms = residents.get(type);
-        int count = Probably.random(0, 10) < 8 ? 0 : //TODO 10==off
+        int count = Probably.random(0, 10) < 5 ? 0 : //TODO 10==off
                 organisms.contains(this)
                         && organisms.size() > 2
                         && organisms.size() < this.getLimit().getMaxCount()

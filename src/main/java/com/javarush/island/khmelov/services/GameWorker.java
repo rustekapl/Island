@@ -1,6 +1,7 @@
 package com.javarush.island.khmelov.services;
 
 import com.javarush.island.khmelov.entity.Game;
+import com.javarush.island.khmelov.view.View;
 import lombok.RequiredArgsConstructor;
 
 import java.util.List;
@@ -16,8 +17,9 @@ public class GameWorker extends Thread {
 
     @Override
     public void run() {
-        game.getView().showMap();
-        game.getView().showStatistics();
+        View view = game.getView();
+        view.showMap();
+        view.showStatistics();
         ScheduledExecutorService mainPool = Executors.newScheduledThreadPool(4);
 
         List<OrganismWorker> workers = game.getEntityFactory().getAllPrototypes()
@@ -31,8 +33,8 @@ public class GameWorker extends Thread {
             try {
                 if (servicePool.awaitTermination(PERIOD, TimeUnit.MILLISECONDS)) {
                     synchronized (System.out) {
-                        game.getView().showMap();
-                        game.getView().showStatistics();
+                        view.showMap();
+                        view.showStatistics();
                         System.out.flush();
                     }
                 }

@@ -13,6 +13,10 @@ public class GameMapCreator {
     }
 
     public GameMap createRandomFilledGameMap(int rows, int cols) {
+        return createRandomFilledGameMap(rows, cols, false);
+    }
+
+    public GameMap createRandomFilledGameMap(int rows, int cols, boolean empty) {
         GameMap gameMap = new GameMap(rows, cols);
         Cell[][] cells = gameMap.getCells();
         for (int row = 0; row < cells.length; row++) {
