@@ -2,13 +2,11 @@ package com.javarush.island.khmelov.entity.organizms;
 
 import com.javarush.island.khmelov.abstraction.entity.Reproducible;
 import com.javarush.island.khmelov.entity.map.Cell;
-import com.javarush.island.khmelov.services.tasks.Task;
 import com.javarush.island.khmelov.util.Probably;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.atomic.AtomicLong;
 
@@ -62,16 +60,61 @@ public abstract class Organism implements Reproducible, Cloneable {
 
     }
 
-    @Override
-    public Task spawn(Cell currentCell) {
-        Map<String, Set<Organism>> residents = currentCell.getResidents();
-        Set<Organism> organisms = residents.get(type);
-        int count = Probably.random(0, 10) < 5 ? 0 : //TODO 10==off
-                organisms.contains(this)
-                        && organisms.size() > 2
-                        && organisms.size() < this.getLimit().getMaxCount()
-                        ? 1 : 0;
-        return Task.bornClone(this, currentCell, count);
+
+    protected boolean die(Cell target) {
+        target.getLock().lock();
+        try {
+            return target.getResidents().get(type).remove(this);
+
+        } finally {
+            target.getLock().unlock();
+        }
+    }
+
+    protected boolean changeWeight(Cell currentCell, int percent) {
+        currentCell.getLock().lock();
+        try {
+            double maxWeight = limit.getMaxWeight();
+            weight += maxWeight * percent / 100;
+            weight = Math.max(0, weight);
+            weight = Math.min(weight, maxWeight);
+            return currentCell.getResidents().get(type).contains(this);
+        } finally {
+            currentCell.getLock().unlock();
+        }
+    }
+
+
+    protected boolean move(Cell source, Cell destination) {
+        if (addTo(destination)) { //if was added
+            if (pollFrom(source)) { //and after was extract
+                return true; //ok
+            } else {
+                pollFrom(destination); //die or eaten
+            }
+        }
+        return false;
+    }
+
+    protected boolean addTo(Cell cell) {
+        cell.getLock().lock();
+        try {
+            Set<Organism> set = cell.getResidents().get(getType());
+            int maxCount = getLimit().getMaxCount();
+            int size = set.size();
+            return size < maxCount && set.add(this);
+        } finally {
+            cell.getLock().unlock();
+        }
+    }
+
+    protected boolean pollFrom(Cell cell) {
+        cell.getLock().lock();
+        try {
+            return cell.getResidents().get(getType()).remove(this);
+        } finally {
+            cell.getLock().unlock();
+        }
     }
 
 }

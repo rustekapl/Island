@@ -4,18 +4,17 @@ import com.javarush.island.khmelov.entity.map.Cell;
 import com.javarush.island.khmelov.entity.map.GameMap;
 import com.javarush.island.khmelov.entity.organizms.Organism;
 
-import java.lang.reflect.Type;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 
 public class ConsoleView implements View {
 
-    private static class Color {
+    public static class Color {
+
 
         public static final String RESET = "\u001B[0m";
         public static final String BLACK = "\u001B[30m";
@@ -27,6 +26,27 @@ public class ConsoleView implements View {
         public static final String CYAN = "\u001B[36m";
         public static final String WHITE = "\u001B[37m";
 
+        public static final String FILL_RED = "\u001B[41m";
+        public static final String FILL_GREEN = "\u001B[42m";
+        public static final String FILL_YELLOW = "\u001B[43m";
+        public static final String FILL_BLUE = "\u001B[44m";
+        public static final String FILL_PURPLE = "\u001B[45m";
+        public static final String FILL_CYAN = "\u001B[46m";
+        public static final String FILL_WHITE = "\u001B[47m";
+
+        private static final String[] Scale = {
+                FILL_GREEN, FILL_BLUE, FILL_YELLOW, FILL_PURPLE, FILL_WHITE,
+                GREEN, BLUE, YELLOW, PURPLE, RED,
+        };
+
+
+        public static String getColor(int size, int maxCount) {
+            if (size > maxCount) {
+                return Color.FILL_RED;
+            }
+            int index = Scale.length - 1 - Scale.length * size / (maxCount + 1);
+            return Scale[index];
+        }
     }
 
     private final GameMap gameMap;
@@ -73,7 +93,7 @@ public class ConsoleView implements View {
             ).append("\n");
             for (int col = 0; col < cols; col++) {
                 String residentSting = get(cells[row][col]);
-                out.append(String.format("║%-" + positions + "s", residentSting)).append(Color.RESET);
+                out.append(String.format("║%-" + positions + "s", residentSting));
             }
             out.append('║').append("\n");
         }
@@ -87,23 +107,12 @@ public class ConsoleView implements View {
         String collect = cell.getResidents().values().stream()
                 .filter((list) -> list.size() > 0)
                 .sorted((o1, o2) -> o2.size() - o1.size())
-//                .limit(2)
-//                .map(o->o.stream().findAny().get().getLetter()+o.size())
-//                .collect(Collectors.joining());
                 .limit(positions)
                 .map(list -> {
                     Organism organism = list.stream().findAny().get();
                     int maxCount = organism.getLimit().getMaxCount();
-                    String color = list.size() == maxCount
-                            ? Color.BLACK
-                            : list.size() > maxCount * 3 / 4
-                            ? Color.BLUE
-                            : list.size() > maxCount / 2
-                            ? Color.GREEN
-                            : list.size() > maxCount / 4
-                            ? Color.YELLOW
-                            : Color.RED;
-                    return color + organism.getLetter();
+                    String color = Color.getColor(list.size(), maxCount);
+                    return color + organism.getLetter() + Color.RESET;
                 })
                 .map(Object::toString)
                 .collect(Collectors.joining());

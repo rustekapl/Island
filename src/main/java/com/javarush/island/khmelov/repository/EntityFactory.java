@@ -8,7 +8,10 @@ import com.javarush.island.khmelov.entity.organizms.plants.Plant;
 import com.javarush.island.khmelov.util.EntityFactoryData;
 import com.javarush.island.khmelov.util.Probably;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 public class EntityFactory implements Factory {
 
@@ -20,34 +23,26 @@ public class EntityFactory implements Factory {
     }
 
     @Override
-    public Cell createRandomCell() {
-        return createRandomCell(false);
-    }
-
-    @Override
     public Cell createRandomCell(boolean empty) {
         Cell cell = new Cell();
         Map<String, Set<Organism>> residents = cell.getResidents();
         boolean fill = Probably.get(33); //TODO need config
-        if (fill || empty) {
+        if (fill && !empty) {
             for (Organism prototype : PROTOTYPES) {
                 String type = prototype.getType();
-                boolean born = empty || Probably.get(50); //TODO need config
-                if (born || empty) {
-                    residents.putIfAbsent(type, new HashSet<>());
-                    if (!empty) {
-                        Set<Organism> organisms = residents.get(type);
-                        int currentCount = organisms.size();
-                        int max = prototype.getLimit().getMaxCount() - currentCount;
-                        int count = Probably.random(0, max);
-                        for (int i = 0; i < count; i++) {
-                            organisms.add(Organism.clone(prototype));
-                        }
+                boolean born = Probably.get(50); //TODO need config
+                if (born) {
+                    Set<Organism> organisms = residents.get(type);
+                    int currentCount = organisms.size();
+                    int max = prototype.getLimit().getMaxCount() - currentCount;
+                    int count = Probably.random(0, max);
+                    for (int i = 0; i < count; i++) {
+                        organisms.add(Organism.clone(prototype));
                     }
                 }
             }
         }
-        return new Cell();
+        return cell;
     }
 
     @Override

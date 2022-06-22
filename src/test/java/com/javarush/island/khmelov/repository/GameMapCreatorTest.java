@@ -22,7 +22,7 @@ class GameMapCreatorTest {
             for (int j = 0; j < cells[i].length; j++) {
                 Assertions.assertEquals(
                         expectedDirectionCount[i][j],
-                        cells[i][j].getNextCell().size()
+                        cells[i][j].getNextCellCount()
                 );
             }
         }

@@ -7,8 +7,6 @@ import java.util.List;
 
 public interface Factory {
 
-    Cell createRandomCell();
-
     Cell createRandomCell(boolean empty);
 
     List<Organism> getAllPrototypes();

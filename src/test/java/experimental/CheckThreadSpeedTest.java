@@ -27,9 +27,7 @@ public class CheckThreadSpeedTest {
             Thread thread = new Thread("th" + i) {
                 @Override
                 public void run() {
-                    lock.lock();
-                    counter.incrementAndGet();
-                    lock.unlock();
+                        counter.incrementAndGet();
                 }
             };
             pool.execute(thread);

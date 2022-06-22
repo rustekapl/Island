@@ -32,11 +32,8 @@ public class GameWorker extends Thread {
             servicePool.shutdown();
             try {
                 if (servicePool.awaitTermination(PERIOD, TimeUnit.MILLISECONDS)) {
-                    synchronized (System.out) {
                         view.showMap();
                         view.showStatistics();
-                        System.out.flush();
-                    }
                 }
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);

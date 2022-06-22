@@ -6,30 +6,56 @@ import com.javarush.island.khmelov.abstraction.entity.Reproducible;
 import com.javarush.island.khmelov.entity.map.Cell;
 import com.javarush.island.khmelov.entity.organizms.Limit;
 import com.javarush.island.khmelov.entity.organizms.Organism;
-import com.javarush.island.khmelov.services.tasks.Task;
+import com.javarush.island.khmelov.util.Probably;
+
+import java.util.Set;
 
 public abstract class Animal extends Organism implements Eating, Reproducible, Movable {
 
-    public Animal(String name, String icon,  Limit limit) {
+    public Animal(String name, String icon, Limit limit) {
         super(name, icon, limit);
     }
 
     @Override
-    public Task eat(Cell currentCell) {
-//        if ()
+    public boolean eat(Cell currentCell) {
+//      if ()
         if (this.getWeight() <= 0) {
-            return Task.die(this, currentCell);
+            return !die(currentCell);
+        } else {
+            return !changeWeight(currentCell, -1);
         }
-        return Task.slim(this, currentCell, 10);
     }
 
 
     @Override
-    public Task move(Cell startCell) {
+    public boolean move(Cell startCell) {
         int countStep = this.getLimit().getMaxSpeed();
-        Cell destinationCell = startCell.getDestinationCell(countStep);
-        return Task.move(this, startCell, destinationCell);
+        Cell destinationCell = startCell.getNextCell(countStep);
+        return move(startCell, destinationCell);
     }
 
-
+    @Override
+    public boolean spawn(Cell cell) {
+        cell.getLock().lock();
+        try {
+            Set<Organism> organisms = cell.getResidents().get(getType());
+            double maxWeight = getLimit().getMaxWeight();
+            if (getWeight() > maxWeight / 2 &&
+                    organisms.contains(this) &&
+                    organisms.size() >= 2 &&
+                    organisms.size() < getLimit().getMaxCount()
+            ) {
+                //all animals lose weight after the birth of offspring
+                double childWeight = getWeight() / 2;
+                setWeight(childWeight / 2);
+                Organism clone = Organism.clone(this);
+                clone.setWeight(childWeight);
+                organisms.add(clone);
+                return true;
+            }
+        } finally {
+            cell.getLock().unlock();
+        }
+        return false;
+    }
 }

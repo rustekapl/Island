@@ -4,7 +4,6 @@ import com.javarush.island.khmelov.entity.map.Cell;
 import com.javarush.island.khmelov.entity.map.GameMap;
 import com.javarush.island.khmelov.entity.organizms.Organism;
 import com.javarush.island.khmelov.entity.organizms.animals.Animal;
-import com.javarush.island.khmelov.services.tasks.Task;
 
 import java.util.Objects;
 import java.util.Queue;
@@ -48,18 +47,21 @@ public class OrganismWorker implements Runnable {
             try {
                 organisms.forEach(organism -> {
                     //here possible action-cycle for entity (enum, collection or array)
-                    tasks.add(organism.spawn(cell));
-                    if (organism instanceof Animal animal) {
-                        tasks.add(animal.eat(cell));
-                        tasks.add(animal.move(cell));
-                    }
+                    Task task = new Task(organism, o -> {
+                        o.spawn(cell);
+                        if (organism instanceof Animal animal) {
+                            animal.eat(cell);
+                            animal.move(cell);
+                        }
+                    });
+                    tasks.add(task);
                 });
             } finally {
                 cell.getLock().unlock();
             }
 
             //run tasks
-            //see CORS pattern or CommandBus pattern and Producer-Consumer problem.
+            //see CQRS pattern or CommandBus pattern and Producer-Consumer problem.
             //This cycle can to run in other thread or threads (pool)
             tasks.forEach(Task::run);
             tasks.clear();
