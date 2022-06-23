@@ -14,16 +14,18 @@ import java.util.concurrent.TimeUnit;
 @RequiredArgsConstructor
 public class GameWorker extends Thread {
     private final Game game;
+    private final int PERIOD = Setting.get().getPeriod();
 
     @Override
     public void run() {
-        int period = Setting.get().getPeriod();
         View view = game.getView();
         view.showMap();
         view.showStatistics();
         ScheduledExecutorService mainPool = Executors.newScheduledThreadPool(4);
 
-        List<OrganismWorker> workers = game.getEntityFactory().getAllPrototypes()
+        List<OrganismWorker> workers = game
+                .getEntityFactory()
+                .getAllPrototypes()
                 .stream()
                 .map(o -> new OrganismWorker(o, game.getGameMap()))
                 .toList();
@@ -32,13 +34,13 @@ public class GameWorker extends Thread {
             workers.forEach(servicePool::submit);
             servicePool.shutdown();
             try {
-                if (servicePool.awaitTermination(period, TimeUnit.MILLISECONDS)) {
+                if (servicePool.awaitTermination(PERIOD, TimeUnit.MILLISECONDS)) {
                         view.showMap();
                         view.showStatistics();
                 }
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
-        }, period, period, TimeUnit.MILLISECONDS); //TODO need config
+        }, PERIOD, PERIOD, TimeUnit.MILLISECONDS);
     }
 }

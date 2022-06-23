@@ -3,6 +3,10 @@ package com.javarush.island.khmelov.config;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 public class Default {
+    public static final int PERIOD = 1000;
+    public static final int ROWS = 2;
+    public static final int COLS = 2;
+    public static final int CONSOLE_CELL_WITH = 3;
     @JsonIgnore
     static final String[] names = {
             "Wolf", "Boa", "Fox", "Bear", "Eagle",

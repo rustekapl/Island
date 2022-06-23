@@ -3,12 +3,10 @@ package com.javarush.island.khmelov.entity.organizms.animals;
 import com.javarush.island.khmelov.abstraction.entity.Eating;
 import com.javarush.island.khmelov.abstraction.entity.Movable;
 import com.javarush.island.khmelov.abstraction.entity.Reproducible;
-import com.javarush.island.khmelov.config.Setting;
 import com.javarush.island.khmelov.entity.map.Cell;
 import com.javarush.island.khmelov.entity.organizms.Limit;
 import com.javarush.island.khmelov.entity.organizms.Organism;
 
-import java.util.Map;
 import java.util.Set;
 
 public abstract class Animal extends Organism implements Eating, Reproducible, Movable {
@@ -19,16 +17,14 @@ public abstract class Animal extends Organism implements Eating, Reproducible, M
 
     @Override
     public boolean eat(Cell currentCell) {
-        Setting setting = Setting.get();
-        Set<Map.Entry<String, Integer>> foodMap = setting
-                .getFoodMap(getType())
-                .entrySet();
-
-        if (!(this.getWeight() <= 0)) {
-            return !changeWeight(currentCell, -1);
-        } else {
-            return !die(currentCell);
+        if (safeFindFood(currentCell)) {
+            return true;
         }
+        if (getWeight() > 0) {
+            return safeChangeWeight(currentCell, -5);
+        }
+        return !safeDie(currentCell);
+
     }
 
 
@@ -36,11 +32,15 @@ public abstract class Animal extends Organism implements Eating, Reproducible, M
     public boolean move(Cell startCell) {
         int countStep = this.getLimit().getMaxSpeed();
         Cell destinationCell = startCell.getNextCell(countStep);
-        return move(startCell, destinationCell);
+        return safeMove(startCell, destinationCell);
     }
 
     @Override
     public boolean spawn(Cell cell) {
+        return safeSpawnAnimal(cell);
+    }
+
+    private boolean safeSpawnAnimal(Cell cell) {
         cell.getLock().lock();
         try {
             Set<Organism> organisms = cell.getResidents().get(getType());
@@ -63,4 +63,6 @@ public abstract class Animal extends Organism implements Eating, Reproducible, M
         }
         return false;
     }
+
+
 }

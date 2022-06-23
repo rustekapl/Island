@@ -1,12 +1,15 @@
 package com.javarush.island.khmelov.entity.organizms;
 
 import com.javarush.island.khmelov.abstraction.entity.Reproducible;
+import com.javarush.island.khmelov.config.Setting;
 import com.javarush.island.khmelov.entity.map.Cell;
 import com.javarush.island.khmelov.util.Probably;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.Iterator;
+import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.atomic.AtomicLong;
 
@@ -61,17 +64,16 @@ public abstract class Organism implements Reproducible, Cloneable {
     }
 
 
-    protected boolean die(Cell target) {
+    protected boolean safeDie(Cell target) {
         target.getLock().lock();
         try {
             return target.getResidents().get(type).remove(this);
-
         } finally {
             target.getLock().unlock();
         }
     }
 
-    protected boolean changeWeight(Cell currentCell, int percent) {
+    protected boolean safeChangeWeight(Cell currentCell, int percent) {
         currentCell.getLock().lock();
         try {
             double maxWeight = limit.getMaxWeight();
@@ -85,18 +87,18 @@ public abstract class Organism implements Reproducible, Cloneable {
     }
 
 
-    protected boolean move(Cell source, Cell destination) {
-        if (addTo(destination)) { //if was added
-            if (pollFrom(source)) { //and after was extract
+    protected boolean safeMove(Cell source, Cell destination) {
+        if (safeAddTo(destination)) { //if was added
+            if (safePollFrom(source)) { //and after was extract
                 return true; //ok
             } else {
-                pollFrom(destination); //die or eaten
+                safePollFrom(destination); //die or eaten
             }
         }
         return false;
     }
 
-    protected boolean addTo(Cell cell) {
+    protected boolean safeAddTo(Cell cell) {
         cell.getLock().lock();
         try {
             Set<Organism> set = cell.getResidents().get(getType());
@@ -108,13 +110,61 @@ public abstract class Organism implements Reproducible, Cloneable {
         }
     }
 
-    protected boolean pollFrom(Cell cell) {
+    protected boolean safePollFrom(Cell cell) {
         cell.getLock().lock();
         try {
             return cell.getResidents().get(getType()).remove(this);
         } finally {
             cell.getLock().unlock();
         }
+    }
+
+    protected boolean safeFindFood(Cell currentCell) {
+        currentCell.getLock().lock();
+        try {
+            double needFood = getNeedFood();
+            if (!(needFood <= 0)) {
+                Setting setting = Setting.get();
+                var foodMap = setting
+                        .getFoodMap(getType())
+                        .entrySet();
+                var iterator = foodMap.iterator();
+                while (needFood > 0 && iterator.hasNext()) {
+                    Map.Entry<String, Integer> entry = iterator.next();
+                    String keyFood = entry.getKey();
+                    Integer probably = entry.getValue();
+                    var foods = currentCell.getResidents().get(keyFood);
+                    if (foods.size() > 0 && probably > Probably.random(0, 100)) {
+                        for (Iterator<Organism> organismIterator = foods.iterator(); organismIterator.hasNext(); ) {
+                            Organism o = organismIterator.next();
+                            double foodWeight = o.getWeight();
+                            double delta = Math.min(foodWeight, needFood);
+                            double weight = getWeight();
+                            setWeight(weight + delta);
+                            o.setWeight(foodWeight - delta);
+                            if (o.getWeight() <= 0) {
+                                organismIterator.remove();
+                            }
+                            needFood -= delta;
+                            if (needFood <= 0) {
+                                return true;
+                            }
+                        }
+                    }
+                }
+            } else {
+                return false;
+            }
+        } finally {
+            currentCell.getLock().unlock();
+        }
+        return false;
+    }
+
+    private double getNeedFood() {
+        return Math.min(
+                getLimit().getMaxFood(),
+                getLimit().getMaxWeight() - getWeight());
     }
 
 }

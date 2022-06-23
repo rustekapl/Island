@@ -44,14 +44,14 @@ class OrganismTest {
 
     @Test
     void die() {
-        wolf.die(startCell);
+        wolf.safeDie(startCell);
         Assertions.assertEquals(0, map.getAll().size());
     }
 
     @Test
     void changeWeight() {
         double expected = wolf.getWeight() + wolf.getLimit().getMaxWeight() * 0.1;
-        wolf.changeWeight(startCell, 10);
+        wolf.safeChangeWeight(startCell, 10);
         Assertions.assertEquals(expected, wolf.getWeight());
     }
 

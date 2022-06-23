@@ -1,11 +1,8 @@
 package com.javarush.island.khmelov.repository;
 
+import com.javarush.island.khmelov.config.Setting;
 import com.javarush.island.khmelov.entity.map.Cell;
 import com.javarush.island.khmelov.entity.organizms.Organism;
-import com.javarush.island.khmelov.entity.organizms.animals.herbivores.Horse;
-import com.javarush.island.khmelov.entity.organizms.animals.predators.Wolf;
-import com.javarush.island.khmelov.entity.organizms.plants.Plant;
-import com.javarush.island.khmelov.util.EntityFactoryData;
 import com.javarush.island.khmelov.util.Probably;
 
 import java.util.Arrays;
@@ -15,20 +12,13 @@ import java.util.Set;
 
 public class EntityFactory implements Factory {
 
-    private static final Class<?>[] TYPES = {Plant.class, Wolf.class, Horse.class};
-    private static final Organism[] PROTOTYPES = EntityFactoryData.createPrototypes(TYPES);
-
-    public EntityFactory() {
-
-    }
-
     @Override
     public Cell createRandomCell(boolean empty) {
         Cell cell = new Cell();
         Map<String, Set<Organism>> residents = cell.getResidents();
         boolean fill = Probably.get(33); //TODO need config
         if (fill && !empty) {
-            for (Organism prototype : PROTOTYPES) {
+            for (Organism prototype : Setting.PROTOTYPES) {
                 String type = prototype.getType();
                 boolean born = Probably.get(50); //TODO need config
                 if (born) {
@@ -47,13 +37,13 @@ public class EntityFactory implements Factory {
 
     @Override
     public List<Organism> getAllPrototypes() {
-        return Arrays.asList(PROTOTYPES);
+        return Arrays.asList(Setting.PROTOTYPES);
     }
 
     @Override
     public String toString() {
         return "EntityFactory{" +
-                "prototypes=" + Arrays.toString(PROTOTYPES) +
+                "prototypes=" + Arrays.toString(Setting.PROTOTYPES) +
                 '}';
     }
 }

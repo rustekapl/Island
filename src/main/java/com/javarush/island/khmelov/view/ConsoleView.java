@@ -1,5 +1,6 @@
 package com.javarush.island.khmelov.view;
 
+import com.javarush.island.khmelov.config.Setting;
 import com.javarush.island.khmelov.entity.map.Cell;
 import com.javarush.island.khmelov.entity.map.GameMap;
 import com.javarush.island.khmelov.entity.organizms.Organism;
@@ -50,8 +51,8 @@ public class ConsoleView implements View {
     }
 
     private final GameMap gameMap;
-    private final int positions = 7;
-    private final String border = "═".repeat(positions);
+    private final int cellWidth = Setting.get().getConsoleCellWith();
+    private final String border = "═".repeat(cellWidth);
 
     public ConsoleView(GameMap gameMap) {
         this.gameMap = gameMap;
@@ -93,7 +94,7 @@ public class ConsoleView implements View {
             ).append("\n");
             for (int col = 0; col < cols; col++) {
                 String residentSting = get(cells[row][col]);
-                out.append(String.format("║%-" + positions + "s", residentSting));
+                out.append(String.format("║%-" + cellWidth + "s", residentSting));
             }
             out.append('║').append("\n");
         }
@@ -107,7 +108,7 @@ public class ConsoleView implements View {
         String collect = cell.getResidents().values().stream()
                 .filter((list) -> list.size() > 0)
                 .sorted((o1, o2) -> o2.size() - o1.size())
-                .limit(positions)
+                .limit(cellWidth)
                 .map(list -> {
                     Organism organism = list.stream().findAny().get();
                     int maxCount = organism.getLimit().getMaxCount();
@@ -117,8 +118,8 @@ public class ConsoleView implements View {
                 .map(Object::toString)
                 .collect(Collectors.joining());
         long count = cell.getResidents().values().stream()
-                .filter((list) -> list.size() > 0).limit(positions).count();
-        String blank = count < positions ? ".".repeat((int) (positions - count)) : "";
+                .filter((list) -> list.size() > 0).limit(cellWidth).count();
+        String blank = count < cellWidth ? ".".repeat((int) (cellWidth - count)) : "";
         cell.getLock().unlock();
         return collect + blank;
     }

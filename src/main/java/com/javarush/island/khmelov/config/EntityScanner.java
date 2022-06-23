@@ -1,6 +1,6 @@
-package com.javarush.island.khmelov.util;
+package com.javarush.island.khmelov.config;
 
-import com.javarush.island.khmelov.abstraction.annotations.Setting;
+import com.javarush.island.khmelov.abstraction.annotations.TypeData;
 import com.javarush.island.khmelov.exception.InitGameException;
 import com.javarush.island.khmelov.entity.organizms.Limit;
 import com.javarush.island.khmelov.entity.organizms.Organism;
@@ -8,24 +8,24 @@ import com.javarush.island.khmelov.entity.organizms.Organism;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 
-public class EntityFactoryData {
+public class EntityScanner {
 
-    private EntityFactoryData() {
+    private EntityScanner() {
     }
 
     public static Organism[] createPrototypes(Class<?>[] TYPES) {
         Organism[] organisms = new Organism[TYPES.length];
         int index = 0;
         for (Class<?> type : TYPES) {
-            if (type.isAnnotationPresent(Setting.class)) {
-                Setting setting = type.getAnnotation(Setting.class);
-                String name = setting.name();
-                String icon = setting.icon();
+            if (type.isAnnotationPresent(TypeData.class)) {
+                TypeData typeData = type.getAnnotation(TypeData.class);
+                String name = typeData.name();
+                String icon = typeData.icon();
                 Limit limit = new Limit(
-                        setting.maxWeight(),
-                        setting.maxCount(),
-                        setting.maxSpeed(),
-                        setting.maxFood()
+                        typeData.maxWeight(),
+                        typeData.maxCount(),
+                        typeData.maxSpeed(),
+                        typeData.maxFood()
                 );
 
                 organisms[index++] = generatePrototype(type, name, icon, limit);
