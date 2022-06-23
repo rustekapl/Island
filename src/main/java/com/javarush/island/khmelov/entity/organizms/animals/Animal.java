@@ -3,11 +3,12 @@ package com.javarush.island.khmelov.entity.organizms.animals;
 import com.javarush.island.khmelov.abstraction.entity.Eating;
 import com.javarush.island.khmelov.abstraction.entity.Movable;
 import com.javarush.island.khmelov.abstraction.entity.Reproducible;
+import com.javarush.island.khmelov.config.Setting;
 import com.javarush.island.khmelov.entity.map.Cell;
 import com.javarush.island.khmelov.entity.organizms.Limit;
 import com.javarush.island.khmelov.entity.organizms.Organism;
-import com.javarush.island.khmelov.util.Probably;
 
+import java.util.Map;
 import java.util.Set;
 
 public abstract class Animal extends Organism implements Eating, Reproducible, Movable {
@@ -18,11 +19,15 @@ public abstract class Animal extends Organism implements Eating, Reproducible, M
 
     @Override
     public boolean eat(Cell currentCell) {
-//      if ()
-        if (this.getWeight() <= 0) {
-            return !die(currentCell);
-        } else {
+        Setting setting = Setting.get();
+        Set<Map.Entry<String, Integer>> foodMap = setting
+                .getFoodMap(getType())
+                .entrySet();
+
+        if (!(this.getWeight() <= 0)) {
             return !changeWeight(currentCell, -1);
+        } else {
+            return !die(currentCell);
         }
     }
 

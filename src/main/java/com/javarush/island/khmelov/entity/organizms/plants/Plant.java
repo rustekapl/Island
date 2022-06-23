@@ -4,7 +4,6 @@ import com.javarush.island.khmelov.abstraction.annotations.Setting;
 import com.javarush.island.khmelov.entity.map.Cell;
 import com.javarush.island.khmelov.entity.organizms.Limit;
 import com.javarush.island.khmelov.entity.organizms.Organism;
-import com.javarush.island.khmelov.util.Probably;
 
 import java.util.Set;
 
@@ -16,30 +15,21 @@ public class Plant extends Organism {
 
     @Override
     public boolean spawn(Cell cell) {
-        cell.getLock().lock();
+        Cell neighborCell = cell.getNextCell(1);
+        neighborCell.getLock().lock();
         try {
-            Set<Organism> organisms = cell.getResidents().get(getType());
-            int count = getWeight() > getLimit().getMaxWeight() / 2 &&
-                    Probably.random(0, 10) < 8 && //TODO 10==off
-                    organisms.contains(this) &&
-                    organisms.size() > 2 &&
-                    organisms.size() < getLimit().getMaxCount()
-                    ? 1
-                    : 0;
-            if (count > 0) {
-                boolean born = organisms.size() < getLimit().getMaxCount();
-                if (organisms.contains(this) && born) {
-                    double childWeight = getWeight() / (1 + count);
-                    for (int i = 0; i < count; i++) {
-                        Organism clone = Organism.clone(this);
-                        clone.setWeight(childWeight);
-                        organisms.add(clone);
-                    }
-                    return born;
-                }
+            this.changeWeight(cell, 2);
+            Set<Organism> plants = neighborCell.getResidents().get(getType());
+            if (plants.size() < getLimit().getMaxCount() &&
+                    getWeight() > getLimit().getMaxWeight() / 5
+            ) {
+                Organism newPlant = Organism.clone(this);
+                double childWeight = getWeight() / 20;
+                newPlant.setWeight(childWeight);
+                return plants.add(newPlant);
             }
         } finally {
-            cell.getLock().unlock();
+            neighborCell.getLock().unlock();
         }
         return false;
     }
