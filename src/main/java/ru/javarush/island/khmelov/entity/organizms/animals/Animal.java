@@ -29,7 +29,9 @@ public abstract class Animal extends Organism implements Eating, Reproducible, M
 
     @Override
     public boolean move(Cell startCell) {
-        int countStep = this.getLimit().getMaxSpeed();
+        int countStep = this
+                .getLimit()
+                .getMaxSpeed();
         Cell destinationCell = startCell.getNextCell(countStep);
         return safeMove(startCell, destinationCell);
     }

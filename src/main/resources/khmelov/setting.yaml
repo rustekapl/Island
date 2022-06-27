@@ -1,9 +1,9 @@
 ---
 period: 100
-rows: 20
-cols: 100
+rows: 5
+cols: 5
 showRows: 5
-showCols: 8
+showCols: 5
 consoleCellWith: 5
 percentAnimalSlim: 5
 percentPlantGrow: 15
