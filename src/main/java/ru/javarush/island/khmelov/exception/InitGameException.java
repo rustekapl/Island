@@ -1,5 +1,6 @@
 package ru.javarush.island.khmelov.exception;
 
+@SuppressWarnings("unused")
 public class InitGameException extends RuntimeException{
     public InitGameException() {
     }

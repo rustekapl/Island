@@ -35,7 +35,7 @@ public class Cell {
         }
     };
 
-    public void randomeRotateResidents() {
+    public void randomRotateResidents() {
         if (residents.size() > 1 && Rnd.get(PERCENT_RANDOM_ROTATE)) {
             Set<Map.Entry<String, Organisms>> entrySet = residents.entrySet();
             var iterator = entrySet.iterator();

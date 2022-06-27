@@ -1,5 +1,6 @@
 package ru.javarush.island.khmelov.view;
 
+@SuppressWarnings("unused")
 public class Color {
 
 

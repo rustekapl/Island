@@ -141,7 +141,7 @@ public abstract class Organism implements Reproducible, Cloneable {
                         .entrySet();
                 var foodIterator = foodMap.iterator();
                 while (needFood > 0 && foodIterator.hasNext()) {
-                    currentCell.randomeRotateResidents();
+                    currentCell.randomRotateResidents();
                     Map.Entry<String, Integer> entry = foodIterator.next();
                     String keyFood = entry.getKey();
                     Integer probably = entry.getValue();
