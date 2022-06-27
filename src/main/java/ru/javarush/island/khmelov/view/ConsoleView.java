@@ -3,6 +3,7 @@ package ru.javarush.island.khmelov.view;
 import ru.javarush.island.khmelov.config.Setting;
 import ru.javarush.island.khmelov.entity.map.Cell;
 import ru.javarush.island.khmelov.entity.map.GameMap;
+import ru.javarush.island.khmelov.entity.map.Residents;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -48,7 +49,7 @@ public class ConsoleView implements View {
         Cell[][] cells = gameMap.getCells();
         for (Cell[] row : cells) {
             for (Cell cell : row) {
-                var residents = cell.getResidents();
+                Residents residents = cell.getResidents();
                 if (Objects.nonNull(residents)) {
                     residents.values().stream()
                             .filter(organisms -> organisms.size() > 0)

@@ -3,7 +3,7 @@ package ru.javarush.island.khmelov.config;
 import ru.javarush.island.khmelov.abstraction.annotations.TypeData;
 import ru.javarush.island.khmelov.entity.organizms.Limit;
 import ru.javarush.island.khmelov.entity.organizms.Organism;
-import ru.javarush.island.khmelov.exception.InitGameException;
+import ru.javarush.island.khmelov.exception.GameException;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
@@ -41,7 +41,7 @@ public class EntityScanner {
             Constructor<?> constructor = type.getConstructor(String.class, String.class, Limit.class);
             return (Organism) constructor.newInstance(name, icon, limit);
         } catch (NoSuchMethodException | InstantiationException | IllegalAccessException | InvocationTargetException e) {
-            throw new InitGameException("not found Entity constructor", e);
+            throw new GameException("not found Entity constructor", e);
         }
     }
 }

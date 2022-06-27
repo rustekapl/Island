@@ -2,53 +2,23 @@ package ru.javarush.island.khmelov.entity.map;
 
 import lombok.Getter;
 import ru.javarush.island.khmelov.entity.organizms.Organism;
-import ru.javarush.island.khmelov.entity.organizms.Organisms;
 import ru.javarush.island.khmelov.util.Rnd;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 import java.util.stream.Collectors;
 
 public class Cell {
 
-    private static final int PERCENT_RANDOM_ROTATE = 1;
     private final List<Cell> nextCell = new ArrayList<>();
     @Getter
     private final Lock lock = new ReentrantLock(true);
     @Getter
-    private final Map<String, Organisms> residents = new HashMap<>() {
-        private void checkNull(Object key) {
-            this.putIfAbsent(key.toString(), new Organisms());
-        }
-
-        @Override
-        public Organisms get(Object key) {
-            checkNull(key);
-            return super.get(key);
-        }
-
-        @Override
-        public Organisms put(String key, Organisms value) {
-            checkNull(key);
-            return super.put(key, value);
-        }
-    };
-
-    public void randomRotateResidents() {
-        if (residents.size() > 1 && Rnd.get(PERCENT_RANDOM_ROTATE)) {
-            lock.lock();
-            try {
-                Set<Map.Entry<String, Organisms>> entrySet = residents.entrySet();
-                var iterator = entrySet.iterator();
-                var organisms = iterator.next();
-                iterator.remove();
-                residents.put(organisms.getKey(), organisms.getValue());
-            } finally {
-                lock.unlock();
-            }
-        }
-    }
+    private final Residents residents = new Residents(this);
 
     public void updateNextCell(GameMap map, int row, int col) {
         Cell[][] cells = map.getCells();

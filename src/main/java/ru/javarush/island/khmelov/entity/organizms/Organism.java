@@ -6,10 +6,12 @@ import lombok.Setter;
 import ru.javarush.island.khmelov.abstraction.entity.Reproducible;
 import ru.javarush.island.khmelov.config.Setting;
 import ru.javarush.island.khmelov.entity.map.Cell;
+import ru.javarush.island.khmelov.entity.map.Residents;
 import ru.javarush.island.khmelov.util.Rnd;
 
 import java.util.Iterator;
 import java.util.Map;
+import java.util.Objects;
 import java.util.concurrent.atomic.AtomicLong;
 
 @SuppressWarnings("unused")
@@ -121,7 +123,7 @@ public abstract class Organism implements Reproducible, Cloneable {
     protected boolean safePollFrom(Cell cell) {
         cell.getLock().lock();
         try {
-            Map<String, Organisms> residents = cell.getResidents();
+            Residents residents = cell.getResidents();
             Organisms organisms = residents.get(getType());
             return organisms.remove(this);
         } finally {
@@ -141,13 +143,13 @@ public abstract class Organism implements Reproducible, Cloneable {
                         .entrySet();
                 var foodIterator = foodMap.iterator();
                 while (needFood > 0 && foodIterator.hasNext()) {
-                    currentCell.randomRotateResidents();
                     Map.Entry<String, Integer> entry = foodIterator.next();
                     String keyFood = entry.getKey();
                     Integer probably = entry.getValue();
-                    Map<String, Organisms> residents = currentCell.getResidents();
+                    Residents residents = currentCell.getResidents();
+                    residents.randomRotateResidents();
                     var foods = residents.get(keyFood);
-                    if (foods.size() > 0 && Rnd.get(probably)) {
+                    if (Objects.nonNull(foods) && !foods.isEmpty() && Rnd.get(probably)) {
                         for (Iterator<Organism> organismIterator = foods.iterator(); organismIterator.hasNext(); ) {
                             Organism o = organismIterator.next();
                             double foodWeight = o.getWeight();

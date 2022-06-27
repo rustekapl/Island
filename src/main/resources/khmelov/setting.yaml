@@ -3,9 +3,9 @@ period: 100
 rows: 20
 cols: 100
 showRows: 5
-showCols: 10
+showCols: 8
 consoleCellWith: 5
-percentAnimalSlim: 4
+percentAnimalSlim: 5
 percentPlantGrow: 15
 foodMap:
   Wolf:

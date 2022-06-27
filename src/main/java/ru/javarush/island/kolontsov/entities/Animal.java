@@ -5,7 +5,7 @@ import ru.javarush.island.kolontsov.gamefield.Cell;
 import java.util.concurrent.ThreadLocalRandom;
 
 public abstract class Animal {
-
+    //TODO Code style. Many warnings. Skip or fix it.
     private final String name;
     private final String icon;
     private final double maxWeight;

@@ -2,13 +2,13 @@ package ru.javarush.island.khmelov.repository;
 
 import ru.javarush.island.khmelov.config.Setting;
 import ru.javarush.island.khmelov.entity.map.Cell;
+import ru.javarush.island.khmelov.entity.map.Residents;
 import ru.javarush.island.khmelov.entity.organizms.Organism;
 import ru.javarush.island.khmelov.entity.organizms.Organisms;
 import ru.javarush.island.khmelov.util.Rnd;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
 
 public class EntityFactory implements Factory {
 
@@ -18,7 +18,7 @@ public class EntityFactory implements Factory {
     @Override
     public Cell createRandomCell(boolean empty) {
         Cell cell = new Cell();
-        Map<String, Organisms> residents = cell.getResidents();
+        Residents residents = cell.getResidents();
         boolean fill = Rnd.get(PERCENT_FILL);
         if (fill && !empty) {
             for (Organism prototype : Setting.PROTOTYPES) {
