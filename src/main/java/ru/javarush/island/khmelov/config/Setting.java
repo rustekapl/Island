@@ -25,7 +25,7 @@ import java.util.Objects;
 @Setter(AccessLevel.PROTECTED)
 public class Setting {
 
-    public static final String SETTING_YAML = "setting.yaml";
+    public static final String SETTING_YAML = "khmelov/setting.yaml";
     private static final Class<?>[] TYPES = {Wolf.class, Bear.class, Horse.class, Mouse.class, Plant.class,};
     public static final Organism[] PROTOTYPES = EntityScanner.createPrototypes(TYPES);
 

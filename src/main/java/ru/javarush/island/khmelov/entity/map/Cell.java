@@ -12,7 +12,7 @@ import java.util.stream.Collectors;
 
 public class Cell {
 
-    private static final int PERCENT_RANDOM_ROTATE = 5;
+    private static final int PERCENT_RANDOM_ROTATE = 1;
     private final List<Cell> nextCell = new ArrayList<>();
     @Getter
     private final Lock lock = new ReentrantLock(true);
@@ -37,11 +37,16 @@ public class Cell {
 
     public void randomRotateResidents() {
         if (residents.size() > 1 && Rnd.get(PERCENT_RANDOM_ROTATE)) {
-            Set<Map.Entry<String, Organisms>> entrySet = residents.entrySet();
-            var iterator = entrySet.iterator();
-            var organisms = iterator.next();
-            iterator.remove();
-            residents.put(organisms.getKey(), organisms.getValue());
+            lock.lock();
+            try {
+                Set<Map.Entry<String, Organisms>> entrySet = residents.entrySet();
+                var iterator = entrySet.iterator();
+                var organisms = iterator.next();
+                iterator.remove();
+                residents.put(organisms.getKey(), organisms.getValue());
+            } finally {
+                lock.unlock();
+            }
         }
     }
 
