@@ -1,6 +1,7 @@
 package ru.javarush.island.khmelov.services;
 
 import lombok.RequiredArgsConstructor;
+import lombok.SneakyThrows;
 import ru.javarush.island.khmelov.config.Setting;
 import ru.javarush.island.khmelov.entity.Game;
 import ru.javarush.island.khmelov.view.View;
@@ -13,6 +14,7 @@ import java.util.concurrent.TimeUnit;
 
 @RequiredArgsConstructor
 public class GameWorker extends Thread {
+    public static final int CORE_POOL_SIZE = 4;
     private final Game game;
     private final int PERIOD = Setting.get().getPeriod();
 
@@ -21,7 +23,8 @@ public class GameWorker extends Thread {
         View view = game.getView();
         view.showMap();
         view.showStatistics();
-        ScheduledExecutorService mainPool = Executors.newScheduledThreadPool(4);
+
+        ScheduledExecutorService mainPool = Executors.newScheduledThreadPool(CORE_POOL_SIZE);
 
         List<OrganismWorker> workers = game
                 .getEntityFactory()
@@ -29,19 +32,24 @@ public class GameWorker extends Thread {
                 .stream()
                 .map(o -> new OrganismWorker(o, game.getGameMap()))
                 .toList();
-        mainPool.scheduleWithFixedDelay(() -> {
-            ExecutorService servicePool = Executors.newFixedThreadPool(4);
-            workers.forEach(servicePool::submit);
-            servicePool.shutdown();
-            try {
-                if (servicePool.awaitTermination(Long.MAX_VALUE, TimeUnit.DAYS)) {
-                    view.showScale();
-                    view.showMap();
-                    view.showStatistics();
-                }
-            } catch (InterruptedException e) {
-                throw new RuntimeException(e);
-            }
-        }, PERIOD, PERIOD, TimeUnit.MILLISECONDS);
+        mainPool.scheduleWithFixedDelay(() -> runWorkers(view, workers)
+                , PERIOD, PERIOD, TimeUnit.MILLISECONDS);
+    }
+
+    private void runWorkers(View view, List<OrganismWorker> workers) {
+        ExecutorService servicePool = Executors.newFixedThreadPool(CORE_POOL_SIZE);
+        workers.forEach(servicePool::submit);
+        servicePool.shutdown();
+        awaitPool(view, servicePool);
+    }
+
+    @SneakyThrows
+    private void awaitPool(View view, ExecutorService servicePool) {
+        if (servicePool.awaitTermination(Long.MAX_VALUE, TimeUnit.DAYS)) {
+            view.showScale();
+            view.showMap();
+            view.showStatistics();
+        }
+
     }
 }
