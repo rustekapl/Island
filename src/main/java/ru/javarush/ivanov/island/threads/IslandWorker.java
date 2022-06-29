@@ -18,7 +18,7 @@ public class IslandWorker extends Thread {
 
     @Override
     public void run() {
-        ScheduledExecutorService executor = Executors.newScheduledThreadPool(4);
+        ScheduledExecutorService executor = Executors.newSingleThreadScheduledExecutor();
         Statistic statistic = new Statistic();
         IslandModelBuilder islandModelBuilder = new IslandModelBuilder();
         islandModelBuilder.letsBuild();
@@ -34,13 +34,13 @@ public class IslandWorker extends Thread {
             animalThreads.forEach(executorForAnimal::submit);
             executorForAnimal.shutdown();
             try {
-                if (executorForAnimal.awaitTermination(1000, TimeUnit.MILLISECONDS)) {
+                if (executorForAnimal.awaitTermination(5000, TimeUnit.MILLISECONDS)) {
                     statistic.giveMeStatistic(island);
                 }
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
-        }, 1000, 1000, TimeUnit.MILLISECONDS);
+        }, 5000, 5000, TimeUnit.MILLISECONDS);
     }
 
     public IslandWorker(Island island) {
