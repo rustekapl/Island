@@ -11,6 +11,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
+@SuppressWarnings("FieldCanBeLocal")
 public class SpotRunner {
     private final Spot[][] spots;
     //TODO Code style. Needs reformat or extraction to methods / variables / constants

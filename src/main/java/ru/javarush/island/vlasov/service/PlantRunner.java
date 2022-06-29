@@ -9,6 +9,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
+@SuppressWarnings("FieldCanBeLocal")
 public class PlantRunner implements Runnable {
     private final Plant plant;
     private final Spot spot;

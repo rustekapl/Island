@@ -11,6 +11,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
+@SuppressWarnings("FieldCanBeLocal")
 public class AnimalRunner implements Runnable {
     private final Animal animal;
     private final int PERIOD = 1;
@@ -60,10 +61,7 @@ public class AnimalRunner implements Runnable {
     }
 
     private void dieIfHungry() {
-        /*if (!animal.isDead() && (animal.getFoodLimit() - animal.getFull()) >= (animal.getFoodLimit() / 2)) {
-            animal.setDead();
-        }*/
-        if (animal.getFull() < (animal.getFoodLimit() / 2)) {
+        if (!animal.isDead() && animal.getFull() < (animal.getFoodLimit() / 2)) {
             animal.setDead();
         }
     }
