@@ -64,11 +64,13 @@ public abstract class Creature implements WildLife, Breedable {
         square.getLock().lock();
         try {
             String randomType = RandomizerForType.getRandomType(this);
+            String nameOfTheType = this.getType();
             PercenterForConsumption percenter = new PercenterForConsumption();
-            int chanceToEat = percenter.getPercents(this.getType(), randomType);
-            boolean resultForEating = RandomizerForConsume.getResult(chanceToEat);
+            int percents = percenter.getPercents(nameOfTheType, randomType);
+            boolean resultForEating = RandomizerForConsume.getResult(percents);
             if (resultForEating) {
-                Set<Creature> set = square.getResidents().get(randomType);
+                Set<Creature> set = square.getResidents()
+                        .get(randomType);
                 for (Creature creature : set) {
                     return checkForEnoughFood(square, set, creature);
                 }
@@ -81,13 +83,16 @@ public abstract class Creature implements WildLife, Breedable {
 
     private boolean checkForEnoughFood(@NotNull Square square, Set<Creature> set, Creature creature) {
         boolean enoughFoodForEater = CheckAmountOfConsumption.enoughFood(this, creature);
+        int turnsBeforeCreatureDied = this.getParams().getTurnsBeforeCreatureDied();
         if (enoughFoodForEater) {
             this.getParams().setTurnsBeforeCreatureDied(2);
         } else {
-            this.getParams().setTurnsBeforeCreatureDied(this.getParams().getTurnsBeforeCreatureDied() - 1);
-            if (this.getParams().getTurnsBeforeCreatureDied() <= 0) {
+            this.getParams().setTurnsBeforeCreatureDied(turnsBeforeCreatureDied - 1);
+            if (turnsBeforeCreatureDied == 0) {
                 this.setSquareInfo(null);
-                square.getResidents().get(getType()).remove(this);
+                square.getResidents()
+                        .get(getType())
+                        .remove(this);
                 return false;
             }
         }
