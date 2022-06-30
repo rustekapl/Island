@@ -2,7 +2,7 @@ package ru.javarush.island.hozhasaitov.app.constants;
 
 public class Constants {
     //TODO ---  need getResources!!! No src!!!
-    public static final String PATH_CONFIG = "src/main/resources/config/configApp.json";
+    public static final String PATH_CONFIG = "src/main/resources/hozhasaitov/configApp.json";
 
     //-------------------ANIMALS WEIGHT---------------------------
     public static final double WOLF_WEIGHT = 50.0;
