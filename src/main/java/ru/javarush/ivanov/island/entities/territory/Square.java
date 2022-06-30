@@ -35,7 +35,7 @@ public class Square {
         return lock;
     }
 
-    public Map<String, Set<Creature>> getResidents() {
+    public Residents getResidents() {
         return residents;
     }
 
@@ -49,15 +49,6 @@ public class Square {
 
     public void setTerritory(Square[][] territory) {
         this.territory = territory;
-    }
-
-    public boolean remove(Creature creature) {
-        String simpleName = creature.getClass().getSimpleName();
-        if (residents.containsKey(simpleName)) {
-            residents.get(simpleName).remove(creature);
-            return true;
-        }
-        return false;
     }
 
     @Override

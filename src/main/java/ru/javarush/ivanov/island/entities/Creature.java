@@ -3,6 +3,7 @@ package ru.javarush.ivanov.island.entities;
 import org.jetbrains.annotations.NotNull;
 import ru.javarush.ivanov.island.entities.interfaces.Breedable;
 import ru.javarush.ivanov.island.entities.interfaces.WildLife;
+import ru.javarush.ivanov.island.entities.territory.Residents;
 import ru.javarush.ivanov.island.entities.territory.Square;
 import ru.javarush.ivanov.island.services.eat_services.CheckAmountOfConsumption;
 import ru.javarush.ivanov.island.services.eat_services.PercenterForConsumption;
@@ -22,7 +23,9 @@ public abstract class Creature implements WildLife, Breedable {
     protected boolean safeDie(@NotNull Square square) {
         square.getLock().lock();
         try {
-            return square.remove(this);
+            Residents residents = square.getResidents();
+            Set<Creature> creatures = residents.get(this.getType());
+            return creatures.remove(this);
         } finally {
             square.getLock().unlock();
         }
