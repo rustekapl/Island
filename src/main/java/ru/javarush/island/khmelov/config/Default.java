@@ -4,8 +4,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 public class Default {
     public static final int PERIOD = 1000;
-    public static final int ROWS = 2;
-    public static final int COLS = 2;
+    public static final int ROWS = 3;
+    public static final int COLS = 3;
 
     public static final int SHOW_ROWS = 5;
     public static final int SHOW_COLS = 10;
