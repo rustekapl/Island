@@ -13,7 +13,7 @@ import java.util.concurrent.TimeUnit;
 public class PlantRunner implements Runnable {
     private final Plant plant;
     private final Spot spot;
-    private final int PERIOD = 1;
+    private final int PERIOD = 1000;
 
     private final ScheduledExecutorService plantExecService;
 
@@ -37,7 +37,7 @@ public class PlantRunner implements Runnable {
             Nature species = plant.getInstance();
             nature.add(species);
             plantExecService.scheduleAtFixedRate(new PlantRunner((Plant) species, spot, plantExecService),
-                    0, PERIOD, TimeUnit.SECONDS);
+                    0, PERIOD, TimeUnit.MILLISECONDS);
         }
     }
 
