@@ -30,7 +30,7 @@ public class IslandWorker extends Thread {
 
     private void executorRunner(ScheduledExecutorService executor, Statistic statistic, List<AnimalThread> animalThreads) {
         executor.scheduleAtFixedRate(() -> {
-            ExecutorService executorForAnimal = Executors.newFixedThreadPool(5);
+            ExecutorService executorForAnimal = Executors.newFixedThreadPool(4);
             animalThreads.forEach(executorForAnimal::submit);
             executorForAnimal.shutdown();
             try {

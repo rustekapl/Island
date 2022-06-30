@@ -37,21 +37,19 @@ public class NextSquare {
     }
 
     private static Square changePosition(Creature currentUnit, Square square, int changedPosition, boolean isWidthChanged) {
-        boolean checkForAmount = CheckForMaxNumberAtSquare.check(currentUnit);
+        boolean checkForAmount = CheckForMaxNumberAtSquare.checkForEnoughSpace(currentUnit);
         if (changedPosition < IslandWidthAndHeight.getWidth()
                 && changedPosition >= 0
                 && checkForAmount
                 && isWidthChanged) {
             square = square.getTerritory()[changedPosition]
                     [square.getSquareNumberHeight()];
-            currentUnit.setSquareInfo(square);
         } else if (changedPosition < IslandWidthAndHeight.getHeight()
                 && changedPosition >= 0
                 && checkForAmount
                 && !isWidthChanged) {
             square = square.getTerritory()[square.getSquareNumberWidth()]
                     [changedPosition];
-            currentUnit.setSquareInfo(square);
         }
         return square;
     }

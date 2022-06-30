@@ -46,7 +46,7 @@ public class Herbs extends Creature implements WildLife {
         square.getLock().lock();
         try {
             Set<Creature> herbs = square.getResidents().get(getType());
-            boolean checkForAmount = CheckForMaxNumberAtSquare.check(this);
+            boolean checkForAmount = CheckForMaxNumberAtSquare.checkForEnoughSpace(this);
             if (herbs.size() >= 2 && checkForAmount) {
                 herbs.add(AnimalAndHerbsFactory.createWildLife(ListOfAnimalsAndHerbs.valueOf(this.getClass().getSimpleName().toUpperCase())));
                 return true;

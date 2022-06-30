@@ -1,6 +1,8 @@
 package ru.javarush.ivanov.island.threads;
 
 import ru.javarush.ivanov.island.entities.Creature;
+import ru.javarush.ivanov.island.entities.territory.Square;
+import ru.javarush.ivanov.island.entities.wildlife.Animal;
 
 import java.util.function.Consumer;
 
@@ -8,15 +10,18 @@ public class Task {
 
     private final Creature creature;
 
-    private final Consumer<Creature> operation;
+    private final Square square;
 
-
-    public Task(Creature creature, Consumer<Creature> operation) {
+    public Task(Creature creature, Square square) {
         this.creature = creature;
-        this.operation = operation;
+        this.square = square;
     }
 
     public void begin() {
-        operation.accept(creature);
+        creature.breed(square);
+        if (creature instanceof Animal animal) {
+            animal.eat(square);
+            animal.move(square);
+        }
     }
 }

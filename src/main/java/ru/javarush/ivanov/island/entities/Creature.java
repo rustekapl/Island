@@ -10,6 +10,7 @@ import ru.javarush.ivanov.island.services.randomizers.RandomizerForConsume;
 import ru.javarush.ivanov.island.services.randomizers.RandomizerForType;
 import ru.javarush.ivanov.island.variables.animal_params.AnimalParams;
 
+import java.util.Map;
 import java.util.Set;
 
 
@@ -29,11 +30,10 @@ public abstract class Creature implements WildLife, Breedable {
 
 
     protected boolean safeMove(Square source, Square destination) {
-        if (safeAddTo(destination)) {
-            if (safePollFrom(source)) {
+        if (!source.equals(destination)) {
+            if (safeAddTo(destination)) {
+                safePollFrom(source);
                 return true;
-            } else {
-                safePollFrom(destination);
             }
         }
         return false;
@@ -45,16 +45,23 @@ public abstract class Creature implements WildLife, Breedable {
             Set<Creature> set = square.getResidents().get(type);
             int maxCount = this.getParams().getMaxNumberPerSquare();
             int size = set.size();
-            return size < maxCount && set.add(this);
+            if (size < maxCount) {
+                set.add(this);
+                this.setSquareInfo(square);
+                return true;
+            }
+            return false;
         } finally {
             square.getLock().unlock();
         }
     }
 
-    protected boolean safePollFrom(@NotNull Square square) {
+    protected void safePollFrom(@NotNull Square square) {
         square.getLock().lock();
         try {
-            return square.getResidents().get(getType()).remove(this);
+            Map<String, Set<Creature>> residents = square.getResidents();
+            Set<Creature> creatures = residents.get(getType());
+            creatures.remove(this);
         } finally {
             square.getLock().unlock();
         }

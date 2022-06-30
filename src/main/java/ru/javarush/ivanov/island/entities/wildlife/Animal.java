@@ -48,7 +48,7 @@ public abstract class Animal extends Creature implements WildLife, Eatable, Mova
         square.getLock().lock();
         try {
             Set<Creature> creatures = square.getResidents().get(getType());
-            boolean checkForAmount = CheckForMaxNumberAtSquare.check(this);
+            boolean checkForAmount = CheckForMaxNumberAtSquare.checkForEnoughSpace(this);
             if (creatures.size() >= 2 && checkForAmount) {
                 String creatureName = this.getClass().getSimpleName().toUpperCase();
                 ListOfAnimalsAndHerbs enumValue = ListOfAnimalsAndHerbs.valueOf(creatureName);

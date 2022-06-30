@@ -40,17 +40,7 @@ public class AnimalThread implements Runnable {
         if (Objects.nonNull(creatures)) {
             square.getLock().lock();
             try {
-                creatures.forEach(c -> {
-                    Task task = new Task(c, a -> {
-                        a.breed(square);
-                        if (c instanceof Animal animal) {
-                            animal.eat(square);
-                            animal.move(square);
-                        }
-                    });
-                    tasks.add(task);
-
-                });
+                creatures.forEach(creature -> tasks.add(new Task(creature,square)));
             } finally {
                 square.getLock().unlock();
             }
