@@ -37,7 +37,6 @@ public class OrganismWorker implements Runnable {
             }
         }
     }
-
     private void processOneCell(Cell cell) {
         String type = prototype.getType();
         Set<Organism> organisms = cell.getResidents().get(type);
