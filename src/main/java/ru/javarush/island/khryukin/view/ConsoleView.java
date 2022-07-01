@@ -38,7 +38,6 @@ public class ConsoleView implements View{
             }
             System.out.println();
         }
-        //System.out.println(map);
         return map.toString();
     }
 

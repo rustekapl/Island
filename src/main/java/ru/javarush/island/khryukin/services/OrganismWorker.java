@@ -51,7 +51,6 @@ public class OrganismWorker implements Runnable {
                         o.spawn(cell);
                         if (organism instanceof Animal animal) {
                             //animal.eat(cell);
-                            //animal.spawn(cell);
                             animal.move(cell);
                         }
                     });

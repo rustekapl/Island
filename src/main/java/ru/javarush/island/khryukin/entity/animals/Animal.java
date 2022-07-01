@@ -43,7 +43,7 @@ public abstract class Animal extends Organism implements Movable, Reproducible {
         }
         return newCell;
     }*/
-
+    //TODO cell capacity test
     private void addMe(Cell cell) {
         cell.getLock().lock();
         try {
@@ -88,7 +88,7 @@ public abstract class Animal extends Organism implements Movable, Reproducible {
             //bornClone(currentCell);
             safeSpawnAnimal(currentCell);
         }*/
-        safeSpawnAnimal(currentCell);
+        safeSpawnAnimal3(currentCell);
     }
 
     private void safeSpawnAnimal(Cell currentCell) {
@@ -101,9 +101,9 @@ public abstract class Animal extends Organism implements Movable, Reproducible {
                     organisms.size() >= 2 &&
                     organisms.size() < getLimit().getMaxCount()) {
                 double childWeight = getLimit().getMaxWeight() / 4;
-                this.setWeight(this.getWeight() - childWeight);
+                //this.setWeight(this.getWeight() - childWeight);
                 Organism clone = this.clone();
-                clone.setWeight(childWeight);
+                //clone.setWeight(childWeight);
                 organisms.add(clone);
             }
         } finally {
@@ -129,6 +129,22 @@ public abstract class Animal extends Organism implements Movable, Reproducible {
                 Set<Organism> organism = residents.get(getType());
                 organism.add(this);
             }*/
+        } finally {
+            currentCell.getLock().unlock();
+        }
+    }
+    private void safeSpawnAnimal3(Cell currentCell) {
+        currentCell.getLock().lock();
+        try {
+            Set<Organism> organisms = currentCell.getResidents().get(getType());
+            //double maxWeight = this.getLimit().getMaxWeight();
+            if(Objects.nonNull(organisms)){
+                if (organisms.size() < getLimit().getMaxCount()) {
+                    Organism clone = this.clone();
+                    clone.setWeight(getLimit().getMaxWeight());
+                    organisms.add(clone);
+                }
+            }
         } finally {
             currentCell.getLock().unlock();
         }
