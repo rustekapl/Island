@@ -1,8 +1,8 @@
 package ru.javarush.island.khryukin.entity.animals.predators;
 
+import ru.javarush.island.khryukin.entity.organisms.Limit;
+import ru.javarush.island.khryukin.entity.organisms.Organism;
 import ru.javarush.island.khryukin.entity.animals.Animal;
-import ru.javarush.island.khryukin.entity.animals.organisms.Limit;
-import ru.javarush.island.khryukin.entity.animals.organisms.Organism;
 import ru.javarush.island.khryukin.property.Setting;
 
 public class Wolf extends Animal {

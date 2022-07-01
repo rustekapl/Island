@@ -1,12 +1,28 @@
 package ru.javarush.island.khryukin.property;
 
 
+import java.util.LinkedHashMap;
+import java.util.Map;
+
 public class Setting {
+    //Заполняем рацион с вероятностью
+    public static final Map<String, Map<String, Integer>> rationMap = new LinkedHashMap<>();
+    static {
+        for (int i = 0, n = AnimalsRation.names.length; i < n; i++) {
+            String animalKey = AnimalsRation.names[i];
+            rationMap.putIfAbsent(animalKey, new LinkedHashMap<>());
+            for (int j = 0; j < n; j++) {
+                int ration = AnimalsRation.setProbablyTable[i][j];
+                if (ration > 0) {
+                    rationMap.get(animalKey).put(AnimalsRation.names[j], ration);
+                }
+            }
+        }
+    }
     //Настройки карты
     public static final int MAP_ROWS = 10;
     public static final int MAP_COLS = 10;
 
-    //TODO Coding. Hard code. Not flexible
     //Настройки для волка
     public static final String WOLF_NAME = "Wolf";
     public static final String WOLF_ICON = "\uD83D\uDC3A";
@@ -46,10 +62,19 @@ public class Setting {
     //Настройки для лисы
     public static final String BEAR_NAME = "Bear";
     public static final String BEAR_ICON = "\uD83D\uDC3B";
-    public static final double BEAR_WEIGHT = 500;
+    //public static final double BEAR_WEIGHT = 500;
     public static final double BEAR_MAX_WEIGHT = 500;
     public static final int BEAR_MAX_COUNT = 5;
     public static final int BEAR_MAX_SPEED = 2;
     public static final int BEAR_MAX_FOOD = 80;
+
+    //Настройки для растения
+    public static final String PLANT_NAME = "Plant";
+    public static final String PLANT_ICON = "\uD83C\uDF3F";
+    //public static final double PLANT_WEIGHT = 1;
+    public static final double PLANT_MAX_WEIGHT = 1;
+    public static final int PLANT_MAX_COUNT = 2000;
+    public static final int PLANT_MAX_SPEED = 0;
+    public static final int PLANT_MAX_FOOD = 0;
 
 }
