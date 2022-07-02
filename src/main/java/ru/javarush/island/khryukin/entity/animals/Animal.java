@@ -1,15 +1,18 @@
 package ru.javarush.island.khryukin.entity.animals;
 
+import ru.javarush.island.khryukin.actions.Eating;
 import ru.javarush.island.khryukin.actions.Movable;
 import ru.javarush.island.khryukin.actions.Reproducible;
 import ru.javarush.island.khryukin.entity.organisms.Limit;
 import ru.javarush.island.khryukin.entity.organisms.Organism;
 import ru.javarush.island.khryukin.entity.map.Cell;
+import ru.javarush.island.khryukin.property.Setting;
+import ru.javarush.island.khryukin.utils.RandomValue;
 
 import java.util.*;
 import java.util.function.Consumer;
 
-public abstract class Animal extends Organism implements Movable, Reproducible {
+public abstract class Animal extends Organism implements Movable, Reproducible, Eating {
     public Animal(String name, String icon, double weight, Limit limit) {
         super(name, icon, weight, limit);
     }
@@ -21,28 +24,8 @@ public abstract class Animal extends Organism implements Movable, Reproducible {
         removeMe(startCell);
         addMe(destinationCell);
         return destinationCell;
-
     }
 
-    /*private Cell findLastCell(Cell startCell, int countCellForStep) {
-        Cell newCell = new Cell(startCell.getResidents());
-        Set<Cell> visitedCells = new HashSet<>();
-        while (visitedCells.size() < countCellForStep) {
-            var nextCells = startCell
-                    .getNextCell()
-                    .stream()
-                    .filter(cell -> !visitedCells.contains(cell))
-                    .toList();
-            int countDirections = nextCells.size();
-            if (countDirections > 0) {
-                newCell = nextCells.get(ThreadLocalRandom.current().nextInt(countDirections));
-                visitedCells.add(newCell);
-            } else {
-                break;
-            }
-        }
-        return newCell;
-    }*/
     //TODO cell capacity test
     private void addMe(Cell cell) {
         cell.getLock().lock();
@@ -83,11 +66,6 @@ public abstract class Animal extends Organism implements Movable, Reproducible {
 
     @Override
     public void spawn(Cell currentCell) {
-        /*Set<Organism> organisms = currentCell.getResidents().get(this.getType());
-        if (Objects.nonNull(organisms) && organisms.contains(this) && organisms.size() > 2) {
-            //bornClone(currentCell);
-            safeSpawnAnimal(currentCell);
-        }*/
         safeSpawnAnimal3(currentCell);
     }
 
@@ -145,6 +123,79 @@ public abstract class Animal extends Organism implements Movable, Reproducible {
                     organisms.add(clone);
                 }
             }
+        } finally {
+            currentCell.getLock().unlock();
+        }
+    }
+
+    @Override
+    public void eat(Cell currentCell) {
+        if (safeFindFood(currentCell)) {
+
+        } else if (getWeight() > 0) {
+            safeChangeWeight(currentCell, -5);
+        } else {
+            safeDie(currentCell);
+        }
+    }
+
+    protected boolean safeFindFood(Cell currentCell) {
+        currentCell.getLock().lock();
+        try {
+            double needFood = getNeedFood();
+            if (!(needFood <= 0)) {
+                var foodMap = Setting.rationMap.get(getType())
+                        .entrySet();
+                var iterator = foodMap.iterator();
+                while (needFood > 0 && iterator.hasNext()) {
+                    Map.Entry<String, Integer> entry = iterator.next();
+                    String keyFood = entry.getKey();
+                    Integer probably = entry.getValue();
+                    var foods = currentCell.getResidents().get(keyFood);
+                    if(Objects.nonNull(foods)) {
+                        if (foods.size() > 0 && probably > RandomValue.random(0, 100)) {
+                            for (Iterator<Organism> organismIterator = foods.iterator(); organismIterator.hasNext(); ) {
+                                Organism o = organismIterator.next();
+                                double foodWeight = o.getWeight();
+                                double delta = Math.min(foodWeight, needFood);
+                                double weight = getWeight();
+                                setWeight(weight + delta);
+                                o.setWeight(foodWeight - delta);
+                                if (o.getWeight() <= 0) {
+                                    organismIterator.remove();
+                                }
+                                needFood -= delta;
+                                if (needFood <= 0) {
+                                    return true;
+                                }
+                            }
+                        }
+                    }
+                }
+            } else {
+                return false;
+            }
+        } finally {
+            currentCell.getLock().unlock();
+        }
+        return false;
+    }
+
+    private double getNeedFood() {
+        return Math.min(
+                getLimit().getMaxFood(),
+                getLimit().getMaxWeight() - getWeight());
+    }
+
+    protected void safeChangeWeight(Cell currentCell, int percent) {
+        currentCell.getLock().lock();
+        double weight = this.getWeight();
+        try {
+            double maxWeight = getLimit().getMaxWeight();
+            weight += maxWeight * percent / 100;
+            weight = Math.max(0, weight);
+            this.setWeight(Math.min(weight, maxWeight));
+            currentCell.getResidents().get(this.getClass().getSimpleName());
         } finally {
             currentCell.getLock().unlock();
         }

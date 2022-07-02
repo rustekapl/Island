@@ -1,6 +1,7 @@
 package ru.javarush.island.khryukin.entity.organisms;
 
 import ru.javarush.island.khryukin.actions.Reproducible;
+import ru.javarush.island.khryukin.entity.map.Cell;
 import ru.javarush.island.khryukin.utils.RandomValue;
 
 import java.util.concurrent.atomic.AtomicLong;
@@ -72,6 +73,15 @@ public abstract class Organism implements Cloneable, Reproducible {
             return clone;
         } catch (CloneNotSupportedException e) {
             throw new AssertionError("cannot clone " + this);
+        }
+    }
+
+    protected void safeDie(Cell target) {
+        target.getLock().lock();
+        try {
+            target.getResidents().get(type).remove(this);
+        } finally {
+            target.getLock().unlock();
         }
     }
 }

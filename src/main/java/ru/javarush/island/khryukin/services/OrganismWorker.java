@@ -49,7 +49,7 @@ public class OrganismWorker implements Runnable {
                     Task task = new Task(organism, o -> {
                         o.spawn(cell);
                         if (organism instanceof Animal animal) {
-                            //animal.eat(cell);
+                            animal.eat(cell);
                             animal.move(cell);
                         }
                     });
