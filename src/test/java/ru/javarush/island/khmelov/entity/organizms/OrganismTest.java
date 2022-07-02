@@ -49,7 +49,7 @@ class OrganismTest {
 
     @Test
     void changeWeight() {
-        double expected = wolf.getWeight() + wolf.getLimit().getMaxWeight() * 0.1;
+        double expected = wolf.getWeight() + wolf.getLimit().getMaxWeight() * 10 / 100;
         wolf.safeChangeWeight(startCell, 10);
         Assertions.assertEquals(expected, wolf.getWeight());
     }

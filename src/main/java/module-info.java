@@ -1,6 +1,5 @@
 open module island {
 
-    requires static lombok;
 
     requires javafx.controls;
     requires javafx.fxml;
@@ -9,5 +8,6 @@ open module island {
     requires com.fasterxml.jackson.dataformat.yaml;
     requires com.fasterxml.jackson.annotation;
     requires org.jetbrains.annotations;
+    requires lombok;
 
 }

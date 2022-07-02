@@ -1,21 +1,22 @@
 package experimental;
 
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Disabled;
-import org.junit.jupiter.api.Test;
 
-import java.util.concurrent.*;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ForkJoinPool;
+import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
+@SuppressWarnings("unused")
 public class CheckThreadSpeedTest {
     public static final AtomicInteger counter = new AtomicInteger();
     public static final int COUNT = 500000;
     public static final Lock lock = new ReentrantLock();
 
-    @Test
-    @Disabled
+    //    @Test
     public void checkSpeed() throws InterruptedException {
         ForkJoinPool forkJoinPool = new ForkJoinPool();
         int parallelism = forkJoinPool.getParallelism();
@@ -27,7 +28,7 @@ public class CheckThreadSpeedTest {
             Thread thread = new Thread("th" + i) {
                 @Override
                 public void run() {
-                        counter.incrementAndGet();
+                    counter.incrementAndGet();
                 }
             };
             pool.execute(thread);
