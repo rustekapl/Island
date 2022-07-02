@@ -1,9 +1,8 @@
 package ru.javarush.island.khryukin.factory;
 
-import ru.javarush.island.khryukin.entity.animals.herbivores.Horse;
+import ru.javarush.island.khryukin.entity.animals.herbivores.*;
+import ru.javarush.island.khryukin.entity.animals.predators.*;
 import ru.javarush.island.khryukin.entity.organisms.Organism;
-import ru.javarush.island.khryukin.entity.animals.predators.Wolf;
-import ru.javarush.island.khryukin.entity.animals.predators.Bear;
 import ru.javarush.island.khryukin.entity.map.Cell;
 import ru.javarush.island.khryukin.entity.plants.Plant;
 import ru.javarush.island.khryukin.utils.EntityFactoryData;
@@ -13,7 +12,8 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.*;
 
 public class EntityFactory implements Factory{
-    private static final Class<?>[] TYPES = {Wolf.class, Horse.class, Bear.class, Plant.class};
+    private static final Class<?>[] TYPES = {Wolf.class, Horse.class, Bear.class, Plant.class, Fox.class,
+            Boa.class, Eagle.class, Deer.class, Rabbit.class, Mouse.class, Goat.class};
     private static final Organism[] PROTOTYPES;
 
     static {
@@ -45,7 +45,6 @@ public class EntityFactory implements Factory{
                     for (int i = 0; i < count; i++) {
                         organisms.add(prototype.clone());
                     }
-                    //System.out.println(organisms);
                 }
             }
         }

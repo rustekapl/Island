@@ -21,8 +21,8 @@ public abstract class Animal extends Organism implements Movable, Reproducible, 
     public Cell move(Cell startCell) {
         int countStep = this.getLimit().getMaxSpeed();
         Cell destinationCell = startCell.getNextCells(countStep);
-        removeMe(startCell);
         addMe(destinationCell);
+        removeMe(startCell);
         return destinationCell;
     }
 
@@ -55,18 +55,9 @@ public abstract class Animal extends Organism implements Movable, Reproducible, 
         }
     }
 
-    private void safeModification(Cell cell, Consumer<Cell> operation) {
-        cell.getLock().lock();
-        try {
-            operation.accept(cell);
-        } finally {
-            cell.getLock().unlock();
-        }
-    }
-
     @Override
     public void spawn(Cell currentCell) {
-        safeSpawnAnimal3(currentCell);
+        safeSpawnAnimal4(currentCell);
     }
 
     private void safeSpawnAnimal(Cell currentCell) {
@@ -101,12 +92,7 @@ public abstract class Animal extends Organism implements Movable, Reproducible, 
                     clone.setWeight(childWeight);
                     organisms.add(clone);
                 }
-            } /*else {
-                Map<String, Set<Organism>> residents = currentCell.getResidents();
-                residents.put(this.getType(), new HashSet<>());
-                Set<Organism> organism = residents.get(getType());
-                organism.add(this);
-            }*/
+            }
         } finally {
             currentCell.getLock().unlock();
         }
@@ -117,7 +103,9 @@ public abstract class Animal extends Organism implements Movable, Reproducible, 
             Set<Organism> organisms = currentCell.getResidents().get(getType());
             //double maxWeight = this.getLimit().getMaxWeight();
             if(Objects.nonNull(organisms)){
-                if (organisms.size() < getLimit().getMaxCount()) {
+                if (organisms.size() < getLimit().getMaxCount() &&
+                        organisms.size() >= 2 &&
+                        this.getWeight() > this.getLimit().getMaxWeight() / 2) {
                     Organism clone = this.clone();
                     clone.setWeight(getLimit().getMaxWeight());
                     organisms.add(clone);
@@ -127,11 +115,29 @@ public abstract class Animal extends Organism implements Movable, Reproducible, 
             currentCell.getLock().unlock();
         }
     }
+    private void safeSpawnAnimal4(Cell currentCell) {
+        currentCell.getLock().lock();
+        try {
+            Set<Organism> organisms = currentCell.getResidents().get(getType());
+            double maxWeight = getLimit().getMaxWeight();
+            if (this.getWeight() > maxWeight / 2 &&
+                    organisms.contains(this) &&
+                            organisms.size() >= 2 &&
+                            organisms.size() < getLimit().getMaxCount()) {
+                double childWeight = getLimit().getMaxWeight() / 2;
+                this.setWeight(this.getWeight() - childWeight);
+                Organism clone = this.clone();
+                clone.setWeight(childWeight);
+                organisms.add(clone);
+            }
+        } finally {
+            currentCell.getLock().unlock();
+        }
+    }
 
     @Override
     public void eat(Cell currentCell) {
         if (safeFindFood(currentCell)) {
-
         } else if (getWeight() > 0) {
             safeChangeWeight(currentCell, -5);
         } else {
@@ -159,8 +165,9 @@ public abstract class Animal extends Organism implements Movable, Reproducible, 
                                 double foodWeight = o.getWeight();
                                 double delta = Math.min(foodWeight, needFood);
                                 double weight = getWeight();
-                                setWeight(weight + delta);
-                                o.setWeight(foodWeight - delta);
+                                setWeight(Math.min(weight + delta, getLimit().getMaxWeight()));
+                                o.setWeight(0);
+                                //o.setWeight(foodWeight - delta);
                                 if (o.getWeight() <= 0) {
                                     organismIterator.remove();
                                 }

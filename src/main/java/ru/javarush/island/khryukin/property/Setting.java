@@ -26,7 +26,7 @@ public class Setting {
     //Настройки для волка
     public static final String WOLF_NAME = "Wolf";
     public static final String WOLF_ICON = "\uD83D\uDC3A";
-    public static final double WOLF_WEIGHT = 50;
+    //public static final double WOLF_WEIGHT = 50;
     public static final double WOLF_MAX_WEIGHT = 50;
     public static final int WOLF_MAX_COUNT = 30;
     public static final int WOLF_MAX_SPEED = 3;
@@ -35,7 +35,7 @@ public class Setting {
     //Настройки для лошади
     public static final String HORSE_NAME = "Horse";
     public static final String HORSE_ICON = "\uD83D\uDC0E";
-    public static final double HORSE_WEIGHT = 400;
+    //public static final double HORSE_WEIGHT = 400;
     public static final double HORSE_MAX_WEIGHT = 400;
     public static final int HORSE_MAX_COUNT = 20;
     public static final int HORSE_MAX_SPEED = 4;
@@ -44,7 +44,7 @@ public class Setting {
     //Настройки для удава
     public static final String BOA_NAME = "Boa";
     public static final String BOA_ICON = "\uD83D\uDC0D";
-    public static final double BOA_WEIGHT = 15;
+    //public static final double BOA_WEIGHT = 15;
     public static final double BOA_MAX_WEIGHT = 15;
     public static final int BOA_MAX_COUNT = 30;
     public static final int BOA_MAX_SPEED = 1;
@@ -53,7 +53,7 @@ public class Setting {
     //Настройки для лисы
     public static final String FOX_NAME = "Fox";
     public static final String FOX_ICON = "\uD83E\uDD8A";
-    public static final double FOX_WEIGHT = 8;
+    //public static final double FOX_WEIGHT = 8;
     public static final double FOX_MAX_WEIGHT = 8;
     public static final int FOX_MAX_COUNT = 30;
     public static final int FOX_MAX_SPEED = 2;
@@ -76,5 +76,44 @@ public class Setting {
     public static final int PLANT_MAX_COUNT = 2000;
     public static final int PLANT_MAX_SPEED = 0;
     public static final int PLANT_MAX_FOOD = 0;
+
+    //Настройки для орла
+    public static final String EAGLE_NAME = "Eagle";
+    public static final String EAGLE_ICON = "\uD83E\uDD85";
+    public static final double EAGLE_MAX_WEIGHT = 6;
+    public static final int EAGLE_MAX_COUNT = 20;
+    public static final int EAGLE_MAX_SPEED = 3;
+    public static final int EAGLE_MAX_FOOD = 1;
+
+    //Настройки для оленя
+    public static final String DEER_NAME = "Deer";
+    public static final String DEER_ICON = "\uD83E\uDD8C";
+    public static final double DEER_MAX_WEIGHT = 300;
+    public static final int DEER_MAX_COUNT = 20;
+    public static final int DEER_MAX_SPEED = 4;
+    public static final int DEER_MAX_FOOD = 50;
+
+    //Настройки для кролика
+    public static final String RABBIT_NAME = "Rabbit";
+    public static final String RABBIT_ICON = "\uD83D\uDC07";
+    public static final double RABBIT_MAX_WEIGHT = 2;
+    public static final int RABBIT_MAX_COUNT = 150;
+    public static final int RABBIT_MAX_SPEED = 2;
+    public static final double RABBIT_MAX_FOOD = 0.45;
+
+    public static final String MOUSE_NAME = "Mouse";
+    public static final String MOUSE_ICON = "\uD83D\uDC01";
+    public static final double MOUSE_MAX_WEIGHT = 0.05;
+    public static final int MOUSE_MAX_COUNT = 500;
+    public static final int MOUSE_MAX_SPEED = 1;
+    public static final double MOUSE_MAX_FOOD = 0.01;
+
+    //Настройки для козы
+    public static final String GOAT_NAME = "Goat";
+    public static final String GOAT_ICON = "\uD83D\uDC10";
+    public static final double GOAT_MAX_WEIGHT = 60;
+    public static final int GOAT_MAX_COUNT = 140;
+    public static final int GOAT_MAX_SPEED = 3;
+    public static final double GOAT_MAX_FOOD = 10;
 
 }

@@ -4,9 +4,9 @@ public class Limit {
     private final double maxWeight;
     private final int maxCount;
     private final int maxSpeed;
-    private final int maxFood;
+    private final double maxFood;
 
-    public Limit(double maxWeight, int maxCount, int maxSpeed, int maxFood) {
+    public Limit(double maxWeight, int maxCount, int maxSpeed, double maxFood) {
         this.maxWeight = maxWeight;
         this.maxCount = maxCount;
         this.maxSpeed = maxSpeed;
@@ -25,7 +25,7 @@ public class Limit {
         return maxSpeed;
     }
 
-    public int getMaxFood() {
+    public double getMaxFood() {
         return maxFood;
     }
 

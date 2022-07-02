@@ -76,7 +76,7 @@ public abstract class Organism implements Cloneable, Reproducible {
         }
     }
 
-    protected void safeDie(Cell target) {
+    public void safeDie(Cell target) {
         target.getLock().lock();
         try {
             target.getResidents().get(type).remove(this);

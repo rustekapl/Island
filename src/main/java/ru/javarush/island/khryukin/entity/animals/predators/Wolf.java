@@ -13,6 +13,6 @@ public class Wolf extends Animal {
 
     //@Override
     public static Organism birth() {
-        return new Wolf(Setting.WOLF_NAME, Setting.WOLF_ICON, Setting.WOLF_WEIGHT, new Limit(Setting.WOLF_MAX_WEIGHT, Setting.WOLF_MAX_COUNT, Setting.WOLF_MAX_SPEED, Setting.WOLF_MAX_FOOD));
+        return new Wolf(Setting.WOLF_NAME, Setting.WOLF_ICON, Setting.WOLF_MAX_WEIGHT, new Limit(Setting.WOLF_MAX_WEIGHT, Setting.WOLF_MAX_COUNT, Setting.WOLF_MAX_SPEED, Setting.WOLF_MAX_FOOD));
     }
 }
