@@ -9,5 +9,8 @@ open module island {
     requires com.fasterxml.jackson.annotation;
     requires org.jetbrains.annotations;
     requires lombok;
+    requires java.desktop;
+    requires com.google.gson;
+    requires com.google.common;
 
 }
