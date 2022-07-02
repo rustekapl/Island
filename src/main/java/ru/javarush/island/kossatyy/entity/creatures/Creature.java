@@ -1,55 +1,93 @@
 package ru.javarush.island.kossatyy.entity.creatures;
 
-import lombok.Getter;
-import lombok.Setter;
 import ru.javarush.island.kossatyy.entity.map.Cell;
 import ru.javarush.island.kossatyy.interfaces.Reproducible;
-import ru.javarush.island.kossatyy.interfaces.Spawn;
-import ru.javarush.island.kossatyy.settings.Config;
-import ru.javarush.island.kossatyy.util.Randomizer;
+import ru.javarush.island.kossatyy.repository.CreatureInfo;
+import ru.javarush.island.kossatyy.repository.Limit;
+import ru.javarush.island.kossatyy.repository.factory.EntityFactory;
+import ru.javarush.island.kossatyy.repository.maps.Ration;
+import ru.javarush.island.kossatyy.repository.maps.Residents;
+import ru.javarush.island.kossatyy.util.Satiety;
 
+import java.util.Objects;
 import java.util.Set;
 
-@Getter
-@Setter
-public abstract class Creature implements Reproducible, Spawn {
 
-    private final String icon;
-    private final int groupID;
-    private double maxWeight;
-    private double curWeight;
-    private boolean isAlive;
+public abstract class Creature implements Reproducible{
 
+    private final CreatureInfo info;
+    private final Limit limit;
 
-    public Creature(String icon, int groupID, double maxWeight, boolean isAlive) {
-        this.icon = icon;
-        this.groupID = groupID;
-        this.maxWeight = maxWeight;
-        this.curWeight = Randomizer.random(maxWeight / 2, maxWeight);
-        this.isAlive = isAlive;
+    public Creature(CreatureInfo info, Limit limit) {
+        this.info = info;
+        this.limit = limit;
     }
 
+    public String getType() {
+        return info.getType();
+    }
 
-    private transient final String letter = getClass().getSimpleName().substring(0, 1); //TODO for test, delete
+    public int getGroupId() {
+        return info.getGroupId();
+    }
 
     public boolean isAlive() {
-        return isAlive;
+        return info.isAlive();
     }
 
-    public void setAlive(boolean alive) {
-        isAlive = alive;
+    public double getCurWeight() {
+        return info.getCurWeight();
+    }
+
+    public void setCurWeight(double curWeight) {
+        info.setCurWeight(curWeight);
+    }
+
+    public String getIcon() {
+        return info.getIcon();
+    }
+
+    public Satiety getSatiety() {
+        return info.getSatiety();
+    }
+
+    public void setSatiety(Satiety satiety) {
+        info.setSatiety(satiety);
+    }
+
+    public Ration getRation() {
+        return info.getRation();
+    }
+
+    public double getMaxWeight() {
+        return limit.getMaxWeight();
+    }
+
+    public int getMaxPopulation() {
+        return limit.getMaxPopulation();
+    }
+
+    public int getSpeed() {
+        return limit.getSpeed();
+    }
+
+    public void die() {
+        info.setAlive(false);
     }
 
     public void reproduce(Cell cell) {
         cell.getLock().lock();
         try {
-            Set<Creature> creatures = cell.getResidents().get(getGroupID());
-            int maxLimit = Config.getConfig().getLimitOfCreatures().getOrDefault(getClass().getSimpleName(), 10);
-            if (creatures.contains(this)
-                    && creatures.size() >= 2
-                    && creatures.size() < maxLimit) {
-                Creature creature = this.spawn();
-                creatures.add(creature);
+            Residents residents = cell.getResidents();
+            String type = getType();
+            Set<Creature> sameCreatures = residents.get(type);
+            int maxLimit = getMaxPopulation();
+
+            if (sameCreatures.contains(this)
+                    && sameCreatures.size() >= 2
+                    && sameCreatures.size() < maxLimit) {
+                Creature creature = EntityFactory.getFactory().create(type);
+                sameCreatures.add(creature);
             }
         } finally {
             cell.getLock().unlock();
@@ -59,10 +97,24 @@ public abstract class Creature implements Reproducible, Spawn {
     public void deleteMe(Cell cell) {
         cell.getLock().lock();
         try {
-            cell.getResidents().get(getGroupID()).remove(this);
+            String type = getType();
+            cell.getResidents().get(type).remove(this);
         } finally {
             cell.getLock().unlock();
         }
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Creature creature = (Creature) o;
+        return Objects.equals(info, creature.info);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(info);
     }
 
 }

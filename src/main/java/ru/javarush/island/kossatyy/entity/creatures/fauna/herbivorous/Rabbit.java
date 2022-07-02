@@ -1,38 +1,11 @@
 package ru.javarush.island.kossatyy.entity.creatures.fauna.herbivorous;
 
-import lombok.ToString;
-import ru.javarush.island.kossatyy.entity.creatures.Creature;
+import ru.javarush.island.kossatyy.repository.CreatureInfo;
+import ru.javarush.island.kossatyy.repository.Limit;
 
-import java.util.Objects;
-import java.util.concurrent.atomic.AtomicLong;
-
-@ToString
 public class Rabbit extends Herbivorous {
 
-    private static final AtomicLong idCounter = new AtomicLong(0);
-    private static final int groupID = 7;
-    private final long id = idCounter.getAndIncrement();
-
-    public Rabbit() {
-        super("\uD83E\uDD8C", groupID, 2, 2);
+    public Rabbit(CreatureInfo info, Limit limit) {
+        super(info, limit);
     }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Rabbit rabbit = (Rabbit) o;
-        return id == rabbit.id;
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(groupID, id);
-    }
-
-    @Override
-    public Creature spawn() {
-        return new Rabbit();
-    }
-
 }

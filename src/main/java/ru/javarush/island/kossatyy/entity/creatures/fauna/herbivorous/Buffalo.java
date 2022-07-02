@@ -1,38 +1,11 @@
 package ru.javarush.island.kossatyy.entity.creatures.fauna.herbivorous;
 
-import lombok.ToString;
-import ru.javarush.island.kossatyy.entity.creatures.Creature;
+import ru.javarush.island.kossatyy.repository.CreatureInfo;
+import ru.javarush.island.kossatyy.repository.Limit;
 
-import java.util.Objects;
-import java.util.concurrent.atomic.AtomicLong;
-
-@ToString
 public class Buffalo extends Herbivorous {
 
-    private static final AtomicLong idCounter = new AtomicLong(0);
-    private static final int groupID = 12;
-    private final long id = idCounter.getAndIncrement();
-
-    public Buffalo() {
-        super("\uD83D\uDC03", groupID, 700, 3);
+    public Buffalo(CreatureInfo info, Limit limit) {
+        super(info, limit);
     }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Buffalo buffalo = (Buffalo) o;
-        return id == buffalo.id;
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(groupID, id);
-    }
-
-    @Override
-    public Creature spawn() {
-        return new Buffalo();
-    }
-
 }
