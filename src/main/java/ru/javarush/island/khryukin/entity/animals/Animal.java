@@ -21,8 +21,8 @@ public abstract class Animal extends Organism implements Movable, Reproducible, 
     public Cell move(Cell startCell) {
         int countStep = this.getLimit().getMaxSpeed();
         Cell destinationCell = startCell.getNextCells(countStep);
-        addMe(destinationCell);
         removeMe(startCell);
+        addMe(destinationCell);
         return destinationCell;
     }
 

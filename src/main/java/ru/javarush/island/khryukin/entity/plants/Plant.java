@@ -33,8 +33,7 @@ public class Plant extends Organism {
             //double maxWeight = this.getLimit().getMaxWeight();
 
             if(Objects.nonNull(plants)){
-                if (/*plants.contains(this) &&
-                        */plants.size() < this.getLimit().getMaxCount()) {
+                if (plants.size() < this.getLimit().getMaxCount()) {
                     Organism clone = this.clone();
                     clone.setWeight(this.getLimit().getMaxWeight());
                     plants.add(clone);
