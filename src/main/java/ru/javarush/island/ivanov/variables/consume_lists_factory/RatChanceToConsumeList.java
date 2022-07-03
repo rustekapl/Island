@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class RatChanceToConsumeList extends ChanceToConsumeList {
-    private static Map<String, Integer> chanceToConsume = new HashMap<>();
+    private static final Map<String, Integer> chanceToConsume = new HashMap<>();
 
     static {
         chanceToConsume.put("Bear", 0);

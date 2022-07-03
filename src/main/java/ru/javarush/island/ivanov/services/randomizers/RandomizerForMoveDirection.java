@@ -1,10 +1,14 @@
 package ru.javarush.island.ivanov.services.randomizers;
 
+import ru.javarush.island.ivanov.services.move_services.Directions;
+
 import java.util.concurrent.ThreadLocalRandom;
 
 public class RandomizerForMoveDirection {
-    public static int getResult() {
-        //TODO Coding. Magic values or methods. Bad reading and understanding
-        return ThreadLocalRandom.current().nextInt(1, 5);
+
+    public static Directions getResult() {
+        int maxLength = Directions.values().length;
+        int randomValue = ThreadLocalRandom.current().nextInt(0, maxLength);
+        return Directions.values()[randomValue];
     }
 }
