@@ -1,9 +1,9 @@
 package ru.javarush.island.sheff.entities.organisms;
 
-import ru.javarush.island.sheff.entities.abstraction.behavior.Breeding;
-import ru.javarush.island.sheff.util.Randomizer;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import ru.javarush.island.sheff.entities.abstraction.behavior.Breeding;
+import ru.javarush.island.sheff.util.Randomizer;
 
 import java.util.Set;
 

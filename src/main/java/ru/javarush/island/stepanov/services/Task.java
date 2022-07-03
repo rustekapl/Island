@@ -1,12 +1,12 @@
 package ru.javarush.island.stepanov.services;
 
+import lombok.ToString;
 import ru.javarush.island.stepanov.entities.creatures.Creature;
 import ru.javarush.island.stepanov.entities.creatures.animals.Animal;
 import ru.javarush.island.stepanov.entities.location.Location;
 import ru.javarush.island.stepanov.entities.location.LocationCell;
 import ru.javarush.island.stepanov.utils.logger.LifeCycleStages;
 import ru.javarush.island.stepanov.utils.logger.Logger;
-import lombok.ToString;
 
 @ToString
 public class Task {

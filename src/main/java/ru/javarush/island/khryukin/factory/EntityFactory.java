@@ -2,8 +2,8 @@ package ru.javarush.island.khryukin.factory;
 
 import ru.javarush.island.khryukin.entity.animals.herbivores.*;
 import ru.javarush.island.khryukin.entity.animals.predators.*;
-import ru.javarush.island.khryukin.entity.organisms.Organism;
 import ru.javarush.island.khryukin.entity.map.Cell;
+import ru.javarush.island.khryukin.entity.organisms.Organism;
 import ru.javarush.island.khryukin.entity.plants.Plant;
 import ru.javarush.island.khryukin.utils.EntityFactoryData;
 import ru.javarush.island.khryukin.utils.RandomValue;

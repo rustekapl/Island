@@ -1,11 +1,14 @@
 package ru.javarush.island.stepanov.utils;
 
+import ru.javarush.island.stepanov.entities.creatures.Creature;
 import ru.javarush.island.stepanov.entities.location.Coord;
 import ru.javarush.island.stepanov.entities.location.Location;
 import ru.javarush.island.stepanov.entities.location.LocationCell;
-import ru.javarush.island.stepanov.entities.creatures.Creature;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
 
 public class RandomSpawner {
 

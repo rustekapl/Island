@@ -1,8 +1,8 @@
 package ru.javarush.island.stepanov.settings;
 
-import ru.javarush.island.stepanov.utils.Decerializer;
 import lombok.Getter;
 import lombok.ToString;
+import ru.javarush.island.stepanov.utils.Decerializer;
 
 import java.io.Serializable;
 import java.util.Map;

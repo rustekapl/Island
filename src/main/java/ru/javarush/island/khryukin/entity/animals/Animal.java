@@ -3,14 +3,13 @@ package ru.javarush.island.khryukin.entity.animals;
 import ru.javarush.island.khryukin.actions.Eating;
 import ru.javarush.island.khryukin.actions.Movable;
 import ru.javarush.island.khryukin.actions.Reproducible;
+import ru.javarush.island.khryukin.entity.map.Cell;
 import ru.javarush.island.khryukin.entity.organisms.Limit;
 import ru.javarush.island.khryukin.entity.organisms.Organism;
-import ru.javarush.island.khryukin.entity.map.Cell;
 import ru.javarush.island.khryukin.property.Setting;
 import ru.javarush.island.khryukin.utils.RandomValue;
 
 import java.util.*;
-import java.util.function.Consumer;
 
 public abstract class Animal extends Organism implements Movable, Reproducible, Eating {
     public Animal(String name, String icon, double weight, Limit limit) {

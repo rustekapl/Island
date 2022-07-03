@@ -1,9 +1,8 @@
 package ru.javarush.island.bulimov.view;
 
-import ru.javarush.island.bulimov.entity.Organism;
-import ru.javarush.island.bulimov.settings.OrganismSetting;
 import ru.javarush.island.bulimov.islandMap.Cell;
 import ru.javarush.island.bulimov.islandMap.Island;
+import ru.javarush.island.bulimov.settings.OrganismSetting;
 
 import java.util.HashMap;
 import java.util.Map;

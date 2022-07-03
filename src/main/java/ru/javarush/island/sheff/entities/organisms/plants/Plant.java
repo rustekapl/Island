@@ -1,8 +1,8 @@
 package ru.javarush.island.sheff.entities.organisms.plants;
 
+import lombok.Getter;
 import ru.javarush.island.sheff.entities.abstraction.behavior.Breeding;
 import ru.javarush.island.sheff.entities.organisms.Organism;
-import lombok.Getter;
 
 import java.util.Set;
 import java.util.stream.Collectors;

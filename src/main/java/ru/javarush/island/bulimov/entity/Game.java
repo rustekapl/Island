@@ -1,6 +1,5 @@
 package ru.javarush.island.bulimov.entity;
 
-import ru.javarush.island.bulimov.entity.repository.AnimalsFactory;
 import ru.javarush.island.bulimov.islandMap.Island;
 import ru.javarush.island.bulimov.view.ConsoleView;
 

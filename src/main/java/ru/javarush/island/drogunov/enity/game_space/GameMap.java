@@ -1,12 +1,12 @@
 package ru.javarush.island.drogunov.enity.game_space;
 
 
+import ru.javarush.island.drogunov.Constants;
 import ru.javarush.island.drogunov.enity.TargetGameUnit;
 import ru.javarush.island.drogunov.enity.game_unit.GameUnit;
 import ru.javarush.island.drogunov.enity.game_unit.plants.Plant;
 import ru.javarush.island.drogunov.exceptions.UnitTargetNotFoundException;
 import ru.javarush.island.drogunov.util.Statistics;
-import ru.javarush.island.drogunov.Constants;
 
 import java.util.Arrays;
 import java.util.HashSet;

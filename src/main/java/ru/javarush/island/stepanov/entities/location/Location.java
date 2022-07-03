@@ -1,7 +1,7 @@
 package ru.javarush.island.stepanov.entities.location;
 
-import ru.javarush.island.stepanov.utils.RandomGenerator;
 import lombok.Getter;
+import ru.javarush.island.stepanov.utils.RandomGenerator;
 
 import java.util.ArrayList;
 import java.util.Arrays;

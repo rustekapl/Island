@@ -1,7 +1,6 @@
 package ru.javarush.island.khryukin.entity.animals.herbivores;
 
 import ru.javarush.island.khryukin.entity.animals.Animal;
-import ru.javarush.island.khryukin.entity.animals.predators.Boar;
 import ru.javarush.island.khryukin.entity.organisms.Limit;
 import ru.javarush.island.khryukin.entity.organisms.Organism;
 import ru.javarush.island.khryukin.property.Setting;

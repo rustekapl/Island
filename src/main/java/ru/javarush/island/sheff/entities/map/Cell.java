@@ -1,8 +1,8 @@
 package ru.javarush.island.sheff.entities.map;
 
+import lombok.Getter;
 import ru.javarush.island.sheff.entities.organisms.Organism;
 import ru.javarush.island.sheff.repository.OrganismTypes;
-import lombok.Getter;
 
 import java.util.ArrayList;
 import java.util.HashSet;

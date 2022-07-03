@@ -1,9 +1,9 @@
 package ru.javarush.island.khryukin.services;
 
 import ru.javarush.island.khryukin.entity.animals.Animal;
-import ru.javarush.island.khryukin.entity.organisms.Organism;
 import ru.javarush.island.khryukin.entity.map.Cell;
 import ru.javarush.island.khryukin.entity.map.GameMap;
+import ru.javarush.island.khryukin.entity.organisms.Organism;
 
 import java.util.Objects;
 import java.util.Queue;

@@ -1,12 +1,13 @@
 package ru.javarush.island.stepanov.entities.location;
 
-import ru.javarush.island.stepanov.entities.creatures.Creature;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import ru.javarush.island.stepanov.entities.creatures.Creature;
 
-import java.util.*;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.locks.ReentrantLock;
 

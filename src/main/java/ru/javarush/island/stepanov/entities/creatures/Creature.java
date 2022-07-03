@@ -1,7 +1,10 @@
 package ru.javarush.island.stepanov.entities.creatures;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 import ru.javarush.island.stepanov.entities.location.LocationCell;
 import ru.javarush.island.stepanov.intefaces.Mortal;
 import ru.javarush.island.stepanov.intefaces.Reproducible;
@@ -10,10 +13,6 @@ import ru.javarush.island.stepanov.settings.CreatureGeneralSettings;
 import ru.javarush.island.stepanov.settings.GlobalSettings;
 import ru.javarush.island.stepanov.utils.logger.LifeCycleStages;
 import ru.javarush.island.stepanov.utils.logger.Logger;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
 
 import java.util.Set;
 import java.util.concurrent.atomic.AtomicBoolean;

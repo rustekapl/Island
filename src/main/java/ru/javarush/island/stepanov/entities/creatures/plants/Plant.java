@@ -1,10 +1,10 @@
 package ru.javarush.island.stepanov.entities.creatures.plants;
 
+import lombok.Getter;
 import ru.javarush.island.stepanov.entities.creatures.Creature;
 import ru.javarush.island.stepanov.entities.location.LocationCell;
 import ru.javarush.island.stepanov.utils.logger.LifeCycleStages;
 import ru.javarush.island.stepanov.utils.logger.Logger;
-import lombok.Getter;
 
 @Getter
 public class Plant extends Creature {

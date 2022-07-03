@@ -2,7 +2,6 @@ package ru.javarush.island.bulimov.islandMap;
 
 import ru.javarush.island.bulimov.entity.Organism;
 
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;

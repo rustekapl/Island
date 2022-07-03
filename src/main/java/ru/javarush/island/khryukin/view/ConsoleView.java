@@ -1,8 +1,8 @@
 package ru.javarush.island.khryukin.view;
 
-import ru.javarush.island.khryukin.entity.organisms.Organism;
 import ru.javarush.island.khryukin.entity.map.Cell;
 import ru.javarush.island.khryukin.entity.map.GameMap;
+import ru.javarush.island.khryukin.entity.organisms.Organism;
 
 import java.util.HashMap;
 import java.util.Map;

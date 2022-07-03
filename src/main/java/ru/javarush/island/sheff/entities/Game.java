@@ -1,11 +1,11 @@
 package ru.javarush.island.sheff.entities;
 
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import ru.javarush.island.sheff.entities.map.GameMap;
 import ru.javarush.island.sheff.repository.OrganismFactory;
 import ru.javarush.island.sheff.services.Scheduler;
 import ru.javarush.island.sheff.view.SimulatorView;
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
 
 @Getter
 @RequiredArgsConstructor

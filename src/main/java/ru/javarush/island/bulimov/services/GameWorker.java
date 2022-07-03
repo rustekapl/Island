@@ -7,8 +7,7 @@ import ru.javarush.island.bulimov.islandMap.Island;
 import ru.javarush.island.bulimov.settings.Config;
 import ru.javarush.island.bulimov.view.ConsoleView;
 
-
-import java.util.*;
+import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;

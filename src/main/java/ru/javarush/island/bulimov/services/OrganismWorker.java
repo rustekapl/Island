@@ -1,10 +1,9 @@
 package ru.javarush.island.bulimov.services;
 
 import ru.javarush.island.bulimov.entity.Organism;
-import ru.javarush.island.bulimov.islandMap.Island;
-import ru.javarush.island.bulimov.settings.OrganismSetting;
 import ru.javarush.island.bulimov.exception.IslandRunException;
 import ru.javarush.island.bulimov.islandMap.Cell;
+import ru.javarush.island.bulimov.islandMap.Island;
 
 import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedQueue;

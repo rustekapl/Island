@@ -1,9 +1,9 @@
 package ru.javarush.island.sheff.repository;
 
+import lombok.Getter;
 import ru.javarush.island.sheff.entities.organisms.Limit;
 import ru.javarush.island.sheff.entities.organisms.Organism;
 import ru.javarush.island.sheff.util.JsonParser;
-import lombok.Getter;
 
 import java.nio.file.Path;
 import java.util.HashSet;

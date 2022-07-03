@@ -1,0 +1,11 @@
+package ru.javarush.island.volokitin.factories;
+
+import ru.javarush.island.volokitin.entities.organisms.Organism;
+import ru.javarush.island.volokitin.entities.organisms.animals.herbivores.Buffalo;
+
+public class BuffaloFactory implements OrganismFactory {
+    @Override
+    public Organism createOrganism() {
+        return new Buffalo();
+    }
+}

@@ -1,11 +1,11 @@
 package ru.javarush.island.sheff.entities.organisms.animals;
 
+import lombok.Getter;
 import ru.javarush.island.sheff.entities.abstraction.behavior.Eating;
 import ru.javarush.island.sheff.entities.abstraction.behavior.Moving;
 import ru.javarush.island.sheff.entities.map.Cell;
 import ru.javarush.island.sheff.entities.organisms.Organism;
 import ru.javarush.island.sheff.util.Randomizer;
-import lombok.Getter;
 
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;

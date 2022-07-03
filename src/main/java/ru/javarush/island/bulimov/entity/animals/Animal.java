@@ -3,19 +3,13 @@ package ru.javarush.island.bulimov.entity.animals;
 import ru.javarush.island.bulimov.abstractions.Eating;
 import ru.javarush.island.bulimov.abstractions.Movable;
 import ru.javarush.island.bulimov.entity.Organism;
-import ru.javarush.island.bulimov.entity.animals.carnivores.Wolf;
-import ru.javarush.island.bulimov.entity.repository.AnimalsFactory;
-import ru.javarush.island.bulimov.exception.IslandRunException;
 import ru.javarush.island.bulimov.islandMap.Cell;
 import ru.javarush.island.bulimov.islandMap.Island;
 import ru.javarush.island.bulimov.settings.OrganismSetting;
 import ru.javarush.island.bulimov.util.Random;
 
-import java.util.Arrays;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Map;
-import java.util.concurrent.ThreadLocalRandom;
 
 
 public abstract class Animal extends Organism implements Eating, Movable {

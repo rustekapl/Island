@@ -1,11 +1,11 @@
 package ru.javarush.island.stepanov.utils.logger;
 
+import lombok.Getter;
 import ru.javarush.island.stepanov.entities.creatures.Creature;
 import ru.javarush.island.stepanov.entities.location.Location;
 import ru.javarush.island.stepanov.entities.location.LocationCell;
 import ru.javarush.island.stepanov.utils.FileWriter;
 import ru.javarush.island.stepanov.utils.StatisticsCollector;
-import lombok.Getter;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;

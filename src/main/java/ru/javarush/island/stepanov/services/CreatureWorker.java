@@ -1,9 +1,9 @@
 package ru.javarush.island.stepanov.services;
 
+import lombok.ToString;
 import ru.javarush.island.stepanov.entities.creatures.Creature;
 import ru.javarush.island.stepanov.entities.location.Location;
 import ru.javarush.island.stepanov.entities.location.LocationCell;
-import lombok.ToString;
 
 import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedQueue;
