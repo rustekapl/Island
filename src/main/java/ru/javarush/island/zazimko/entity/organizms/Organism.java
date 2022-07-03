@@ -45,7 +45,7 @@ public abstract class Organism implements Reproducible, Cloneable {
         return icon;
     }
 
-    //TODO  Coding. Ctrl_C Ctrl_V ??? Bit we like original coding.
+    //TODO  Coding. Ctrl_C Ctrl_V ??? But we like original coding.
     @Override
     protected Organism clone() throws CloneNotSupportedException {
         //visible in inherits (cast to Organism)

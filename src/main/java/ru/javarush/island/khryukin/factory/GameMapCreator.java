@@ -15,7 +15,7 @@ public class GameMapCreator {
     }
 
     public GameMap createRandomFilledGameMap(int rows, int cols){
-        //TODO  Coding. Ctrl_C Ctrl_V ??? Bit we like original coding.
+        //TODO  Coding. Ctrl_C Ctrl_V ??? But we like original coding.
         GameMap gameMap = new GameMap(rows, cols);
         Cell[][] cells = gameMap.getCells();
         for (int i = 0; i < cells.length; i++) {

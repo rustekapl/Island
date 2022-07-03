@@ -60,7 +60,7 @@ public abstract class Animal extends Organism implements Movable, Reproducible, 
     }
 
     private void safeSpawnAnimal(Cell currentCell) {
-        //TODO  Coding. Ctrl_C Ctrl_V ??? Bit we like original coding.
+        //TODO  Coding. Ctrl_C Ctrl_V ??? But we like original coding.
         currentCell.getLock().lock();
         try {
             Set<Organism> organisms = currentCell.getResidents().get(getType());
@@ -92,7 +92,7 @@ public abstract class Animal extends Organism implements Movable, Reproducible, 
     }
 
     protected boolean safeFindFood(Cell currentCell) {
-        //TODO  Coding. Ctrl_C Ctrl_V ??? Bit we like original coding.
+        //TODO  Coding. Ctrl_C Ctrl_V ??? But we like original coding.
         currentCell.getLock().lock();
         try {
             double needFood = getNeedFood();

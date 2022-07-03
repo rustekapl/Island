@@ -20,7 +20,7 @@ public class OrganismWorker implements Runnable {
         this.gameMap = gameMap;
     }
 
-    //TODO  Coding. Ctrl_C Ctrl_V ??? Bit we like original coding.
+    //TODO  Coding. Ctrl_C Ctrl_V ??? But we like original coding.
     @Override
     public void run() {
         Cell[][] cells = gameMap.getCells();
@@ -38,7 +38,7 @@ public class OrganismWorker implements Runnable {
         }
     }
 
-    //TODO  Coding. Ctrl_C Ctrl_V ??? Bit we like original coding.
+    //TODO  Coding. Ctrl_C Ctrl_V ??? But we like original coding.
     private void processOneCell(Cell cell) {
         String type = prototype.getType();
         Organisms organisms = cell.getResidents().get(type);

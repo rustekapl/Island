@@ -12,7 +12,7 @@ import java.util.Objects;
 @Setter(AccessLevel.PROTECTED)
 public class Setting {
 
-    //TODO  Coding. Ctrl_C Ctrl_V ??? Bit we like original coding.
+    //TODO  Coding. Ctrl_C Ctrl_V ??? But we like original coding.
     //======================== SAFE_THREAD_SINGLETON =============================
     private static volatile Setting SETTING;
 

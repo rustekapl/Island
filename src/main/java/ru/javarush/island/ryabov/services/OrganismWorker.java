@@ -23,7 +23,7 @@ public class OrganismWorker implements Runnable {
                 try {
                     processOneCell(cell);
                 } catch (Exception e) {
-                    //TODO  Coding. Ctrl_C Ctrl_V ??? Bit we like original coding.
+                    //TODO  Coding. Ctrl_C Ctrl_V ??? But we like original coding.
                     e.printStackTrace();
                     System.err.println("OMG. Debug it!");
                     System.exit(0);
