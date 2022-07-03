@@ -5,6 +5,8 @@ import ru.javarush.island.gribanov.view.View;
 
 public class Game {
     private final GameMap gameMap;
+
+    //TODO --- Code style. Need always delete code. Not comment it.
     //private final Factory entityFactory;
     private final View view;
 

@@ -35,6 +35,7 @@ public class GameWorker extends Thread {
                 .map(o -> new OrganismWorker(o, game.getGameMap()))
                 .toList();
         mainPool.scheduleAtFixedRate(() -> {
+            //TODO Coding. Magic values or methods. Bad reading and understanding
             ExecutorService servicePool = Executors.newFixedThreadPool(8);
             workers.forEach(servicePool::submit);
             servicePool.shutdown();
