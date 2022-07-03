@@ -1,58 +1,47 @@
 package ru.javarush.island.zazimko.view;
 
-import ru.javarush.island.zazimko.classes.animals.Organism;
-import ru.javarush.island.zazimko.gameField.Cell;
-import ru.javarush.island.zazimko.gameField.Field;
+import ru.javarush.island.zazimko.entity.map.Cell;
+import ru.javarush.island.zazimko.entity.map.GameMap;
+import ru.javarush.island.zazimko.entity.map.Residents;
 
-import java.lang.reflect.Type;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Set;
-import java.util.concurrent.ConcurrentHashMap;
 
 
 @SuppressWarnings("FieldCanBeLocal")
 public class ConsoleView implements View {
 
+    private final GameMap gameMap;
 
-    private final Field field;
-
-    public ConsoleView(Field field) {
-        this.field = field;
+    public ConsoleView(GameMap gameMap) {
+        this.gameMap = gameMap;
 
     }
 
 
-    @SuppressWarnings("ResultOfMethodCallIgnored")
     @Override
     public void showStatistics() {
         Map<String, Double> rawStatistics = new HashMap<>();
         Map<String, Long> statistics = new HashMap<>();
-        Cell[][] cells = field.getCells();
+        Cell[][] cells = gameMap.getCells();
         for (Cell[] row : cells) {
             for (Cell cell : row) {
-                ConcurrentHashMap<Type, Set<Organism>> organisms = cell.getOrganisms();
-                if (Objects.nonNull(organisms)) {
-                    for (Map.Entry<Type, Set<Organism>> pair : organisms.entrySet()) {
-                        Set<Organism> animalSet = pair.getValue();
-                        if (animalSet.size() > 0) {
-                            animalSet
-                                    .forEach(organisms1 -> {
-                                                String icon = organisms1.getIcon();
-                                                double count = animalSet.size();
-                                                rawStatistics.put(icon, rawStatistics.getOrDefault(icon, 0D) + count);
-                                            }
-                                    );
-                        }
-                    }
+                Residents residents = cell.getResidents();
+                if (Objects.nonNull(residents)) {
+                    residents.values().stream()
+                            .filter(organisms -> organisms.size() > 0)
+                            .forEach(organisms -> {
+                                        String icon = organisms.getIcon();
+                                        double count = organisms.calculateSize();
+                                        rawStatistics.put(icon, rawStatistics.getOrDefault(icon, 0D) + count);
+                                    }
+                            );
                 }
-                rawStatistics.forEach((key, value) -> statistics.put(key, Math.round(value)));
-                System.out.println(statistics + "\n");
-
             }
         }
-        statistics.toString();
+        rawStatistics.forEach((key, value) -> statistics.put(key, Math.round(value)));
+        System.out.println(statistics + "\n");
+
     }
 }
-

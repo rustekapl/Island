@@ -1,11 +1,9 @@
 package ru.javarush.island.zazimko.services;
 
 import lombok.Getter;
-import ru.javarush.island.zazimko.classes.animals.Organism;
-import ru.javarush.island.zazimko.classes.animals.carnivores.Carnivore;
-import ru.javarush.island.zazimko.classes.animals.herbivores.Herbivores;
-import ru.javarush.island.zazimko.gameField.Cell;
-
+import ru.javarush.island.zazimko.entity.map.Cell;
+import ru.javarush.island.zazimko.entity.organizms.Organism;
+import ru.javarush.island.zazimko.entity.organizms.animals.Animal;
 
 @Getter
 public class Task {
@@ -19,18 +17,13 @@ public class Task {
     }
 
     public void doTask() {
-        if (organism instanceof Carnivore carnivore) {
-            carnivore.toEat(cell);
-            carnivore.toMultiply(cell);
-            carnivore.toDie(cell);
-            carnivore.toMove(cell);
-
-        } else if (organism instanceof Herbivores herbivores) {
-            herbivores.toEat(cell);
-            herbivores.toMultiply(cell);
-            herbivores.toDie(cell);
-            herbivores.toMove(cell);
-
+        if (organism instanceof Animal animal) {
+            if (animal.eat(cell)) {
+                animal.spawn(cell);
+                animal.move(cell);
+            }
+        } else {
+            organism.spawn(cell);
         }
     }
 
