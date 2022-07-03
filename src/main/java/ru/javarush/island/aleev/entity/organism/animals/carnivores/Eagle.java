@@ -1,18 +1,13 @@
 package ru.javarush.island.aleev.entity.organism.animals.carnivores;
 
 
-
 import ru.javarush.island.aleev.parameters.Parameters;
 
 
-public class Wolf extends Carnivore {
-
-    public Wolf(Parameters parameters) {
+public class Eagle extends Carnivore{
+    public Eagle(Parameters parameters) {
         super(parameters);
     }
-
-
-
 
 
 
@@ -20,11 +15,5 @@ public class Wolf extends Carnivore {
     public void eat() {
 
     }
-
-    @Override
-    public void reproduct() {
-        super.reproduct();
-    }
-
 
 }
