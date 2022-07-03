@@ -7,8 +7,10 @@ import java.util.concurrent.ThreadLocalRandom;
 public class RandomizerForAnimalsPerSquare {
 
     public static int getResult(Creature squareWildLife) {
-        //TODO Code style. Need reformat or extraction to methods | variables | constants
-        return ThreadLocalRandom.current().nextInt(1, squareWildLife.getParams().getMaxNumberPerSquare() + 1);
+        int maxBound = squareWildLife
+                .getParams()
+                .getMaxNumberPerSquare() + 1;
+        return ThreadLocalRandom.current().nextInt(1, maxBound);
     }
 
     private RandomizerForAnimalsPerSquare() {

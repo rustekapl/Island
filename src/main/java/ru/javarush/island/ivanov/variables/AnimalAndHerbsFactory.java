@@ -6,7 +6,6 @@ import ru.javarush.island.ivanov.entities.wildlife.*;
 
 public class AnimalAndHerbsFactory {
     public static Creature createWildLife(ListOfAnimalsAndHerbs listOfAnimalsAndHerbs) {
-        //TODO Coding. Hard code. Not flexible
         return switch (listOfAnimalsAndHerbs) {
             case BEAR -> new Bear();
             case BOAR -> new Boar();

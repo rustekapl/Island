@@ -3,6 +3,7 @@ package ru.javarush.island.ivanov.entities;
 import org.jetbrains.annotations.NotNull;
 import ru.javarush.island.ivanov.entities.interfaces.Breedable;
 import ru.javarush.island.ivanov.entities.interfaces.WildLife;
+import ru.javarush.island.ivanov.entities.territory.Residents;
 import ru.javarush.island.ivanov.entities.territory.Square;
 import ru.javarush.island.ivanov.services.eat_services.CheckAmountOfConsumption;
 import ru.javarush.island.ivanov.services.eat_services.PercenterForConsumption;
@@ -10,6 +11,7 @@ import ru.javarush.island.ivanov.services.randomizers.RandomizerForConsume;
 import ru.javarush.island.ivanov.services.randomizers.RandomizerForType;
 import ru.javarush.island.ivanov.variables.animal_params.AnimalParams;
 
+import java.util.Map;
 import java.util.Set;
 
 
@@ -21,7 +23,9 @@ public abstract class Creature implements WildLife, Breedable {
     protected boolean safeDie(@NotNull Square square) {
         square.getLock().lock();
         try {
-            return square.remove(this);
+            Residents residents = square.getResidents();
+            Set<Creature> creatures = residents.get(this.getType());
+            return creatures.remove(this);
         } finally {
             square.getLock().unlock();
         }
@@ -29,11 +33,10 @@ public abstract class Creature implements WildLife, Breedable {
 
 
     protected boolean safeMove(Square source, Square destination) {
-        if (safeAddTo(destination)) {
-            if (safePollFrom(source)) {
+        if (!source.equals(destination)) {
+            if (safeAddTo(destination)) {
+                safePollFrom(source);
                 return true;
-            } else {
-                safePollFrom(destination);
             }
         }
         return false;
@@ -42,54 +45,44 @@ public abstract class Creature implements WildLife, Breedable {
     protected boolean safeAddTo(@NotNull Square square) {
         square.getLock().lock();
         try {
-
-            Set<Creature> set = square
-                    .getResidents()
-                    .get(type);
-            //TODO Code style. Needs reformat. One line - one method
+            Set<Creature> set = square.getResidents().get(type);
             int maxCount = this.getParams().getMaxNumberPerSquare();
             int size = set.size();
-            return size < maxCount && set.add(this);
+            if (size < maxCount) {
+                set.add(this);
+                this.setSquareInfo(square);
+                return true;
+            }
+            return false;
         } finally {
             square.getLock().unlock();
         }
     }
 
-    protected boolean safePollFrom(@NotNull Square square) {
+    protected void safePollFrom(@NotNull Square square) {
         square.getLock().lock();
         try {
-            //TODO Code style. Needs reformat. One line - one method
-            return square.getResidents().get(getType()).remove(this);
+            Map<String, Set<Creature>> residents = square.getResidents();
+            Set<Creature> creatures = residents.get(getType());
+            creatures.remove(this);
         } finally {
             square.getLock().unlock();
         }
     }
 
     protected boolean safeFindFood(@NotNull Square square) {
-        //TODO Code style. Long code. Needs to be split into several methods
         square.getLock().lock();
         try {
             String randomType = RandomizerForType.getRandomType(this);
+            String nameOfTheType = this.getType();
             PercenterForConsumption percenter = new PercenterForConsumption();
-            int chanceToEat = percenter.getPercents(this.getType(), randomType);
-            boolean resultForEating = RandomizerForConsume.getResult(chanceToEat);
+            int percents = percenter.getPercents(nameOfTheType, randomType);
+            boolean resultForEating = RandomizerForConsume.getResult(percents);
             if (resultForEating) {
-                Set<Creature> set = square.getResidents().get(randomType);
+                Set<Creature> set = square.getResidents()
+                        .get(randomType);
                 for (Creature creature : set) {
-                    boolean enoughFoodForEater = CheckAmountOfConsumption.enoughFood(this, creature);
-                    if (enoughFoodForEater) {
-                        this.getParams().setTurnsToDeath(2);
-                    } else {
-                        this.getParams().setTurnsToDeath(this.getParams().getTurnsToDeath() - 1);
-                        if (this.getParams().getTurnsToDeath() <= 0) {
-                            this.setSquareInfo(null);
-                            square.getResidents().get(getType()).remove(this);
-                            return false;
-                        }
-                    }
-                    set.remove(creature);
-                    creature.setSquareInfo(null);
-                    return true;
+                    return checkForEnoughFood(square, set, creature);
                 }
             }
         } finally {
@@ -98,15 +91,32 @@ public abstract class Creature implements WildLife, Breedable {
         return false;
     }
 
+    private boolean checkForEnoughFood(@NotNull Square square, Set<Creature> set, Creature creature) {
+        boolean enoughFoodForEater = CheckAmountOfConsumption.enoughFood(this, creature);
+        int turnsBeforeCreatureDied = this.getParams().getTurnsBeforeCreatureDied();
+        if (enoughFoodForEater) {
+            this.getParams().setTurnsBeforeCreatureDied(2);
+        } else {
+            this.getParams().setTurnsBeforeCreatureDied(turnsBeforeCreatureDied - 1);
+            if (turnsBeforeCreatureDied == 0) {
+                this.setSquareInfo(null);
+                square.getResidents()
+                        .get(getType())
+                        .remove(this);
+                return false;
+            }
+        }
+        set.remove(creature);
+        creature.setSquareInfo(null);
+        return true;
+    }
+
+
     public String getType() {
         return type;
     }
 
     public AnimalParams getParams() {
         return params;
-    }
-
-    public void setParams(AnimalParams params) {
-        this.params = params;
     }
 }

@@ -1,55 +1,56 @@
 package ru.javarush.island.ivanov.services.move_services;
 
 import ru.javarush.island.ivanov.entities.Creature;
+import ru.javarush.island.ivanov.variables.island_params.IslandWidthAndHeight;
 import ru.javarush.island.ivanov.entities.territory.Square;
 import ru.javarush.island.ivanov.services.randomizers.RandomizerForMoveLength;
-import ru.javarush.island.ivanov.variables.island_params.IslandWidthAndHeight;
 
 public class NextSquare {
-    public static Square getNextSquare(Creature currentUnit, int direction) {
-        int rnd = RandomizerForMoveLength.getResult(currentUnit.getParams().getSpeed());
+    public static Square getNextSquare(Creature currentUnit, Directions direction) {
+        int rnd = RandomizerForMoveLength
+                .getResult(currentUnit
+                        .getParams()
+                        .getSpeed());
         Square square = currentUnit.getSquareInfo();
-        Square result = square;
-        boolean checkForAmount = CheckForMaxNumberAtSquare.check(currentUnit);
-        //TODO Coding. Hard code. Not flexible
         switch (direction) {
-            //TODO Coding. Magic values or methods. Bad reading and understanding
-            case 1:
+            case NORTH:
                 int changedPosition = square.getSquareNumberHeight() - rnd;
-                if (changedPosition >= 0 && checkForAmount) {
-                    result = square.getTerritory()[square.getSquareNumberWidth()]
-                            [changedPosition];
-                    currentUnit.setSquareInfo(result);
-                }
+                square = changePosition(currentUnit,square,changedPosition,false);
                 break;
 
-            case 2:
+            case EAST:
                 changedPosition = square.getSquareNumberWidth() + rnd;
-                if (changedPosition < IslandWidthAndHeight.getWidth() && checkForAmount) {
-                    result = square.getTerritory()[changedPosition]
-                            [square.getSquareNumberHeight()];
-                    currentUnit.setSquareInfo(result);
-                }
+                square = changePosition(currentUnit,square,changedPosition,true);
                 break;
 
-            case 3:
+            case SOUTH:
                 changedPosition = square.getSquareNumberHeight() + rnd;
-                if (changedPosition < IslandWidthAndHeight.getHeight() && checkForAmount) {
-                    result = square.getTerritory()[square.getSquareNumberWidth()]
-                            [changedPosition];
-                    currentUnit.setSquareInfo(result);
-                }
+                square = changePosition(currentUnit,square,changedPosition,false);
                 break;
 
-            case 4:
+            case WEST:
                 changedPosition = square.getSquareNumberWidth() - rnd;
-                if (changedPosition >= 0 && checkForAmount) {
-                    result = square.getTerritory()[changedPosition]
-                            [square.getSquareNumberHeight()];
-                    currentUnit.setSquareInfo(result);
-                }
+                square = changePosition(currentUnit,square,changedPosition,true);
                 break;
         }
-        return result;
+        return square;
+    }
+
+    private static Square changePosition(Creature currentUnit, Square square, int changedPosition, boolean isWidthChanged) {
+        boolean checkForAmount = CheckForMaxNumberAtSquare.checkForEnoughSpace(currentUnit);
+        if (changedPosition < IslandWidthAndHeight.getWidth()
+                && changedPosition >= 0
+                && checkForAmount
+                && isWidthChanged) {
+            square = square.getTerritory()[changedPosition]
+                    [square.getSquareNumberHeight()];
+        } else if (changedPosition < IslandWidthAndHeight.getHeight()
+                && changedPosition >= 0
+                && checkForAmount
+                && !isWidthChanged) {
+            square = square.getTerritory()[square.getSquareNumberWidth()]
+                    [changedPosition];
+        }
+        return square;
     }
 }
