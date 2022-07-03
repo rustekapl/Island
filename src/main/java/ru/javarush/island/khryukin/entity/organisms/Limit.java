@@ -1,12 +1,12 @@
-package ru.javarush.island.khryukin.entity.animals.organisms;
+package ru.javarush.island.khryukin.entity.organisms;
 
 public class Limit {
-    private double maxWeight = 0;
-    private int maxCount = 0;
-    private int maxSpeed = 0;
-    private int maxFood = 0;
+    private final double maxWeight;
+    private final int maxCount;
+    private final int maxSpeed;
+    private final double maxFood;
 
-    public Limit(double maxWeight, int maxCount, int maxSpeed, int maxFood) {
+    public Limit(double maxWeight, int maxCount, int maxSpeed, double maxFood) {
         this.maxWeight = maxWeight;
         this.maxCount = maxCount;
         this.maxSpeed = maxSpeed;
@@ -25,7 +25,8 @@ public class Limit {
         return maxSpeed;
     }
 
-    public int getMaxFood() {
+    public double getMaxFood() {
         return maxFood;
     }
+
 }

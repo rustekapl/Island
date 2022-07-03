@@ -1,14 +1,16 @@
-package ru.javarush.island.khryukin.entity.animals.organisms;
+package ru.javarush.island.khryukin.entity.organisms;
 
 import ru.javarush.island.khryukin.actions.Reproducible;
+import ru.javarush.island.khryukin.entity.map.Cell;
+import ru.javarush.island.khryukin.utils.RandomValue;
 
 import java.util.concurrent.atomic.AtomicLong;
 
 public abstract class Organism implements Cloneable, Reproducible {
 
     private final static AtomicLong idCounter = new AtomicLong(System.currentTimeMillis());
-
-    private final long id = idCounter.incrementAndGet();
+    private final String type = this.getClass().getSimpleName();
+    private long id = idCounter.incrementAndGet();
     private String name;
     private String icon;
     private double weight;
@@ -58,13 +60,28 @@ public abstract class Organism implements Cloneable, Reproducible {
         this.limit = limit;
     }
 
+    public String getType() {
+        return type;
+    }
+
     @Override
     public Organism clone() {
         try {
-            //TODO ---  id==id?
-            return (Organism) super.clone();
+            Organism clone = (Organism) super.clone();
+            clone.id = idCounter.incrementAndGet();
+            clone.weight = RandomValue.random(limit.getMaxWeight() / 2, limit.getMaxWeight());
+            return clone;
         } catch (CloneNotSupportedException e) {
             throw new AssertionError("cannot clone " + this);
+        }
+    }
+
+    public void safeDie(Cell target) {
+        target.getLock().lock();
+        try {
+            target.getResidents().get(type).remove(this);
+        } finally {
+            target.getLock().unlock();
         }
     }
 }

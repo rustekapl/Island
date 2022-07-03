@@ -5,12 +5,12 @@ import ru.javarush.island.khryukin.entity.organisms.Limit;
 import ru.javarush.island.khryukin.entity.organisms.Organism;
 import ru.javarush.island.khryukin.property.Setting;
 
-public class Horse extends Animal {
-    public Horse(String name, String icon, double weight, Limit limit) {
+public class Mouse extends Animal {
+    public Mouse(String name, String icon, double weight, Limit limit) {
         super(name, icon, weight, limit);
     }
 
     public static Organism birth() {
-        return new Horse(Setting.HORSE_NAME, Setting.HORSE_ICON, Setting.HORSE_MAX_WEIGHT, new Limit(Setting.HORSE_MAX_WEIGHT, Setting.HORSE_MAX_COUNT, Setting.HORSE_MAX_SPEED, Setting.HORSE_MAX_FOOD));
+        return new Mouse(Setting.MOUSE_NAME, Setting.MOUSE_ICON, Setting.MOUSE_MAX_WEIGHT, new Limit(Setting.MOUSE_MAX_WEIGHT, Setting.MOUSE_MAX_COUNT, Setting.MOUSE_MAX_SPEED, Setting.MOUSE_MAX_FOOD));
     }
 }
