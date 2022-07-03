@@ -5,11 +5,12 @@ import ru.javarush.island.ogarkov.entity.landform.Landform;
 import ru.javarush.island.ogarkov.location.Cell;
 import ru.javarush.island.ogarkov.location.Territory;
 import ru.javarush.island.ogarkov.settings.Items;
-import ru.javarush.island.ogarkov.settings.Setting;
 import ru.javarush.island.ogarkov.util.Randomizer;
 
 import java.util.HashSet;
 import java.util.Set;
+
+import static ru.javarush.island.ogarkov.settings.Setting.*;
 
 public class TerritoryCreator {
 
@@ -29,10 +30,13 @@ public class TerritoryCreator {
         return territory;
     }
 
-    public Set<Organism> createPopulation(Items item, int maxCount) {
+    public Set<Organism> createPopulation(Items item, int minCount) {
         var population = new HashSet<Organism>();
-        int amount = Randomizer.getIntOriginOne(maxCount);
         Items randomItem = item.getRandom();
+        int amount;
+        if (minCount < item.getMaxCount()) {
+            amount = Randomizer.getInt(minCount, item.getMaxCount());
+        } else amount = minCount;
         for (int i = 0; i < amount; i++) {
             Organism resident = randomItem.getFactory().createItem();
             population.add(resident);
@@ -41,18 +45,35 @@ public class TerritoryCreator {
     }
 
     public Set<Organism> createRandomPopulation() {
-        //TODO Code style. Needs reformat or extraction constants
-        int maxProbability = Setting.CELL_PLANT_PROBABILITY + Setting.CELL_HERBIVORE_PROBABILITY + Setting.CELL_CARNIVORE_PROBABILITY;
-        int probability = Randomizer.getInt(maxProbability);
-        if (probability < Setting.CELL_PLANT_PROBABILITY) {
-            return createPopulation(Items.PLANT, Setting.PLANT_INIT_PER_CELL);
-        } else if (probability < Setting.CELL_PLANT_PROBABILITY + Setting.CELL_HERBIVORE_PROBABILITY) {
-            return createPopulation(Items.HERBIVORE, Setting.HERBIVORE_INIT_PER_CELL);
-        } else
-            return createPopulation(Items.CARNIVORE, Setting.CARNIVORE_INIT_PER_CELL);
+        int plantHerbivoreProbability =
+                CELL_PLANT_PROBABILITY +
+                        CELL_HERBIVORE_PROBABILITY;
+        int allProbabilities =
+                plantHerbivoreProbability +
+                        CELL_CARNIVORE_PROBABILITY;
+
+        int probability = Randomizer
+                .getInt(allProbabilities);
+
+        if (probability < CELL_PLANT_PROBABILITY) {
+            return createPopulation(
+                    Items.PLANT,
+                    PLANT_INIT_PER_CELL
+            );
+        } else if (probability < plantHerbivoreProbability) {
+            return createPopulation(
+                    Items.HERBIVORE,
+                    HERBIVORE_INIT_PER_CELL
+            );
+        } else return createPopulation(
+                    Items.CARNIVORE,
+                    CARNIVORE_INIT_PER_CELL
+            );
     }
 
     public Landform createRandomLandform() {
-        return (Landform) Items.LANDFORM.getFactory().createItem();
+        return (Landform) Items.LANDFORM
+                .getFactory()
+                .createItem();
     }
 }

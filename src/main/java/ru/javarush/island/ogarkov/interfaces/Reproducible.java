@@ -3,5 +3,5 @@ package ru.javarush.island.ogarkov.interfaces;
 import ru.javarush.island.ogarkov.location.Cell;
 
 public interface Reproducible {
-    boolean reproduce(Cell cell);
+    void reproduce(Cell cell);
 }
