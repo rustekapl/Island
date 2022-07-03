@@ -1,15 +1,24 @@
 package ru.javarush.island.drogunov.util;
 
-import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class Randomizer {
-    public static int getRandomInteger(int to) {
-        return new Random().nextInt(to);
+    public static int getRandom(int to) {
+        if (to == 0) {
+            return 0;
+        }
+
+        return ThreadLocalRandom.current().nextInt(to);
     }
 
-    public static int getRandomInteger(int from, int to) {
-        return new Random().nextInt(from, to);
+    public static double getRandom(double to) {
+        if (to == 0) {
+            return 0.0;
+        }
+        return ThreadLocalRandom.current().nextDouble(to);
     }
 
-
+    public static boolean getResult(int probability) {
+        return ThreadLocalRandom.current().nextInt(0, 100) <= probability;
+    }
 }
