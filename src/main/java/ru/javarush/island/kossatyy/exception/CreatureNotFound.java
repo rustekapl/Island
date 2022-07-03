@@ -1,6 +1,8 @@
-package ru.javarush.island.kossatyy.exceptions;
+package ru.javarush.island.kossatyy.exception;
 
+@SuppressWarnings("unused")
 public class CreatureNotFound extends RuntimeException {
+
     public CreatureNotFound() {
     }
 
@@ -15,4 +17,5 @@ public class CreatureNotFound extends RuntimeException {
     public CreatureNotFound(Throwable cause) {
         super(cause);
     }
+
 }

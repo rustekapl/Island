@@ -1,6 +1,8 @@
-package ru.javarush.island.kossatyy.exceptions;
+package ru.javarush.island.kossatyy.exception;
 
+@SuppressWarnings("unused")
 public class CreatureOperationFail extends RuntimeException {
+
     public CreatureOperationFail() {
     }
 
@@ -15,4 +17,5 @@ public class CreatureOperationFail extends RuntimeException {
     public CreatureOperationFail(Throwable cause) {
         super(cause);
     }
+
 }
