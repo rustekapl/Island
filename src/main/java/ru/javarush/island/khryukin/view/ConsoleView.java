@@ -30,9 +30,7 @@ public class ConsoleView implements View{
                 Map<String, Set<Organism>> residents = cell.getResidents();
                 residents.values().stream()
                         .filter(s->s.size()>0)
-                        //.forEach(s->map.put(s.stream().findAny().get().toString(),s.size()));
                         .forEach(s->map.put(s.stream().findAny().get().getIcon(),s.size()));
-                        //.forEach(s->map.put(s.stream().findAny().get().getClass().getSimpleName().substring(0, 1),s.size()));
                 System.out.print(map);
                 map.clear();
             }
