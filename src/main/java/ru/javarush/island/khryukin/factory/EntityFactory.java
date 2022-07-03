@@ -12,9 +12,9 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.*;
 
 public class EntityFactory implements Factory{
-    private static final Class<?>[] TYPES = {Wolf.class, Horse.class, Bear.class, Plant.class, Fox.class,
+    private static final Class<?>[] TYPES = {Horse.class, Bear.class, Plant.class, Fox.class,
             Boa.class, Eagle.class, Deer.class, Rabbit.class, Mouse.class, Goat.class, Sheep.class,
-            Boar.class, Buffalo.class, Duck.class, Caterpillar.class};
+            Boar.class, Buffalo.class, Duck.class, Caterpillar.class, Wolf.class};
     private static final Organism[] PROTOTYPES;
 
     static {
