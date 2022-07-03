@@ -1,0 +1,215 @@
+{
+  "countPeriods" : 3,
+  "locationSize" : {
+    "LOCATION_WIDTH" : 20,
+    "LOCATION_HEIGHT" : 5
+  },
+  "creaturesIncluded" : {
+    "Plant" : "ru.javarush.island.stepanov.entities.creatures.plants.Plant",
+    "Rabbit" : "ru.javarush.island.stepanov.entities.creatures.animals.herbivores.Rabbit",
+    "Wolf" : "ru.javarush.island.stepanov.entities.creatures.animals.predators.Wolf",
+    "Snake" : "ru.javarush.island.stepanov.entities.creatures.animals.predators.Snake",
+    "Fox" : "ru.javarush.island.stepanov.entities.creatures.animals.predators.Fox",
+    "Bear" : "ru.javarush.island.stepanov.entities.creatures.animals.predators.Bear",
+    "Eagle" : "ru.javarush.island.stepanov.entities.creatures.animals.predators.Eagle",
+    "Horse": "ru.javarush.island.stepanov.entities.creatures.animals.herbivores.Horse",
+    "Deer" : "ru.javarush.island.stepanov.entities.creatures.animals.herbivores.Deer",
+    "Mouse" : "ru.javarush.island.stepanov.entities.creatures.animals.herbivores.Mouse",
+    "Goat" : "ru.javarush.island.stepanov.entities.creatures.animals.herbivores.Goat",
+    "Sheep" : "ru.javarush.island.stepanov.entities.creatures.animals.herbivores.Sheep",
+    "Boar" : "ru.javarush.island.stepanov.entities.creatures.animals.predators.Boar",
+    "Buffalo" : "ru.javarush.island.stepanov.entities.creatures.animals.herbivores.Buffalo",
+    "Duck" : "ru.javarush.island.stepanov.entities.creatures.animals.herbivores.Duck",
+    "Caterpillar" : "ru.javarush.island.stepanov.entities.creatures.animals.herbivores.Caterpillar"
+  },
+  "creatureGeneralSettingsMap" : {
+    "Plant" : {
+      "fullWeight" : 1.0,
+      "maxPopulationPerCell" : 200,
+      "startPopulation" : 500,
+      "speed" : 0,
+      "hungerCapacity" : 0.0,
+      "foodChainSettings" : {}
+    },
+    "Rabbit" : {
+      "fullWeight" : 2.0,
+      "maxPopulationPerCell" : 150,
+      "startPopulation" : 75,
+      "speed" : 2,
+      "hungerCapacity" : 0.45,
+      "foodChainSettings" : {
+        "Plant" : 100
+      }
+    },
+    "Wolf" : {
+      "fullWeight" : 50.0,
+      "maxPopulationPerCell" : 30,
+      "startPopulation" : 15,
+      "speed" : 3,
+      "hungerCapacity" : 8.0,
+      "foodChainSettings" : {
+        "Horse" : 10,
+        "Deer" : 15,
+        "Rabbit" : 60,
+        "Mouse" : 80,
+        "Goat" : 60,
+        "Sheep" : 70,
+        "Boar" : 15,
+        "Buffalo" : 10,
+        "Duck" : 40
+      }
+    },
+    "Snake" : {
+      "fullWeight" : 15.0,
+      "maxPopulationPerCell" : 30,
+      "startPopulation" : 15,
+      "speed" : 1,
+      "hungerCapacity" : 3.0,
+      "foodChainSettings" : {
+        "Fox" : 15,
+        "Rabbit" : 20,
+        "Mouse" : 40,
+        "Duck" : 10
+      }
+    },
+    "Fox" : {
+      "fullWeight" : 8.0,
+      "maxPopulationPerCell" : 30,
+      "startPopulation" : 15,
+      "speed" : 2,
+      "hungerCapacity" : 2.0,
+      "foodChainSettings" : {
+        "Rabbit" : 70,
+        "Mouse" : 90,
+        "Duck" : 60,
+        "Caterpillar" : 40
+      }
+    },
+    "Bear" : {
+      "fullWeight" : 500.0,
+      "maxPopulationPerCell" : 5,
+      "startPopulation" : 5,
+      "speed" : 2,
+      "hungerCapacity" : 80.0,
+      "foodChainSettings" : {
+        "Snake" : 80,
+        "Horse" : 40,
+        "Deer" : 80,
+        "Rabbit" : 80,
+        "Mouse" : 90,
+        "Goat" : 70,
+        "Sheep" : 70,
+        "Boar" : 50,
+        "Buffalo" : 20,
+        "Duck" : 10
+      }
+    },
+    "Eagle" : {
+      "fullWeight" : 6.0,
+      "maxPopulationPerCell" : 20,
+      "startPopulation" : 20,
+      "speed" : 3,
+      "hungerCapacity" : 1.0,
+      "foodChainSettings" : {
+        "Fox" : 10,
+        "Rabbit" : 90,
+        "Mouse" : 90,
+        "Duck" : 80
+      }
+    },
+    "Horse": {
+      "fullWeight" : 400.0,
+      "maxPopulationPerCell" : 20,
+      "startPopulation" : 20,
+      "speed" : 4,
+      "hungerCapacity" : 60.0,
+      "foodChainSettings" : {
+        "Plant" : 100
+      }
+    },
+    "Deer" : {
+      "fullWeight" : 300.0,
+      "maxPopulationPerCell" : 20,
+      "startPopulation" : 20,
+      "speed" : 4,
+      "hungerCapacity" : 50.0,
+      "foodChainSettings" : {
+        "Plant" : 100
+      }
+    },
+    "Mouse" : {
+      "fullWeight" : 0.05,
+      "maxPopulationPerCell" : 500,
+      "startPopulation" : 200,
+      "speed" : 1,
+      "hungerCapacity" : 0.01,
+      "foodChainSettings" : {
+        "Plant" : 100,
+        "Caterpillar" : 90
+      }
+    },
+    "Goat" : {
+      "fullWeight" : 60.0,
+      "maxPopulationPerCell" : 140,
+      "startPopulation" : 70,
+      "speed" : 3,
+      "hungerCapacity" : 10.0,
+      "foodChainSettings" : {
+        "Plant" : 100
+      }
+    },
+    "Sheep" : {
+      "fullWeight" : 70.0,
+      "maxPopulationPerCell" : 140,
+      "startPopulation" : 70,
+      "speed" : 3,
+      "hungerCapacity" : 15.0,
+      "foodChainSettings" : {
+        "Plant" : 100
+      }
+    },
+    "Boar" : {
+      "fullWeight" : 400.0,
+      "maxPopulationPerCell" : 50,
+      "startPopulation" : 30,
+      "speed" : 2,
+      "hungerCapacity" : 50.0,
+      "foodChainSettings" : {
+        "Mouse" : 50,
+        "Caterpillar" : 90,
+        "Plant" : 100
+      }
+    },
+    "Buffalo" : {
+      "fullWeight" : 700.0,
+      "maxPopulationPerCell" : 10,
+      "startPopulation" : 10,
+      "speed" : 3,
+      "hungerCapacity" : 100.0,
+      "foodChainSettings" : {
+        "Plant" : 100
+      }
+    },
+    "Duck" : {
+      "fullWeight" : 1.0,
+      "maxPopulationPerCell" : 200,
+      "startPopulation" : 100,
+      "speed" : 4,
+      "hungerCapacity" : 0.15,
+      "foodChainSettings" : {
+        "Plant" : 100,
+        "Caterpillar" : 90
+      }
+    },
+    "Caterpillar" : {
+      "fullWeight" : 0.01,
+      "maxPopulationPerCell" : 1000,
+      "startPopulation" : 400,
+      "speed" : 0,
+      "hungerCapacity" : 0,
+      "foodChainSettings" : {
+        "Plant" : 100
+      }
+    }
+  }
+}

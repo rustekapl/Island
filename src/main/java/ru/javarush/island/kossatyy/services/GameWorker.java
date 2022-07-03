@@ -1,47 +1,53 @@
 package ru.javarush.island.kossatyy.services;
 
-import lombok.RequiredArgsConstructor;
 import ru.javarush.island.kossatyy.entity.Game;
-import ru.javarush.island.kossatyy.settings.Config;
+import ru.javarush.island.kossatyy.entity.creatures.Creature;
+import ru.javarush.island.kossatyy.setting.Config;
 import ru.javarush.island.kossatyy.view.View;
 
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.*;
 import java.util.stream.Collectors;
 
-@RequiredArgsConstructor
+
 public class GameWorker extends Thread {
+
     private final Game game;
-    private final int PERIOD = Config.getConfig().getPERIOD();
+    private final int period;
+
+    public GameWorker(Game game) {
+        this.game = game;
+        this.period = Config.getConfig().getPeriod();
+    }
 
     @Override
     public void run() {
+
         View view = game.getView();
         view.showMap();
         view.showStatistics();
-        ScheduledExecutorService mainPool = Executors.newScheduledThreadPool(4);
-        int countCreatures = game.getEntityFactory().getAlfaSquad().size();
-        Phaser phaser = new Phaser();
+        ScheduledExecutorService mainPool = Executors.newScheduledThreadPool(1);
+        Map<String, Creature> prototypes = game.getEntityFactory().getPrototypes();
+        CountDownLatch latch = new CountDownLatch(prototypes.size());
 
-        List<CreatureWorker> workers = game
-                .getEntityFactory()
-                .getAlfaSquad()
+        List<CreatureWorker> workers = prototypes
                 .values()
                 .stream()
-                .map(creature -> new CreatureWorker(creature, game.getIsland(), phaser))
+                .map(creature -> new CreatureWorker(creature, game.getIsland(),latch))
                 .collect(Collectors.toList());
-        mainPool.scheduleAtFixedRate(() -> {
+
+        mainPool.scheduleWithFixedDelay(() -> {
             ExecutorService servicePool = Executors.newFixedThreadPool(4);
             workers.forEach(servicePool::submit);
             servicePool.shutdown();
-            //TODO Code style. Needs reformat or extraction to methods / variables / constants
             await(view, servicePool);
-        }, PERIOD, PERIOD, TimeUnit.MILLISECONDS);
+        }, period, period, TimeUnit.MILLISECONDS);
     }
 
     private void await(View view, ExecutorService servicePool) {
         try {
-            if (servicePool.awaitTermination(PERIOD, TimeUnit.MILLISECONDS)) {
+            if (servicePool.awaitTermination(3, TimeUnit.SECONDS)) {
                 view.showMap();
                 view.showStatistics();
             }
@@ -49,4 +55,5 @@ public class GameWorker extends Thread {
             throw new RuntimeException(e);
         }
     }
+
 }

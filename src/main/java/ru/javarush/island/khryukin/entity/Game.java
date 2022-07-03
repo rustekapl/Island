@@ -15,6 +15,7 @@ public class Game {
         this.view = view;
     }
 
+
     public GameMap getGameMap() {
         return gameMap;
     }

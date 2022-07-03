@@ -12,85 +12,66 @@ import ru.javarush.island.ogarkov.view.Controller;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
+import java.util.concurrent.*;
 import java.util.concurrent.atomic.AtomicLong;
 
 public class SimulationWorker extends Thread {
-    private static final AtomicLong hours = new AtomicLong();
+    private static final AtomicLong halfDay = new AtomicLong();
     private final Island island;
     private final Controller controller;
-    private final List<OrganismWorker> workers;
+    private final List<Callable<Boolean>> workers;
+    private final List<Callable<Boolean>> workersAtNewDay;
     private final StatisticsWorker statisticsWorker;
-    private final StartDayWorker startDayWorker;
-    private final ScheduledExecutorService mainPool;
-    private final ScheduledExecutorService updateablePool;
+    private ScheduledExecutorService mainPool;
     private final ExecutorService mainInnerPool;
-    private final ExecutorService updateableInnerPool;
-
 
     public SimulationWorker(Island island, Controller controller, Statistics statistics) {
         this.island = island;
         this.controller = controller;
+        statisticsWorker = new StatisticsWorker(island, statistics);
         workers = createWorkers();
-        statisticsWorker = new StatisticsWorker(island, controller, statistics);
-        startDayWorker = new StartDayWorker(island);
-        mainPool = Executors.newScheduledThreadPool(Runtime.getRuntime().availableProcessors());
-        updateablePool = Executors.newScheduledThreadPool(Runtime.getRuntime().availableProcessors());
-        mainInnerPool = Executors.newWorkStealingPool();
-        updateableInnerPool = Executors.newWorkStealingPool();
+        StartDayWorker startDayWorker = new StartDayWorker(island);
+        workersAtNewDay = new ArrayList<>(workers);
+        workersAtNewDay.add(startDayWorker);
+        mainPool = Executors.newSingleThreadScheduledExecutor();
+        mainInnerPool = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
     }
 
-    // TODO: 26.06.2022 добавить условие завершения симуляции + выход по закрытию окна
     @Override
     public void run() {
-        mainPool.scheduleWithFixedDelay(() -> {
-            workers.forEach(mainInnerPool::submit);
-            mainInnerPool.submit(statisticsWorker);
-            if (hours.get() % 24 == 0) {
-                mainInnerPool.submit(startDayWorker);
-            }
-            hours.incrementAndGet();
-
-        }, Setting.INITIAL_DELAY, Setting.MAIN_DELAY, TimeUnit.MILLISECONDS);
-
-        updateablePool.scheduleWithFixedDelay(() -> {
-            updateableInnerPool.submit(controller::prepareForUpdateView);
-            updateableInnerPool.submit(() -> Platform.runLater(controller::updateView));
-
-        }, Setting.INITIAL_DELAY, Setting.UPDATE_DELAY, TimeUnit.MILLISECONDS);
+        mainPool.scheduleWithFixedDelay(this::lifeCycle, Setting.INITIAL_DELAY, Setting.MAIN_DELAY, TimeUnit.MILLISECONDS);
     }
 
     public void stopIt() {
-        workers.forEach(OrganismWorker::stopIt);
-        startDayWorker.stopIt();
         mainInnerPool.shutdown();
-        updateableInnerPool.shutdown();
         mainPool.shutdown();
-        updateablePool.shutdown();
         try {
             if (!mainInnerPool.awaitTermination(Setting.INITIAL_DELAY, TimeUnit.MILLISECONDS)) {
                 mainInnerPool.shutdownNow();
             }
-            if (!updateableInnerPool.awaitTermination(Setting.INITIAL_DELAY, TimeUnit.MILLISECONDS)) {
-                updateableInnerPool.shutdownNow();
-            }
             if (!mainPool.awaitTermination(Setting.INITIAL_DELAY, TimeUnit.MILLISECONDS)) {
                 mainPool.shutdownNow();
-            }
-            if (!updateablePool.awaitTermination(Setting.INITIAL_DELAY, TimeUnit.MILLISECONDS)) {
-                updateablePool.shutdownNow();
             }
         } catch (InterruptedException e) {
             throw new IslandException(e);
         }
     }
 
-    private List<OrganismWorker> createWorkers() {
-        List<OrganismWorker> workers = new ArrayList<>();
-        for (Items organismItem : Items.getOrganismItems()) {
+    public void changeSpeed(long period) {
+        mainPool.shutdown();
+        try {
+            if (mainPool.awaitTermination(Long.MAX_VALUE, TimeUnit.MILLISECONDS)) {
+                mainPool = Executors.newSingleThreadScheduledExecutor();
+                mainPool.scheduleWithFixedDelay(this::lifeCycle, period, period, TimeUnit.MILLISECONDS);
+            }
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private List<Callable<Boolean>> createWorkers() {
+        List<Callable<Boolean>> workers = new ArrayList<>();
+        for (Items organismItem : Items.getLowerItems()) {
             List<Territory> territories = new ArrayList<>(island.getTerritories());
             Collections.shuffle(territories);
             workers.add(new OrganismWorker(organismItem, territories));
@@ -98,5 +79,19 @@ public class SimulationWorker extends Thread {
         return workers;
     }
 
-
+    private void lifeCycle() {
+        try {
+            if (halfDay.get() % 2 != 0) {
+                mainInnerPool.invokeAll(workers);
+            } else {
+                mainInnerPool.invokeAll(workersAtNewDay);
+            }
+        } catch (InterruptedException e) {
+            throw new IslandException(e);
+        }
+        statisticsWorker.calculate();
+        controller.prepareForUpdateView();
+        Platform.runLater(controller::updateView);
+        halfDay.incrementAndGet();
+    }
 }

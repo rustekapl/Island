@@ -36,7 +36,7 @@ public class Main extends Application {
         simulationWorker.start();
     }
 
-    public void createSimulation() {
+    public void createSimulation () {
         ItemsLoader.loadItems();
         var territoryCreator = new TerritoryCreator();
         var islandCreator = new IslandCreator(territoryCreator);
@@ -45,10 +45,17 @@ public class Main extends Application {
         controller = new Controller(island, statistics);
     }
 
-    private void loadSimulationForm(Stage stage) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("/ogarkov/simulationForm.fxml"));
+    private void loadSimulationForm (Stage stage) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(
+                Main.class
+                        .getResource("/ogarkov/simulationForm.fxml")
+        );
         fxmlLoader.setController(controller);
-        stage.getIcons().add(new Image((Objects.requireNonNull(getClass().getResourceAsStream("/ogarkov/icon.png")))));
+        stage.getIcons().add(
+                new Image(
+                        (Objects.requireNonNull(getClass()
+                                .getResourceAsStream("/ogarkov/icon.png")))
+                ));
         Scene scene = new Scene(fxmlLoader.load());
         stage.setTitle(Setting.SIMULATION_NAME);
         stage.setScene(scene);
