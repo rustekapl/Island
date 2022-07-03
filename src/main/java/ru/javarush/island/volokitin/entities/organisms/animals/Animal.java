@@ -49,7 +49,7 @@ public abstract class Animal extends Organism {
     private boolean safeEat(Area area) {
         area.getLock().lock();
         boolean ate = false;
-
+        //TODO Code style. Long code. Needs to be split into several methods
         try {
             Settings settings = Settings.get();
             OrganismsCommonSpecs animalCommonSpecs = settings.getOrganismCommonSpecsByType(this.getType());

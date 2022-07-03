@@ -11,7 +11,7 @@ public class Task implements Runnable {
     protected final Cell cell;
 
     public void run() {
-
+        //TODO ---  abstract?
     }
 
 }

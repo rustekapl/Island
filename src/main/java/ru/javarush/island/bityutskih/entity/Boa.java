@@ -8,6 +8,7 @@ public class Boa extends Predators {
 
     public Boa() {
         super();
+        //TODO Coding. Hard code. Not flexible
         EATING.put(Bear.class.getCanonicalName(), 0);
         EATING.put(Boar.class.getCanonicalName(), 0);
         EATING.put(Buffalo.class.getCanonicalName(), 0);

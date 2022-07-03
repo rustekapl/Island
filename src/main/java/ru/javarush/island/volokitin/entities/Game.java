@@ -19,8 +19,10 @@ public class Game {
         Area[][] areas = world.getAreas();
         for (int i = 0; i < areas.length; i++) {
             for (int j = 0; j < areas[i].length; j++) {
+                //TODO Code style. Needs reformat. One line - one method
                 int rowNumber = String.valueOf(Settings.get().getMapRows()).length();
                 int colNumber = String.valueOf(Settings.get().getMapCols()).length();
+                //TODO Coding. System.out here? Need move the output to View layer
                 System.out.printf("%0" + rowNumber + "d/%0" + colNumber + "d    %s\n", i + 1, j + 1, areas[i][j]);
             }
         }

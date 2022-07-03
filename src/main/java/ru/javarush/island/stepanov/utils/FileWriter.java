@@ -12,6 +12,7 @@ import java.nio.file.DirectoryStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
+//TODO ---  bad name FileWriter (in JDK found)
 public class FileWriter {
 
     public static String writeFile(String path, String textToWrite){
@@ -20,8 +21,7 @@ public class FileWriter {
 
         try (
                 BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(
-                new FileOutputStream(path), StandardCharsets.UTF_8)))
-        {
+                        new FileOutputStream(path), StandardCharsets.UTF_8))) {
             bufferedWriter.write(textToWrite);
         } catch (IOException e){
             e.printStackTrace();

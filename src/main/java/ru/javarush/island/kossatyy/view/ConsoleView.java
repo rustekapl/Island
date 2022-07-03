@@ -13,6 +13,7 @@ import java.util.*;
 
 public class ConsoleView implements View {
 
+    //TODO Coding. Need move to config or settings
     public static final int HEIGHT_DIAGRAM = 10;
     public static final int POPULATION_HIGH = 70; // int between 40 - 100
     public static final int POPULATION_AVERAGE = POPULATION_HIGH - 40;

@@ -12,6 +12,7 @@ public class Constants {
     public static final Map<Class<?>, String> GAME_UNITS = new HashMap<>();
 
     static {
+        //TODO Coding. Hard code. Not flexible
         GAME_UNITS.put(Wolf.class, "10 Horse 15 Deer 60 Rabbit 80 Mouse 60 Goat 70 Sheep 15 Board 10 Buffalo 40 Duck");
         GAME_UNITS.put(Boa.class, "15 Fox 20 Rabbit 40 Mouse 10 Duck");
         GAME_UNITS.put(Fox.class, "70 Rabbit 90 Mouse 60 Duck 40 Caterpillar");

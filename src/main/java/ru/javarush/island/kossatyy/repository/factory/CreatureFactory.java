@@ -22,6 +22,7 @@ public abstract class CreatureFactory implements Factory {
 
     @Override
     public Map<String, Creature> getPrototypes() {
+        //TODO ---  NPE? May be need just abstract?
         return null;
     }
 }

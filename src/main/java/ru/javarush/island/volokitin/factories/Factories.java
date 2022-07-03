@@ -12,6 +12,7 @@ public class Factories {
 
     private Factories() {
         factoriesMap = new HashMap<>();
+        //TODO Coding. Hard code. Not flexible. Array??? Or reflection and cfg???
         factoriesMap.put("Bear", new BearFactory());
         factoriesMap.put("Boa", new BoaFactory());
         factoriesMap.put("Eagle", new EagleFactory());

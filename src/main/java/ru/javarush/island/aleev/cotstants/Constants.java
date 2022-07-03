@@ -6,13 +6,14 @@ import static ru.javarush.island.aleev.cotstants.OrganismType.*;
 public class Constants {
     public static final int LENGTH_ISLAND = 100;
     public static final int WIDTH_ISLAND = 20;
+    //TODO --- Code style. Need always delete code. Not comment it.
 //    public static final int TIME_CYCLE = 500;
 
     public static OrganismType[] getHerbivores(){
         return new OrganismType[]{BOAR,BUFFALO,CATERPILLAR,DEER,DUCK,GOAT,HORSE,MOUSE,RABBIT,SHEEP};
     }
 
-
+    //TODO Code style. Many warnings. Skip or fix it.
     public static final String NAME_BEAR = "Bear";
     public static final String BEAR_ICON = "\uD83D\uDC3B";
     public static final double MAX_WEIGHT_BEAR = 500;

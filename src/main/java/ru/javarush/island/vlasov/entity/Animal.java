@@ -5,6 +5,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 
 public abstract class Animal implements Nature {
+    //TODO ---  flat package for entities
     private final float WEIGHT;
     private final int SPECIES_PER_SPOT;
     private final int TRAVEL_SPEED;

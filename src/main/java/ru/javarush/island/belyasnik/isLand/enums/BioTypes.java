@@ -18,6 +18,7 @@ public enum BioTypes {
     BEAR, // 14
     EAGLE; // 15
 
+    //TODO --- Code style. Need delete unused code.
     public static class Param {
 
 

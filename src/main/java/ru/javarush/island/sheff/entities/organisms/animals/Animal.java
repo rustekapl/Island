@@ -99,6 +99,7 @@ public abstract class Animal extends Organism implements Eating, Moving {
     public void endTurn() {
         steps = limit.getMaxSpeed();
         canBreed = isFemaleGender();
+        //TODO Coding. Magic values or methods. Bad reading and understanding
         weight = weight - limit.getMaxFood() / 1.5 - 0.001;
         dead = weight <= 0;
     }

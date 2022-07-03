@@ -46,6 +46,7 @@ public final class Default {
     V - limits of this creature Limit(double maxWeight, int maxPopulation, int speed).
     */
     public static final Map<String, Limit> LIMITS = Map.ofEntries( //TODO How to simple?
+            //TODO ---  I think here need read from config or data class. And cycles or streams.
             entry("Wolf", new Limit(50, 30, 3)),
             entry("Snake", new Limit(15, 30, 1)),
             entry("Fox", new Limit(8, 30, 2)),
@@ -69,6 +70,7 @@ public final class Default {
     V - creature icon.
     */
     public static final Map<String, String> ICONS = Map.ofEntries(
+            //TODO ---  see above
             entry("Wolf", "\uD83D\uDC3A"),
             entry("Snake", "\uD83D\uDC0D"),
             entry("Fox", "\uD83E\uDD8A"),

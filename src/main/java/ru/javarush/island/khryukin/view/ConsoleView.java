@@ -90,6 +90,7 @@ public class ConsoleView implements View{
                 .sorted((o1, o2) -> o2.size() - o1.size())
                 .limit(positions)
                 .map(list -> list.stream().findAny().get().getClass().getSimpleName().substring(0, 1))
+                //TODO --- Code style. Need always delete code. Not comment it.
                 //.map(list -> list.stream().findAny().get().getIcon())
                 .map(Object::toString)
                 .collect(Collectors.joining());

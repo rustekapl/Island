@@ -11,6 +11,7 @@ public class Buffalo extends Animal {
     }
 
     public static Organism birth() {
+        //TODO Code style. Needs reformat. One line - one method
         return new Buffalo(Setting.BUFFALO_NAME, Setting.BUFFALO_ICON, Setting.BUFFALO_MAX_WEIGHT, new Limit(Setting.BUFFALO_MAX_WEIGHT, Setting.BUFFALO_MAX_COUNT, Setting.BUFFALO_MAX_SPEED, Setting.BUFFALO_MAX_FOOD));
     }
 }

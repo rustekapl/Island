@@ -44,6 +44,7 @@ public class Setting {
     //=============================== /INIT ========================================
 
     //=============================== FOOD_RATION ==================================
+    //TODO ---  JSON???? Just save to cfg file
     public static final String[][][] FOOD_RATION = {
             {{"BEAR"}, {"boa:80", "horse:40", "deer:80", "rabbit:80", "mouse:90", "goat:70", "sheep:70", "boar:50", "buffalo:20", "duck:10"}},
             {{"BOA"}, {"fox:15", "rabbit:20", "mouse:40", "duck:10"}},

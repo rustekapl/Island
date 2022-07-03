@@ -23,6 +23,7 @@ public class OrganismFactory {
     }
 
     public Organism getPrototype(OrganismType organismType) {
+        //TODO Coding. Hard code. Not flexible
         return switch (organismType) {
             case BEAR -> new Bear(GameParameters.getInstance().getParameters().get(BEAR));
             case BOA -> new Boa(GameParameters.getInstance().getParameters().get(BOA));

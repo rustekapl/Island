@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 
+//TODO ---  bad name FileReader (in JDK found)
 public class FileReader {
 
     private FileReader() {

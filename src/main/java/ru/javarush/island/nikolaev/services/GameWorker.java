@@ -17,6 +17,7 @@ public class GameWorker extends Thread {
 
     @Override
     public void run() {
+        //TODO Code style. Many warnings. Skip or fix it.
         ScheduledExecutorService mainPool = (ScheduledExecutorService) Executors.newScheduledThreadPool(THREADCOUNT);
 
         List<OrganismWorker> workers = game.getEntityFactory().getAllPrototypes()

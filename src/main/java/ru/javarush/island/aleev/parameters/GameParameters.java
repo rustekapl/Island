@@ -24,6 +24,7 @@ public class GameParameters {
 
 
     private void initParameters() {
+        //TODO Coding. Hard code. Not flexible
         parameters.put(OrganismType.BEAR, new Parameters(Constants.BEAR_ICON, Constants.MAX_COUNT_BEAR, Constants.MAX_SPEED_BEAR));
         parameters.put(OrganismType.BOA, new Parameters(Constants.BOA_ICON, Constants.MAX_COUNT_BOA, Constants.MAX_SPEED_BOA));
         parameters.put(OrganismType.EAGLE, new Parameters(Constants.EAGLE_ICON, Constants.MAX_COUNT_EAGLE, Constants.MAX_SPEED_EAGLE));

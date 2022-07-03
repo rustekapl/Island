@@ -6,7 +6,7 @@ import ru.javarush.island.ivanov.entities.Creature;
 import java.util.Set;
 
 public class CheckForMaxNumberAtSquare {
-
+    //TODO ---  need NotNull here? and dependencies?
     public static boolean checkForEnoughSpace(@NotNull Creature creature) {
         int maxNumberAtSquare = creature
                 .getParams()

@@ -13,6 +13,7 @@ import java.util.concurrent.TimeUnit;
 public class PlantRunner implements Runnable {
     private final Plant plant;
     private final Spot spot;
+    //TODO Coding. Need move to config or settings
     private final int PERIOD = 1000;
 
     private final ScheduledExecutorService plantExecService;

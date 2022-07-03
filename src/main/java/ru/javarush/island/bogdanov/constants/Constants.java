@@ -9,6 +9,7 @@ public class Constants {
     public static final int ISLAND_ROWS = 5;
     public static final String BIOSPHERE_PACKAGE_NAME = "ru.javarush.island.bogdanov.biosphere";
     public static final List<String> ANIMAL_NAMES = new ArrayList<>() {{
+        //TODO ---  array????
         add("Wolf");
         add("Snake");
         add("Fox");

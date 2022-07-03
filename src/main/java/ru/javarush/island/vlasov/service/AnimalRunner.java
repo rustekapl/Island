@@ -14,6 +14,7 @@ import java.util.concurrent.TimeUnit;
 @SuppressWarnings("FieldCanBeLocal")
 public class AnimalRunner implements Runnable {
     private final Animal animal;
+    //TODO Coding. May be need move to common settings?
     private final int PERIOD = 1000;
     private Spot spot;
     private final ScheduledExecutorService animalExecService;

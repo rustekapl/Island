@@ -12,6 +12,7 @@ public class EatTask extends Task {
     @Override
     public void run() {
         if (creature instanceof Animal) {
+            //TODO ---  jdk 17? Pattern matching
             Animal animal = (Animal) creature;
             animal.eat(cell);
         }

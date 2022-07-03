@@ -57,6 +57,7 @@ public abstract class Organism implements Reproducing, Cloneable{
     }
     public static <T extends Organism> T clone(T original) {
         try {
+            //TODO ---  suppress the warnings
             return (T) original.clone();
         } catch (CloneNotSupportedException e) {
             throw new IslandRunException("Cloneable error"+ e);

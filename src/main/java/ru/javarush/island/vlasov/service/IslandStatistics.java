@@ -39,12 +39,13 @@ public class IslandStatistics implements Runnable {
         islandMaxSpecies = getMaxPopulation(islandNatureStatistics);
         islandMin = islandNatureStatistics.get(islandMinSpecies);
         islandMax = islandNatureStatistics.get(islandMaxSpecies);
-
+        //TODO Coding. System.out here? Need move the output to View layer
         printIsland(islandMinSpecies, islandMaxSpecies, islandMin, islandMax, statistics);
         System.out.println("*********************************************************************");
     }
 
     private void printIsland(String islandMinSpecies, String islandMaxSpecies, int islandMin, int islandMax, int[] statistics) {
+        //TODO Coding. System.out here? Need move the output to View layer
         System.out.println("Island statistics:"
                 + "\t *** Predators: " + statistics[0]
                 + "\t *** Herbivores: " + statistics[1]
@@ -74,6 +75,8 @@ public class IslandStatistics implements Runnable {
         for (Spot[] spot : spots) {
             for (Spot sp : spot) {
                 SpotStatistics spotStatistics = sp.getSpotStatistics();
+                //TODO ---  why not array?
+                //TODO Coding. Magic values or methods. Bad reading and understanding
                 statistics[0] += spotStatistics.getPredatorCount();
                 statistics[1] += spotStatistics.getHerbCount();
                 statistics[2] += spotStatistics.getPlantCount();
@@ -120,6 +123,7 @@ public class IslandStatistics implements Runnable {
         Set<String> strSet = natureStatistics.keySet();
         for (String str : strSet) {
             Integer i = natureStatistics.get(str);
+            //TODO Coding. Magic values or methods. Bad reading and understanding
             if (i > max && !"Plant".equals(str)) {
                 max = i;
                 maxSpecies = str;

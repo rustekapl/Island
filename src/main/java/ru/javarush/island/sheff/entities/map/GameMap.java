@@ -72,6 +72,7 @@ public class GameMap {
         for (int i = 0; i < rows; i++) {
             Cell[] cell = cells[i];
             for (int j = 0; j < cols; j++) {
+                //TODO ---  name cell1???
                 Cell cell1 = cell[j];
                 cell1.getResidents()
                         .values()

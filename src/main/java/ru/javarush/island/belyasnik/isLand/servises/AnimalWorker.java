@@ -19,6 +19,8 @@ public class AnimalWorker implements Callable<String>, AnimalActions {
     private final Organism organism;
     private final String threadName;
     private static final AtomicInteger POOL_NUMBER = new AtomicInteger(1); // номер группы
+
+    //TODO --- Code style. Need always delete code. Not comment it.
     //public AtomicInteger countThread = new AtomicInteger(0);
 
     public AnimalWorker(IslandMap islandMap, Cell cell, Organism organism) {

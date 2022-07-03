@@ -24,6 +24,7 @@ public class Cell {
 
     @Getter
     private final Lock lock = new ReentrantLock(true);
+    //TODO Code style. Many warnings. Skip or fix it.
     private final List<Cell> nextCell = new ArrayList<>();
 
     public void updateNextCell(GameMap map, int row, int col) {

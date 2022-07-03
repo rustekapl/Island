@@ -9,17 +9,21 @@ import java.util.HashMap;
 
 
 public class AnimalsFactory {
-    private final static HashMap<Integer,Organism> PROTOTYPES = new HashMap<>(){};
-    static{
-        PROTOTYPES.put(0, new Wolf(50.0, 30, 3, 8,4.0));
-        PROTOTYPES.put(1, new Boa(15, 30, 1, 3,1.5));
-        PROTOTYPES.put(2, new Fox(8, 30, 2, 2,1.0));
-        PROTOTYPES.put(3, new Bear(500, 5, 2, 80,40.0));
-        PROTOTYPES.put(4, new Eagle(6, 20, 3, 1,0.5));
+    private final static HashMap<Integer, Organism> PROTOTYPES = new HashMap<>() {
+    };
 
-        PROTOTYPES.put(5, new Horse(400.0, 20, 4, 60,30.0));
-        PROTOTYPES.put(6, new Deer(300, 20, 4, 50,25.0));
-        PROTOTYPES.put(7, new Rabbit(2, 150, 2, 0.45,0.15));
+    //TODO Coding. Magic values or methods. Bad reading and understanding
+    //TODO Coding. here need cycles or streams
+    static {
+        PROTOTYPES.put(0, new Wolf(50.0, 30, 3, 8, 4.0));
+        PROTOTYPES.put(1, new Boa(15, 30, 1, 3, 1.5));
+        PROTOTYPES.put(2, new Fox(8, 30, 2, 2, 1.0));
+        PROTOTYPES.put(3, new Bear(500, 5, 2, 80, 40.0));
+        PROTOTYPES.put(4, new Eagle(6, 20, 3, 1, 0.5));
+
+        PROTOTYPES.put(5, new Horse(400.0, 20, 4, 60, 30.0));
+        PROTOTYPES.put(6, new Deer(300, 20, 4, 50, 25.0));
+        PROTOTYPES.put(7, new Rabbit(2, 150, 2, 0.45, 0.15));
         PROTOTYPES.put(8, new Mouse(0.05, 500, 1, 0.01,0.005));
         PROTOTYPES.put(9, new Goat(60, 140, 3, 10,5.0));
         PROTOTYPES.put(10, new Sheep(70, 140, 3, 15,7.0));

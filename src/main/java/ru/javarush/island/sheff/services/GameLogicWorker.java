@@ -42,6 +42,7 @@ public class GameLogicWorker extends Thread {
     }
 
     public void initialize() {
+        //TODO Code style. Long code. Needs to be split into several methods
         this.transferCount = gameMap.getTransferCount();
         IntStream.range(0, gameMap.getCells().length).forEach(i -> rows.put(i, gameMap.getCells()[i]));
         statistics = getStatistics();

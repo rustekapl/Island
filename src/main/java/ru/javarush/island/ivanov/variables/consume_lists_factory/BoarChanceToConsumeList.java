@@ -7,6 +7,7 @@ public class BoarChanceToConsumeList extends ChanceToConsumeList {
     private static final Map<String, Integer> chanceToConsume = new HashMap<>();
 
     static {
+        //TODO Coding. Hard code. Not flexible
         chanceToConsume.put("Bear", 0);
         chanceToConsume.put("Boar", 0);
         chanceToConsume.put("Buffalo", 0);

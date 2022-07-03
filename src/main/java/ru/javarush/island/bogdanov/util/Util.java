@@ -4,6 +4,8 @@ import java.util.concurrent.ThreadLocalRandom;
 
 public class Util {
 
+    //TODO ---  I can create new Util()
+
     public static boolean getRandomGender() {
         return ThreadLocalRandom.current().nextBoolean();
     }

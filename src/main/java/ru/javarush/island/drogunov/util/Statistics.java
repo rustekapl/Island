@@ -3,7 +3,9 @@ package ru.javarush.island.drogunov.util;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class Statistics {
+    //TODO Coding. Russian text?? Ok. My opinion: 我想很多人都很難閱讀。
     //TODO да можно сделать не статикой) осталось до 14:00 не много времени)
+    //TODO ---  yes
     private static final AtomicInteger days = new AtomicInteger();
     private static final AtomicInteger countDeadAll = new AtomicInteger();
     private static int countDeadLastDay = 0;

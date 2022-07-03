@@ -6,6 +6,7 @@ public class Deer extends Herbivore {
     private final HashMap<String, Integer> CHANCE_TO_EAT = new HashMap<>();
 
     public Deer() {
+        //TODO Coding. Hard code. Not flexible
         super(300, 20, 4, 50);
         CHANCE_TO_EAT.put(Plant.class.getCanonicalName(), 100);
     }

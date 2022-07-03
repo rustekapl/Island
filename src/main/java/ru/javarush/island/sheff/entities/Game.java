@@ -11,6 +11,8 @@ import ru.javarush.island.sheff.view.SimulatorView;
 @RequiredArgsConstructor
 public class Game {
 
+    //TODO ---  it is not data class
+
     private final GameMap gameMap;
     private final OrganismFactory organismFactory;
     private final SimulatorView simulatorView;

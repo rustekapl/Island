@@ -24,7 +24,7 @@ public class CallEndTurnTask extends Task {
 
         Arrays.stream(cells).forEach(cell -> cell.getResidents()
                 .forEach((s, organisms) -> organisms.removeIf(Organism::isDead)));
-
+        //TODO Coding. System.out here? Need move the output to View layer
         System.out.println("Конец хода");
 
         return true;

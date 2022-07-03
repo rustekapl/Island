@@ -25,7 +25,7 @@ public class CallEatTask extends Task {
                         ((Eating) organism).eat(cell.getResidents());
                     }
                 }));
-
+        //TODO Coding. System.out here? Need move the output to View layer
         System.out.println("Поели");
 
         return true;

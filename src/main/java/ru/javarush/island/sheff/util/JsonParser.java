@@ -10,7 +10,7 @@ import java.io.FileReader;
 import java.io.IOException;
 
 public class JsonParser {
-
+    //TODO ---  private???
     Gson gson = new Gson();
     JsonObject jsonObject;
 

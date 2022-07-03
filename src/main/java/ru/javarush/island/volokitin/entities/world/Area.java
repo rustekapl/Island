@@ -42,7 +42,9 @@ public class Area {
 
 
         inhabitants.entrySet()
+                //TODO Code style. Many warnings. Skip or fix it.
                 .forEach(entry -> {
+                    //TODO Code style. Needs reformat. One line - one method
                     OrganismsCommonSpecs organismCommonSpecs = Settings.get().getOrganismCommonSpecsByType(entry.getKey());
                     String icon = organismCommonSpecs.getIcon();
                     long count = entry.getValue().size();

@@ -10,7 +10,7 @@ public class EntityFactory {
     }
 
     public static Entity createAnimal(EntityType type) {
-
+        //TODO ---  map?
         return switch (type) {
             case WOLF -> new Wolf();
             case SNAKE -> new Snake();

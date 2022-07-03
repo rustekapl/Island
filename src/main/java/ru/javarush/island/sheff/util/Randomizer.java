@@ -4,6 +4,8 @@ import java.util.concurrent.ThreadLocalRandom;
 
 public class Randomizer {
 
+    //TODO ---  I can create instance
+
     public static int getZeroToBound(int bound) {
         return ThreadLocalRandom.current().nextInt(0, bound);
     }

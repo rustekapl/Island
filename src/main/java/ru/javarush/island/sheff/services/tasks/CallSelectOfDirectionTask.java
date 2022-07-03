@@ -20,7 +20,7 @@ public class CallSelectOfDirectionTask extends Task {
                 .flatMap(Collection::stream)
                 .filter(organisms -> organisms instanceof Moving && !organisms.isDead() && organisms.getSteps() > 0)
                 .forEach(organisms -> ((Moving) organisms).selectOfDirection(cell.getAdjacentCells())));
-
+        //TODO Coding. System.out here? Need move the output to View layer
         System.out.println("Выбрали направление");
 
         return true;

@@ -37,7 +37,7 @@ public class SpotStatistics implements Runnable {
                     natureStatistics.put(species.toString(), 1);
                 }
             }
-
+            //TODO Coding. Hard code. Not flexible
             if (species instanceof Predator && !species.isDead()) {
                 predatorCount++;
             } else if (species instanceof Herbivore && !species.isDead()) {

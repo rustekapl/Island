@@ -40,6 +40,7 @@ public class Settings {
 
             organismsTypes = new ArrayList<>(organismsCommonSpecs.keySet());
         } catch (IOException e) {
+            //TODO Coding. System.out here? Need move the output to View layer
             System.out.printf("Ошибка при чтении файла настроек init.yml: %s", e);
         }
     }

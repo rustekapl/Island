@@ -24,6 +24,7 @@ public class Plant extends Organism implements Breeding {
     public Set<Organism> spawn() {
 
         if (weight < limit.getMaxWeight()) {
+            //TODO Coding. Magic values or methods. Bad reading and understanding
             weight = weight < limit.getMaxWeight() - limit.getMaxWeight() / 1.5 ?
                     weight * 1.5 : limit.getMaxWeight();
         }
@@ -41,6 +42,7 @@ public class Plant extends Organism implements Breeding {
     @Override
     public void endTurn() {
         canBreed = true;
+        //TODO Coding. Magic values or methods. Bad reading and understanding
         weight = weight <= limit.getMaxWeight() - 15 ? +15 : weight;
     }
 }

@@ -8,7 +8,7 @@ public abstract class Animal implements Nature {
     private final AtomicBoolean isDead = new AtomicBoolean(false);
     private float full = 0;
 
-
+    //TODO ---  flat structure
     public Animal() {
     }
 

@@ -119,6 +119,7 @@ public class IslandMapWorker extends Thread {
                         future.get(); // получаем результат
                         //System.out.println(f.get());
                     } catch (CancellationException | ExecutionException | InterruptedException ignore) {
+                        //TODO ---  empty catch????
                     }
                 }
 

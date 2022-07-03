@@ -18,6 +18,7 @@ public class FactoryGameUnit implements Factory {
 
     @Override
     public Cell createCell() {
+        //TODO Code style. Long code. Needs to be split into several methods
         Cell cell = new Cell();
         Map<String, Set<GameUnit>> gameUnitList = cell.getUnitsMap();
         for (Class<?> unit : Constants.GAME_UNITS.keySet()) {

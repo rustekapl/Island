@@ -22,6 +22,7 @@ public class Task {
         this.gameUnit = gameUnit;
         this.cell = cell;
         this.gameMap = gameMap;
+        //TODO Coding. Magic values or methods. Bad reading and understanding
         decreaseForWalk = gameUnit.getLimits().getMaxSatiety() * 0.3;
         decreaseForMultiply = gameUnit.getLimits().getMaxSatiety() * 0.5;
     }
@@ -38,6 +39,9 @@ public class Task {
             //TODO Метод Eat реализован по другому чем walk and multiply.
             // старался сделать по ООП, То что передается Cell видел, не успел исправить, для этого необходимо делать
             // эффективный поиск Cell по GameUnit в GameMap
+
+            //можно и так и эдак, но надо ОДНОТИПНО. Сложную логику всегда лучше в сервисы,
+            // но у нас в задании есть условие про ООП в животных.
             taskEat(animal);
             animal.walk(cell);
             gameUnit.subtractionSatiety(decreaseForWalk);

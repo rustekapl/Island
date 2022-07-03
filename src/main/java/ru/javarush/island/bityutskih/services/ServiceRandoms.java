@@ -4,6 +4,7 @@ package ru.javarush.island.bityutskih.services;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class ServiceRandoms {
+    //TODO ---  Util package?
     private ServiceRandoms() {
     }
 

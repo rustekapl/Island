@@ -17,20 +17,24 @@ public abstract class Animal extends GameUnit implements Walkable, Eating {
         super.satiety = Randomizer.getRandom(limits.getMaxSatiety());
     }
 
+    //TODO Coding. Russian text?? Ok. My opinion: 我想很多人都很難閱讀。
     @Override
     public void eat(GameUnit target) {
         //TODO А есть ли тут необходимость в BigDecimal???
         // Комментарии оставлены специально
+        //TODO ---  нет. вес неточный. были бы деньги - тогда да.
 //        BigDecimal weightTargetUnit = new BigDecimal(target.getWeight());
 //        BigDecimal neededSatiety = new BigDecimal(this.satiety - limits.getMaxSatiety());
 //        BigDecimal result = weightTargetUnit.subtract(neededSatiety);
         //TODO и внутри класса лучше как обратятся\записывать через Getter\Setter??
         // Это поля этого класса но родителя
+        // вполне ок
         double maxSatiety = this.limits.getMaxSatiety();
         double neededSatiety = this.satiety - maxSatiety;
         double weightTarget = target.getWeight();
         double result = neededSatiety + weightTarget;
         //TODO вот погрешность можно было бы обработать тут или обработать в сеттере
+        //TODO ---  логику лучше не в сеттерах. тут ок
         plusSatiety(result > 0 ? neededSatiety : weightTarget);
 
     }

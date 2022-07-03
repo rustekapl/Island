@@ -8,6 +8,7 @@ public class Settings {
     public static final HashMap<String, String> unicodeSymbols = new HashMap<>();
 
     static {
+        //TODO Coding. Hard code. Not flexible
         unicodeSymbols.put("Bear", "\uD83D\uDC3B");
         unicodeSymbols.put("Boa", "\uD83D\uDC0D");
         unicodeSymbols.put("Boar", "\uD83D\uDC17");

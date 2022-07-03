@@ -53,6 +53,7 @@ public abstract class Animal
     }
 
     //TODO Починить еду и прикрепить рацион из таблицы в Config
+    //TODO Code style. Many warnings. Skip or fix it.
     private boolean safeSpawnAnimal(Cell cell) {
         cell.getLock().lock();
         try {
@@ -77,6 +78,7 @@ public abstract class Animal
         }
     }
 
+    //TODO Code style. Many warnings. Skip or fix it.
     private Cell findLastCell(Cell startCell, int countCellForStep) {
         Set<Cell> visitedCells = new HashSet<>();
         while (visitedCells.size() < countCellForStep) {
@@ -96,7 +98,7 @@ public abstract class Animal
         return startCell;
     }
 
-
+    //TODO Code style. Many warnings. Skip or fix it.
     private void safeModification(Cell cell, Consumer<Cell> operation) {
         cell.getLock().lock();
         try {

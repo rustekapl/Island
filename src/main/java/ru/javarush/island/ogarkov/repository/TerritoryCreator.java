@@ -45,6 +45,7 @@ public class TerritoryCreator {
     }
 
     public Set<Organism> createRandomPopulation() {
+        //TODO Code style. Long code. Needs to be split into several methods
         int plantHerbivoreProbability =
                 CELL_PLANT_PROBABILITY +
                         CELL_HERBIVORE_PROBABILITY;

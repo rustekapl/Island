@@ -21,6 +21,7 @@ public class ServiceCleaner implements Runnable {
             throw new RuntimeException(e);
         }
 
+        //TODO ---  duplicate code. need method
         CopyOnWriteArrayList<Nature> nature = service.getNature();
 
         for (int i = 0; i < nature.size(); i++) {

@@ -27,6 +27,7 @@ public enum OrganismFactorySingleton implements OrganismFactory {
         gsonParser = new JsonParser(Path.of(PATH).toFile());
 
         organismMap = new ConcurrentHashMap<>();
+            //TODO ---  need cycle
                 organismMap.put(BEAR.getName(), gsonParser.getObject(BEAR));
                 organismMap.put(BOA.getName(), gsonParser.getObject(BOA));
                 organismMap.put(BOAR.getName(), gsonParser.getObject(BOAR));

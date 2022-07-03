@@ -26,7 +26,7 @@ public class StarvTask extends Task {
         if (creature instanceof Animal) {
             Animal animal = (Animal) creature;
             Satiety satiety = animal.getSatiety();
-
+            //TODO ---  many branches. All right but not readable
             if (weightRatio >= WELL_FED && satiety != Satiety.WELL_FED) {
                 animal.setSatiety(Satiety.WELL_FED);
             } else if (weightRatio >= ALL_RIGHT && weightRatio < WELL_FED && satiety != Satiety.ALL_RIGHT) {

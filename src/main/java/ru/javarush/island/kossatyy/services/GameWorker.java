@@ -31,6 +31,7 @@ public class GameWorker extends Thread {
         Map<String, Creature> prototypes = game.getEntityFactory().getPrototypes();
         CountDownLatch latch = new CountDownLatch(prototypes.size());
 
+        //TODO ---  you can use var
         List<CreatureWorker> workers = prototypes
                 .values()
                 .stream()

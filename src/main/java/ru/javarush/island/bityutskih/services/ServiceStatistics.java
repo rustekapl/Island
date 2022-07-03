@@ -31,6 +31,7 @@ public class ServiceStatistics implements Runnable {
                 deadCounter++;
             }
         }
+        //TODO Coding. System.out here? Need move the output to View layer
         System.out.println("Хищников: " + predatorCounter);
         System.out.println("Травоядных: " + herbCounter);
         System.out.println("Растений: " + plantCounter);

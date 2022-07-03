@@ -10,6 +10,7 @@ import java.lang.reflect.Type;
 @Getter
 public enum OrganismTypes {
 
+    //TODO ---  enum???
     BEAR("Bear", "\uD83D\uDC3B", Bear.class),
     BOA("Boa", "\uD83D\uDC0D", Boa.class),
     BOAR("Boar", "\uD83D\uDC17", Boar.class),

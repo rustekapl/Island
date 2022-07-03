@@ -19,10 +19,15 @@ public class Setting {
             }
         }
     }
+
+    //TODO Coding. Russian text?? Ok. My opinion: 我想很多人都很難閱讀。
     //Настройки карты
     public static final int MAP_ROWS = 10;
     public static final int MAP_COLS = 10;
 
+    //TODO ---  Grouping by inner classes?
+
+    //TODO Coding. Hard code. Not flexible
     //Настройки для волка
     public static final String WOLF_NAME = "Wolf";
     public static final String WOLF_ICON = "\uD83D\uDC3A";

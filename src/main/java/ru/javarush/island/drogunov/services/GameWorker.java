@@ -41,9 +41,11 @@ public class GameWorker extends Thread {
 
             try {
                 if (servicePool.awaitTermination(Long.MAX_VALUE, TimeUnit.DAYS)) {
+                    //TODO --- Code style. Need always delete code. Not comment it.
 //       for test
 //                    game.getView().showMap();
                     game.getView().showStatistics();
+                    //TODO --- Code style. Need always delete code. Not comment it.
 //      for test
 //                    game.getView().showCountCellUnits();
                 }

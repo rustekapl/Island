@@ -3,6 +3,9 @@ package ru.javarush.island.volokitin.util;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class Randomizer {
+
+    //TODO ---  I can create new Randomizer()
+
     public static boolean getProbability(int percent) {
         return getRandom(0, 100) < percent;
     }

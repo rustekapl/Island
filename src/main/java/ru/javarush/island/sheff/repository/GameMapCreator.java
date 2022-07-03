@@ -23,7 +23,7 @@ public record GameMapCreator(OrganismFactory organismFactory) {
         gameMap.initialize();
 
         Cell[][] cells = gameMap.getCells();
-
+        //TODO Code style. Long code. Needs to be split into several methods
         Arrays.stream(OrganismTypes.values()).forEach(organismTypes -> {
             cells[Randomizer.getZeroToBound(rows)][Randomizer.getZeroToBound(cols)]
                     .getResidents()

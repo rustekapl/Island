@@ -50,6 +50,8 @@ public abstract class Organism {
             OrganismsCommonSpecs organismCommonSpecs = Settings.get().getOrganismCommonSpecsByType(this.getType());
             int weightLossPercent;
             if (this instanceof Animal) {
+                //TODO Coding. Magic values or methods. Bad reading and understanding
+                //TODO Coding. Need move to config or settings
                 weightLossPercent = 20;
             } else {
                 weightLossPercent = 1;
@@ -57,6 +59,8 @@ public abstract class Organism {
 
             double weightLoss = organismCommonSpecs.getMaxWeight() * weightLossPercent / 100;
             this.setWeight(this.getWeight() - weightLoss);
+            //TODO Coding. Magic values or methods. Bad reading and understanding
+            //TODO Coding. Need move to config or settings
             if (this.getWeight() < organismCommonSpecs.getMaxWeight() * 0.3) {
                 area.getInhabitants().get(this.getType()).remove(this);
             }

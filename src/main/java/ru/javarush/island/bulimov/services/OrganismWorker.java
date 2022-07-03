@@ -21,6 +21,7 @@ public class OrganismWorker implements  Runnable{
 
     @Override
     public void run() {
+        //TODO Code style. Warnings. Skip or fix it.
         Cell[][] cells = island.getAnimalMap();
         for (Cell[] row : cells) {
             for (Cell cell : row) {

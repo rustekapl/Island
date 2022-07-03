@@ -14,11 +14,13 @@ public class CreatureGeneralSettings {
     private double hungerCapacity;
     private Map<String, Integer> foodChainSettings;
 
-    public CreatureGeneralSettings(){
+    //TODO ---  unused
+    //TODO Code style. Many warnings. Skip or fix it.
+    public CreatureGeneralSettings() {
         super();
     }
 
-    public CreatureGeneralSettings(double fullWeight, int maxPopulationPerCell, int startPopulation, int speed, double hungerCapacity, Map<String, Integer> foodChainSettings){
+    public CreatureGeneralSettings(double fullWeight, int maxPopulationPerCell, int startPopulation, int speed, double hungerCapacity, Map<String, Integer> foodChainSettings) {
         this.fullWeight = fullWeight;
         this.maxPopulationPerCell = maxPopulationPerCell;
         this.startPopulation = startPopulation;

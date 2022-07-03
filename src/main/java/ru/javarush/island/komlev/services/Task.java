@@ -17,6 +17,7 @@ public class Task {
         return organism;
     }
 
+    //TODO Code style. Many warnings. Skip or fix it.
     public Consumer<Organism> getOperation() {
         return operation;
     }

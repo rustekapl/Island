@@ -38,6 +38,7 @@ public class Cell {
             List<Cell> nextCells = new ArrayList<>();
             for (Cell cell : currentCell
                     .nextCell) {
+                //TODO Code style. Warnings. Skip or fix it.
                 nextCells.add(cell);
             }
             int countDirections = nextCells.size();

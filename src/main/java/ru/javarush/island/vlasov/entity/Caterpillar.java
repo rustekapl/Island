@@ -6,6 +6,7 @@ public class Caterpillar extends Herbivore {
     private final HashMap<String, Integer> CHANCE_TO_EAT = new HashMap<>();
 
     public Caterpillar() {
+        //TODO Coding. Hard code. Not flexible
         super(0.01F, 1000, 0, 0);
         CHANCE_TO_EAT.put(Plant.class.getCanonicalName(), 100);
     }

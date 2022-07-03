@@ -6,6 +6,7 @@ import ru.javarush.island.ivanov.entities.wildlife.*;
 
 public class AnimalAndHerbsFactory {
     public static Creature createWildLife(ListOfAnimalsAndHerbs listOfAnimalsAndHerbs) {
+        //TODO ---  case is evil. Map?
         return switch (listOfAnimalsAndHerbs) {
             case BEAR -> new Bear();
             case BOAR -> new Boar();

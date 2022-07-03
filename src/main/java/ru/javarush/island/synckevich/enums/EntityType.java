@@ -1,6 +1,7 @@
 package ru.javarush.island.synckevich.enums;
 
 public enum EntityType {
+    //TODO ---  only icon ???  Enum - good as type and as container for data and methods
     WOLF("\ud83d\udc01"),
     SNAKE("\ud83d\udc0d"),
     FOX("\ud83e\udd8a"),

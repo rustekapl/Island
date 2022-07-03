@@ -12,7 +12,7 @@ import java.util.Map;
 public class GlobalSettings implements Serializable {
 
     private static volatile GlobalSettings instance;
-
+    //TODO Code style. Many warnings. Skip or fix it.
     private int countPeriods;
     private Map<String, Integer> locationSize;
     private Map<String, String> creaturesIncluded;

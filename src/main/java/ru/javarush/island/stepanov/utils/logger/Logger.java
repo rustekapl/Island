@@ -13,6 +13,7 @@ import java.time.format.DateTimeFormatter;
 public class Logger {
 
     public static LoggerLevel level = LoggerLevel.GENERALIZED;
+    //TODO ---  final ???
     private static String separator = " ";
     private static String arrow = " --> ";
     private static String bracketOpen = "[";

@@ -52,6 +52,7 @@ public class SimulatorView extends JFrame {
                     fields[row][col] = new JTextArea();
                     fields[row][col].setLineWrap(true);
                     fields[row][col].setWrapStyleWord(false);
+                    //TODO Coding. Magic values or methods. Bad reading and understanding
                     fields[row][col].setFont(fields[row][col].getFont().deriveFont(9f));
                     fields[row][col].setText(cells[row][col].toString());
                     String text = fields[row][col].getText();
