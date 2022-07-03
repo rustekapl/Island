@@ -1,0 +1,381 @@
+{
+  "bear": {
+    "name": "Bear",
+    "weight": 500,
+    "location": {
+      "row": 0,
+      "col": 0
+    },
+    "limit": {
+      "maxWeight": 500,
+      "maxCount": 5,
+      "maxSpeed": 2,
+      "maxFood": 80,
+      "femaleGenderChance": 50,
+      "offspring": [
+        1,
+        2
+      ],
+      "ration": {
+        "Boa": 80,
+        "Horse": 40,
+        "Deer": 80,
+        "Rabbit": 80,
+        "Mouse": 90,
+        "Goat": 70,
+        "Sheep": 70,
+        "Boar": 50,
+        "Buffalo": 20,
+        "Duck": 10
+      }
+    }
+  },
+  "boa": {
+    "name": "Boa",
+    "weight": 15,
+    "location": {
+      "row": 0,
+      "col": 0
+    },
+    "limit": {
+      "maxWeight": 15,
+      "maxCount": 30,
+      "maxSpeed": 1,
+      "maxFood": 3,
+      "femaleGenderChance": 50,
+      "offspring": [
+        1,
+        3
+      ],
+      "ration": {
+        "Fox": 15,
+        "Rabbit": 20,
+        "Mouse": 40,
+        "Duck": 10
+      }
+    }
+  },
+  "boar": {
+    "name": "Boar",
+    "weight": 400,
+    "location": {
+      "row": 0,
+      "col": 0
+    },
+    "limit": {
+      "maxWeight": 400,
+      "maxCount": 50,
+      "maxSpeed": 2,
+      "maxFood": 50,
+      "femaleGenderChance": 50,
+      "offspring": [
+        3,
+        5
+      ],
+      "ration": {
+        "Mouse": 50,
+        "Caterpillar": 90,
+        "Plant": 100
+      }
+    }
+  },
+  "buffalo": {
+    "name": "Buffalo",
+    "weight": 700,
+    "location": {
+      "row": 0,
+      "col": 0
+    },
+    "limit": {
+      "maxWeight": 700,
+      "maxCount": 10,
+      "maxSpeed": 3,
+      "maxFood": 100,
+      "femaleGenderChance": 50,
+      "offspring": [
+        1,
+        1
+      ],
+      "ration": {
+        "Plant": 100
+      }
+    }
+  },
+  "caterpillar": {
+    "name": "Caterpillar",
+    "weight": 0.01,
+    "location": {
+      "row": 0,
+      "col": 0
+    },
+    "limit": {
+      "maxWeight": 0.01,
+      "maxCount": 1000,
+      "maxSpeed": 0,
+      "maxFood": 0,
+      "femaleGenderChance": 50,
+      "offspring": [
+        10,
+        15
+      ],
+      "ration": {
+        "Plant": 100
+      }
+    }
+  },
+  "deer": {
+    "name": "Deer",
+    "weight": 300,
+    "location": {
+      "row": 0,
+      "col": 0
+    },
+    "limit": {
+      "maxWeight": 300,
+      "maxCount": 20,
+      "maxSpeed": 4,
+      "maxFood": 50,
+      "femaleGenderChance": 50,
+      "offspring": [
+        1,
+        2
+      ],
+      "ration": {
+        "Plant": 100
+      }
+    }
+  },
+  "duck": {
+    "name": "Duck",
+    "weight": 1,
+    "location": {
+      "row": 0,
+      "col": 0
+    },
+    "limit": {
+      "maxWeight": 1,
+      "maxCount": 200,
+      "maxSpeed": 4,
+      "maxFood": 0.15,
+      "femaleGenderChance": 50,
+      "offspring": [
+        5,
+        10
+      ],
+      "ration": {
+        "caterpillar": 90,
+        "Plant": 100
+      }
+    }
+  },
+  "eagle": {
+    "name": "Eagle",
+    "weight": 6,
+    "location": {
+      "row": 0,
+      "col": 0
+    },
+    "limit": {
+      "maxWeight": 6,
+      "maxCount": 20,
+      "maxSpeed": 3,
+      "maxFood": 1,
+      "femaleGenderChance": 50,
+      "offspring": [
+        2,
+        3
+      ],
+      "ration": {
+        "Fox": 10,
+        "Rabbit": 90,
+        "Mouse": 90,
+        "Duck": 80
+      }
+    }
+  },
+  "fox": {
+    "name": "Fox",
+    "weight": 8,
+    "location": {
+      "row": 0,
+      "col": 0
+    },
+    "limit": {
+      "maxWeight": 8,
+      "maxCount": 30,
+      "maxSpeed": 2,
+      "maxFood": 2,
+      "femaleGenderChance": 50,
+      "offspring": [
+        1,
+        3
+      ],
+      "ration": {
+        "Rabbit": 70,
+        "Mouse": 90,
+        "Duck": 60,
+        "Caterpillar": 40
+      }
+    }
+  },
+  "goat": {
+    "name": "Goat",
+    "weight": 60,
+    "location": {
+      "row": 0,
+      "col": 0
+    },
+    "limit": {
+      "maxWeight": 60,
+      "maxCount": 140,
+      "maxSpeed": 3,
+      "maxFood": 10,
+      "femaleGenderChance": 50,
+      "offspring": [
+        5,
+        7
+      ],
+      "ration": {
+        "Plant": 100
+      }
+    }
+  },
+  "horse": {
+    "name": "Horse",
+    "weight": 400,
+    "location": {
+      "row": 0,
+      "col": 0
+    },
+    "limit": {
+      "maxWeight": 400,
+      "maxCount": 20,
+      "maxSpeed": 4,
+      "maxFood": 60,
+      "femaleGenderChance": 50,
+      "offspring": [
+        1,
+        1
+      ],
+      "ration": {
+        "Plant": 100
+      }
+    }
+  },
+  "mouse": {
+    "name": "Mouse",
+    "weight": 0.05,
+    "location": {
+      "row": 0,
+      "col": 0
+    },
+    "limit": {
+      "maxWeight": 0.05,
+      "maxCount": 500,
+      "maxSpeed": 1,
+      "maxFood": 0.01,
+      "femaleGenderChance": 50,
+      "offspring": [
+        5,
+        10
+      ],
+      "ration": {
+        "Plant": 100,
+        "Caterpillar": 90
+      }
+    }
+  },
+  "plant": {
+    "name": "Plant",
+    "weight": 200,
+    "location": {
+      "row": 0,
+      "col": 0
+    },
+    "limit": {
+      "maxWeight": 200,
+      "maxCount": 1,
+      "maxSpeed": 0,
+      "maxFood": 0,
+      "femaleGenderChance": 50,
+      "offspring": [
+        50,
+        80
+      ]
+    }
+  },
+  "rabbit": {
+    "name": "Rabbit",
+    "weight": 2,
+    "location": {
+      "row": 0,
+      "col": 0
+    },
+    "limit": {
+      "maxWeight": 2,
+      "maxCount": 150,
+      "maxSpeed": 2,
+      "maxFood": 0.45,
+      "femaleGenderChance": 50,
+      "offspring": [
+        2,
+        4
+      ],
+      "ration": {
+        "Plant": 100
+      }
+    }
+  },
+  "sheep": {
+    "name": "Sheep",
+    "weight": 70,
+    "location": {
+      "row": 0,
+      "col": 0
+    },
+    "limit": {
+      "maxWeight": 70,
+      "maxCount": 140,
+      "maxSpeed": 3,
+      "maxFood": 15,
+      "femaleGenderChance": 50,
+      "offspring": [
+        1,
+        3
+      ],
+      "ration": {
+        "Plant": 100
+      }
+    }
+  },
+  "wolf": {
+    "name": "Wolf",
+    "weight": 50,
+    "location": {
+      "row": 0,
+      "col": 0
+    },
+    "limit": {
+      "maxWeight": 50,
+      "maxCount": 30,
+      "maxSpeed": 3,
+      "maxFood": 8.0,
+      "femaleGenderChance": 50,
+      "offspring": [
+        1,
+        3
+      ],
+      "ration": {
+        "Horse": 10,
+        "Deer": 15,
+        "Rabbit": 60,
+        "Mouse": 80,
+        "Goat": 60,
+        "Sheep": 70,
+        "Boar": 15,
+        "Buffalo": 10,
+        "Duck": 40
+      }
+    }
+  }
+}
