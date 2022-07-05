@@ -22,7 +22,6 @@ public class Runner {
                 gameMap.printInfo();
         }
 
-
     }
 
 
