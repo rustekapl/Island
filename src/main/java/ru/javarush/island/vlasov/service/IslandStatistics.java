@@ -21,34 +21,44 @@ public class IslandStatistics implements Runnable {
 
     @Override
     public void run() {
-        //TODO Code style. Long code. Needs to be split into several methods
         islandNatureStatistics.clear();
         String islandMinSpecies, islandMaxSpecies;
         int islandMin, islandMax;
         int predatorCount = 0, herbCount = 0, plantCount = 0, deadPredators = 0, deadHerb = 0;
+        int[] statistics = {predatorCount, herbCount, plantCount, deadPredators, deadHerb};
 
-        for (Spot[] spot : spots) {
-            for (Spot sp : spot) {
-                SpotStatistics spotStatistics = sp.getSpotStatistics();
-                predatorCount += spotStatistics.getPredatorCount();
-                herbCount += spotStatistics.getHerbCount();
-                plantCount += spotStatistics.getPlantCount();
-                deadPredators += spotStatistics.getDeadPredators();
-                deadHerb += spotStatistics.getDeadHerb();
-
-                fillIslandNatureStatistics(spotStatistics);
-            }
-        }
+        fillStatisticsVariables(statistics);
 
         HashMap<String, Integer> randSpotNatureStatistics = randomSpot.getSpotStatistics().getNatureStatistics();
         String minSpecies = getMinPopulation(randSpotNatureStatistics), maxSpecies = getMaxPopulation(randSpotNatureStatistics);
         int min = randSpotNatureStatistics.get(minSpecies), max = randSpotNatureStatistics.get(maxSpecies);
 
+        printRandomSpot(minSpecies, maxSpecies, min, max);
+
         islandMinSpecies = getMinPopulation(islandNatureStatistics);
         islandMaxSpecies = getMaxPopulation(islandNatureStatistics);
         islandMin = islandNatureStatistics.get(islandMinSpecies);
         islandMax = islandNatureStatistics.get(islandMaxSpecies);
+        //TODO Coding. System.out here? Need move the output to View layer
+        printIsland(islandMinSpecies, islandMaxSpecies, islandMin, islandMax, statistics);
+        System.out.println("*********************************************************************");
+    }
 
+    private void printIsland(String islandMinSpecies, String islandMaxSpecies, int islandMin, int islandMax, int[] statistics) {
+        //TODO Coding. System.out here? Need move the output to View layer
+        System.out.println("Island statistics:"
+                + "\t *** Predators: " + statistics[0]
+                + "\t *** Herbivores: " + statistics[1]
+                + "\t *** Plants: " + statistics[2]
+                + "\t *** Max population: " + Constant.unicodeSymbols.get(islandMaxSpecies)
+                + " - " + islandMax
+                + " *** Min population: " + Constant.unicodeSymbols.get(islandMinSpecies)
+                + " - " + islandMin
+                + " *** Predators died: " + statistics[3]
+                + " *** Herbivores died: " + statistics[4]);
+    }
+
+    private void printRandomSpot(String minSpecies, String maxSpecies, int min, int max) {
         System.out.println("Random " + randomSpot
                 + "\t *** Predators: " + randomSpot.getSpotStatistics().getPredatorCount()
                 + "\t\t *** Herbivores: " + randomSpot.getSpotStatistics().getHerbCount()
@@ -59,19 +69,23 @@ public class IslandStatistics implements Runnable {
                 + " - " + min
                 + " *** Predators died: " + randomSpot.getSpotStatistics().getDeadPredators()
                 + " *** Herbivores died: " + randomSpot.getSpotStatistics().getDeadHerb());
+    }
 
-        System.out.println("Island statistics:"
-                + "\t *** Predators: " + predatorCount
-                + "\t *** Herbivores: " + herbCount
-                + "\t *** Plants: " + plantCount
-                + "\t *** Max population: " + Constant.unicodeSymbols.get(islandMaxSpecies)
-                + " - " + islandMax
-                + " *** Min population: " + Constant.unicodeSymbols.get(islandMinSpecies)
-                + " - " + islandMin
-                + " *** Predators died: " + deadPredators
-                + " *** Herbivores died: " + deadHerb);
+    private void fillStatisticsVariables(int[] statistics) {
+        for (Spot[] spot : spots) {
+            for (Spot sp : spot) {
+                SpotStatistics spotStatistics = sp.getSpotStatistics();
+                //TODO ---  why not array?
+                //TODO Coding. Magic values or methods. Bad reading and understanding
+                statistics[0] += spotStatistics.getPredatorCount();
+                statistics[1] += spotStatistics.getHerbCount();
+                statistics[2] += spotStatistics.getPlantCount();
+                statistics[3] += spotStatistics.getDeadPredators();
+                statistics[4] += spotStatistics.getDeadHerb();
 
-        System.out.println("*********************************************************************");
+                fillIslandNatureStatistics(spotStatistics);
+            }
+        }
     }
 
     private void fillIslandNatureStatistics(SpotStatistics spotStatistics) {
@@ -109,6 +123,7 @@ public class IslandStatistics implements Runnable {
         Set<String> strSet = natureStatistics.keySet();
         for (String str : strSet) {
             Integer i = natureStatistics.get(str);
+            //TODO Coding. Magic values or methods. Bad reading and understanding
             if (i > max && !"Plant".equals(str)) {
                 max = i;
                 maxSpecies = str;

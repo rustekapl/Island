@@ -1,44 +1,41 @@
 package ru.javarush.island.kossatyy.entity.map;
 
 import lombok.Getter;
-import ru.javarush.island.kossatyy.entity.creatures.Creature;
-import ru.javarush.island.kossatyy.settings.Config;
+import ru.javarush.island.kossatyy.repository.maps.Residents;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
-
-@Getter
 public class Cell {
 
-
-    private final Lock lock = new ReentrantLock(true);
     private final int row;
     private final int column;
 
-    private List<Cell> neighbours;
+    @Getter
+    private List<Cell> directions;
 
-    private final Map<Integer, Set<Creature>> residents;
+    @Getter
+    private final Residents residents;
 
-    private final Config config;
+    @Getter
+    private final Lock lock;
 
-    public Cell(int row, int column, Config config) {
-        this.residents = new HashMap<>();
-        this.config = config;
+    public Cell(int row, int column) {
         this.row = row;
         this.column = column;
+        this.residents = new Residents();
+        this.lock = new ReentrantLock(true);
     }
 
-    public void setNeighbours(List<Cell> neighbours) {
-        this.neighbours = neighbours;
+    public void setDirections(List<Cell> directions) {
+        this.directions = directions;
     }
 
     @Override
     public String toString() {
-        return "Cell[" + row + "]" + "[" + column + "]";
+        return "Cell" +
+                "[" + row + "]" +
+                "[" + column + "]";
     }
 }

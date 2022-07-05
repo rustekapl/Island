@@ -1,21 +1,16 @@
 package ru.javarush.island.ivanov.entities.territory;
 
-import ru.javarush.island.ivanov.entities.Creature;
-
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
+import java.util.Arrays;
+import java.util.Objects;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
 public class Square {
 
-    //TODO ---  Coding. maybe need new classes
-    private Map<String, Set<Creature>> residents = new HashMap<>();
-
+    private Residents residents = new Residents();
     private Square[][] territory;
-    private int squareNumberWidth;
-    private int squareNumberHeight;
+    private final int squareNumberWidth;
+    private final int squareNumberHeight;
     private final Lock lock = new ReentrantLock(true);
 
     public Square(int squareNumberWidth, int squareNumberHeight) {
@@ -27,28 +22,20 @@ public class Square {
         return squareNumberWidth;
     }
 
-    //TODO Code style. Many warnings. Skip or fix it.
-    public void setSquareNumberWidth(int squareNumberWidth) {
-        this.squareNumberWidth = squareNumberWidth;
-    }
-
     public int getSquareNumberHeight() {
         return squareNumberHeight;
     }
 
-    public void setSquareNumberHeight(int squareNumberHeight) {
-        this.squareNumberHeight = squareNumberHeight;
-    }
 
     public Lock getLock() {
         return lock;
     }
 
-    public Map<String, Set<Creature>> getResidents() {
+    public Residents getResidents() {
         return residents;
     }
 
-    public void setResidents(Map<String, Set<Creature>> residents) {
+    public void setResidents(Residents residents) {
         this.residents = residents;
     }
 
@@ -60,11 +47,22 @@ public class Square {
         this.territory = territory;
     }
 
-    public boolean remove(Creature creature) {
-        if (residents.containsKey(creature)) {
-            residents.get(creature).remove(creature);
-            return true;
-        }
-        return false;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Square square = (Square) o;
+        return squareNumberWidth == square.squareNumberWidth
+                && squareNumberHeight == square.squareNumberHeight
+                && Objects.equals(residents, square.residents)
+                && Arrays.deepEquals(territory, square.territory)
+                && Objects.equals(lock, square.lock);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = Objects.hash(residents, squareNumberWidth, squareNumberHeight, lock);
+        result = 31 * result + Arrays.deepHashCode(territory);
+        return result;
     }
 }

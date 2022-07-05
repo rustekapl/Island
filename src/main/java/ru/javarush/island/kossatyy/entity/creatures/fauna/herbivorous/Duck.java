@@ -1,38 +1,11 @@
 package ru.javarush.island.kossatyy.entity.creatures.fauna.herbivorous;
 
-import lombok.ToString;
-import ru.javarush.island.kossatyy.entity.creatures.Creature;
+import ru.javarush.island.kossatyy.repository.CreatureInfo;
+import ru.javarush.island.kossatyy.repository.Limit;
 
-import java.util.Objects;
-import java.util.concurrent.atomic.AtomicLong;
-
-@ToString
 public class Duck extends Herbivorous {
 
-    private static final AtomicLong idCounter = new AtomicLong(0);
-    private static final int groupID = 13;
-    private final long id = idCounter.getAndIncrement();
-
-    public Duck() {
-        super("\uD83E\uDD86", groupID, 1, 4);
+    public Duck(CreatureInfo info, Limit limit) {
+        super(info, limit);
     }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Duck duck = (Duck) o;
-        return id == duck.id;
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(groupID, id);
-    }
-
-    @Override
-    public Creature spawn() {
-        return new Duck();
-    }
-
 }

@@ -42,6 +42,7 @@ public abstract class Organism implements Cloneable {
         if(targetCol>Constants.LENGTH_ISLAND){
             targetCol=(targetCol%Constants.LENGTH_ISLAND)-1;
         }
+        //TODO --- Code style. Need always delete code. Not comment it.
 //        if (targetRow >= Constants.WIDTH_ISLAND || targetCol >= Constants.LENGTH_ISLAND || targetRow < 0 || targetCol < 0) {
 //            isMove = false;
 //        }

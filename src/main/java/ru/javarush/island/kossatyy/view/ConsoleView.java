@@ -5,36 +5,30 @@ import ru.javarush.island.kossatyy.entity.creatures.fauna.carnivores.Carnivore;
 import ru.javarush.island.kossatyy.entity.creatures.fauna.herbivorous.Herbivorous;
 import ru.javarush.island.kossatyy.entity.map.Cell;
 import ru.javarush.island.kossatyy.entity.map.Island;
-import ru.javarush.island.kossatyy.entity.repository.EntityFactory;
-import ru.javarush.island.kossatyy.settings.Config;
+import ru.javarush.island.kossatyy.repository.factory.Factory;
+import ru.javarush.island.kossatyy.repository.maps.Residents;
+import ru.javarush.island.kossatyy.setting.Config;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 
 public class ConsoleView implements View {
 
-    public static class Color {
-
-
-        public static final String RESET = "\u001B[0m";
-
-        public static final String FILL_RED = "\u001B[41m";
-        public static final String FILL_GREEN = "\u001B[42m";
-        public static final String FILL_YELLOW = "\u001B[43m";
-    }
+    //TODO Coding. Need move to config or settings
+    public static final int HEIGHT_DIAGRAM = 10;
+    public static final int POPULATION_HIGH = 70; // int between 40 - 100
+    public static final int POPULATION_AVERAGE = POPULATION_HIGH - 40;
 
     private final Island island;
+    private final Factory factory;
     private int day = 0;
 
-    public ConsoleView(Island island) {
+    public ConsoleView(Island island, Factory factory) {
         this.island = island;
+        this.factory = factory;
     }
-
 
     @Override
     public String showStatistics() {
-        //TODO Code style. Long code. Needs to be split into several methods
         Map<String, Integer> statisticCarni = new HashMap<>();
         Map<String, Integer> statisticHerbi = new HashMap<>();
         Map<String, Integer> statisticPlant = new HashMap<>();
@@ -63,64 +57,65 @@ public class ConsoleView implements View {
                 }
             }
         }
-        System.out.printf("--------Island DAY %d--------%n", day++);
-        System.out.println("Carnivores:");
-        statisticCarni.forEach((key, value) -> System.out.printf("%19s - %d%n", key, value));
-        System.out.println("Herbivorous:");
-        statisticHerbi.forEach((key, value) -> System.out.printf("%19s - %d%n", key, value));
-        System.out.println("Plants:");
-        statisticPlant.forEach((key, value) -> System.out.printf("%19s - %d%n", key, value));
-        System.out.println("----------------------------");
-        return statisticCarni.toString() + statisticHerbi.toString() + statisticPlant.toString();
+        return printStatistics(statisticCarni, statisticHerbi, statisticPlant);
     }
 
     @Override
     public String showMap() {
-        //TODO Code style. Long code. Needs to be split into several methods
         StringBuilder out = new StringBuilder("\n");
-        Map<String, Integer> maxPopulation = Config.getConfig().getMaxPopulation();
-        Map<String, Integer> curPopulation = new HashMap<>();
-        Map<Integer, Creature> creatures = new EntityFactory().getAlfaSquad(); //TODO решить проблему с new
+        Map<String, Creature> prototypes = factory.getPrototypes();
+        List<Creature> creatures = new ArrayList<>(prototypes.values());
         Cell[][] cells = island.getCells();
-        final int creatureCount = creatures.size();
-        final int rows = 10;
+        int creatureCount = creatures.size();
+        Map<String, Integer> curPopulation = countCreatures(creatures, cells);
+        drawDiagram(out, creatures, creatureCount, curPopulation);
+        out.append(" ".repeat(5)).append("| ");
+        drawIcons(out, creatures);
+        System.out.println(out);
+        return out.toString();
+    }
 
-        for (Cell[] row : cells) {
-            for (Cell cell : row) {
-                var residents = cell.getResidents();
-                if (Objects.nonNull(residents)) {
-                    residents.values().stream()
-                            .filter(set -> set.size() > 0)
-                            .forEach(set -> {
-                                        Creature creature = set.stream().findAny().get();
-                                        String name = creature.getClass().getSimpleName();
-                                        curPopulation.put(name, curPopulation.getOrDefault(name, 0) + set.size());
-                                    }
-                            );
-                }
-            }
-        }
+    private String printStatistics(Map<String, Integer> statisticCarni, Map<String, Integer> statisticHerbi, Map<String, Integer> statisticPlant) {
+        StringBuilder out = new StringBuilder("\n");
+        out.append(String.format("--------Island DAY %d--------%n", day++));
+        out.append("Carnivores:\n");
+        out.append(MapToString(statisticCarni));
+        out.append("Herbivorous:\n");
+        out.append(MapToString(statisticHerbi));
+        out.append("Plants:\n");
+        out.append(MapToString(statisticPlant));
+        out.append("----------------------------");
 
+        System.out.println(out);
+        return out.toString();
+    }
 
-        for (int row = 0; row < rows; row++) {
+    private String MapToString(Map<String, Integer> map) {
+        StringBuilder out = new StringBuilder();
+        map.forEach((key, value) -> out.append(String.format("%19s - %d%n", key, value)));
+        return out.toString();
+    }
+
+    private void drawDiagram(StringBuilder out, List<Creature> creatures, int creatureCount, Map<String, Integer> curPopulation) {
+        for (int row = 0; row < HEIGHT_DIAGRAM; row++) {
             int percent = 100;
             out.append(row == 0
                     ? String.format("%-3s %%|", percent)
                     : String.format(" %-2s %%|", percent - row * 10)
             );
             for (int col = 0; col < creatureCount; col++) {
-                String residentString = fill(row, col, maxPopulation, curPopulation, creatures);
+                String residentString = fill(row, col, curPopulation, creatures);
                 int cellWidth = 5;
                 out.append(String.format("%-" + cellWidth + "s", residentString));
             }
             out.append("\n");
         }
-        out.append(" ".repeat(5)).append("| ");
+    }
 
+    private void drawIcons(StringBuilder out, List<Creature> creatures) {
         for (int i = 0, bound = 1; i < creatures.size(); i++) {
             String icon = creatures.get(i).getIcon();
             out.append(icon).append(" ".repeat(bound));
-
             if (i < 7 && i > 0) {
                 if (i % 2 == 0) {
                     bound--;
@@ -135,35 +130,61 @@ public class ConsoleView implements View {
                 }
             }
         }
-
-        System.out.println(out);
-        return out.toString();
     }
 
-    private String fill(int row, int col, Map<String, Integer> maxPopulation, Map<String, Integer> curPopulation, Map<Integer, Creature> creatures) {
-        Creature curCreature = creatures.get(col);
-        String name = curCreature.getClass().getSimpleName();
-        int mapRow = Config.getConfig().getRows();
-        int mapCol = Config.getConfig().getColumns();
-        int maxCount = maxPopulation.get(name) * mapRow * mapCol;
-        int curCount = curPopulation.get(name);
-        double ratioPercent = 100.0 * curCount / maxCount;
+    private Map<String, Integer> countCreatures(List<Creature> creatures, Cell[][] cells) {
+        Map<String, Integer> result = new HashMap<>();
+        for (Cell[] row : cells) {
+            for (Cell cell : row) {
+                Residents residents = cell.getResidents();
+                if (Objects.nonNull(residents)) {
+                    creatures.forEach(creature -> {
+                        String type = creature.getType();
+                        result.put(type, result.getOrDefault(type, 0) + residents.get(type).size());
+                    });
+                }
+            }
+        }
+        return result;
+    }
 
-        int curPercent = 100 - row * 10;
+    private String fill(int row, int col, Map<String, Integer> curPopulation, List<Creature> creatures) {
+        Creature creature = creatures.get(col);
+        String type = creature.getType();
+        Config config = Config.getConfig();
+        int mapRow = config.getRows();
+        int mapCol = config.getColumns();
+        int maxCount = creature.getMaxPopulation() * mapRow * mapCol;
+        int curCount = curPopulation.get(type);
+        double ratioPercent = 100.0 * curCount / maxCount;
+        double curPercent = 100.0 - row * 10;
+
+        String filler = choseFiller(ratioPercent, curPercent);
+        return "." + filler + Color.RESET + ".";
+    }
+
+    private String choseFiller(double ratioPercent, double curPercent) {
         String filler = ".";
         String color = Color.RESET;
 
-        if (curPercent < ratioPercent) {
-            //TODO Coding. Magic values or methods. Bad reading and understanding
-            if (ratioPercent >= 70) {
+        if (curPercent <= ratioPercent) {
+            if (ratioPercent >= POPULATION_HIGH) {
                 color = Color.FILL_GREEN;
-            } else if (ratioPercent >= 30 && ratioPercent < 70) {
+            } else if (ratioPercent >= POPULATION_AVERAGE && ratioPercent < POPULATION_HIGH) {
                 color = Color.FILL_YELLOW;
             } else {
                 color = Color.FILL_RED;
             }
             filler = " ";
         }
-        return "." + color + filler + Color.RESET + ".";
+        return color + filler;
     }
+
+    private static class Color {
+        public static final String RESET = "\u001B[0m";
+        public static final String FILL_RED = "\u001B[41m";
+        public static final String FILL_GREEN = "\u001B[42m";
+        public static final String FILL_YELLOW = "\u001B[43m";
+    }
+
 }

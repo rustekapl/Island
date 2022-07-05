@@ -14,7 +14,8 @@ public class GameMapCreator {
         this.entityFactory = entityFactory;
     }
 
-    public GameMap createRandomFilledGameMap(int rows, int cols) {
+    public GameMap createRandomFilledGameMap(int rows, int cols){
+        //TODO  Coding. Ctrl_C Ctrl_V ??? But we like original coding.
         GameMap gameMap = new GameMap(rows, cols);
         Cell[][] cells = gameMap.getCells();
         for (int i = 0; i < cells.length; i++) {

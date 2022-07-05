@@ -11,10 +11,11 @@ public class Runner {
         gameMap.init();
         gameMap.fill();
         gameMap.printInfo();
-
+        //TODO Code style. Many warnings. Skip or fix it.
         while (true){
             gameMap.life();
             try {
+                //TODO Coding. Magic values or methods. Bad reading and understanding
                 Thread.sleep(1000);
             } catch (InterruptedException e){
                 throw new GameException(e);

@@ -5,14 +5,14 @@ import ru.javarush.island.ivanov.entities.Creature;
 import ru.javarush.island.ivanov.entities.interfaces.WildLife;
 import ru.javarush.island.ivanov.entities.territory.Square;
 import ru.javarush.island.ivanov.services.move_services.CheckForMaxNumberAtSquare;
+import ru.javarush.island.ivanov.variables.animal_params.AnimalParams;
 import ru.javarush.island.ivanov.variables.AnimalAndHerbsFactory;
 import ru.javarush.island.ivanov.variables.ListOfAnimalsAndHerbs;
-import ru.javarush.island.ivanov.variables.animal_params.AnimalParams;
 
 import java.util.Set;
 
 public class Herbs extends Creature implements WildLife {
-    private AnimalParams herbsParams = new AnimalParams();
+    private final AnimalParams herbsParams = new AnimalParams();
     private Square squareInfo;
 
     public Herbs() {
@@ -20,10 +20,6 @@ public class Herbs extends Creature implements WildLife {
         herbsParams.setMaxNumberPerSquare(200);
         herbsParams.setSpeed(0);
         herbsParams.setAmountOfFoodForSatiety(0);
-    }
-
-    public void setHerbsParams(AnimalParams herbsParams) {
-        this.herbsParams = herbsParams;
     }
 
     @Override
@@ -50,7 +46,7 @@ public class Herbs extends Creature implements WildLife {
         square.getLock().lock();
         try {
             Set<Creature> herbs = square.getResidents().get(getType());
-            boolean checkForAmount = CheckForMaxNumberAtSquare.check(this);
+            boolean checkForAmount = CheckForMaxNumberAtSquare.checkForEnoughSpace(this);
             if (herbs.size() >= 2 && checkForAmount) {
                 herbs.add(AnimalAndHerbsFactory.createWildLife(ListOfAnimalsAndHerbs.valueOf(this.getClass().getSimpleName().toUpperCase())));
                 return true;

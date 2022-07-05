@@ -15,7 +15,4 @@ public class Randomizer {
         return ThreadLocalRandom.current().nextInt(minValue, maxValue);
     }
 
-    public static double random(double minValue, double maxValue) {
-        return ThreadLocalRandom.current().nextDouble(minValue, maxValue);
-    }
 }

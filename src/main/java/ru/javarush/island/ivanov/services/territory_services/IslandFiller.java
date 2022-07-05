@@ -1,9 +1,9 @@
 package ru.javarush.island.ivanov.services.territory_services;
 
 import ru.javarush.island.ivanov.entities.Creature;
+import ru.javarush.island.ivanov.variables.island_params.IslandWidthAndHeight;
 import ru.javarush.island.ivanov.entities.territory.Square;
 import ru.javarush.island.ivanov.variables.ListOfAnimalsAndHerbs;
-import ru.javarush.island.ivanov.variables.island_params.IslandWidthAndHeight;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -28,7 +28,6 @@ public class IslandFiller {
     private static void creatureInfoFiller(Square square) {
         Set<String> listOfAnimals = ListOfAnimalsAndHerbs.getCurrencies();
         for (String type : listOfAnimals) {
-            //TODO Code style. Need reformat or extraction to methods | variables | constants
             Set<Creature> set = new HashSet<>(square.getResidents().get(type));
             set.forEach(c -> c.setSquareInfo(square));
         }
@@ -42,7 +41,6 @@ public class IslandFiller {
         }
     }
 
-    //TODO Code style. Incorrect order members or modifiers
     private IslandFiller() {
     }
 }

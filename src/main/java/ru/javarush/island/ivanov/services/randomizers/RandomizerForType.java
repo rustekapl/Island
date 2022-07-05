@@ -9,7 +9,6 @@ import java.util.concurrent.ThreadLocalRandom;
 public class RandomizerForType {
 
     public static String getRandomType(Creature creature) {
-        //TODO Code style. Need reformat. One line - one method
         List<String> stringList = ListOfAnimalsAndHerbs.getCurrencies().stream().toList();
         String result = "";
         int rnd = ThreadLocalRandom.current().nextInt(0, stringList.size());

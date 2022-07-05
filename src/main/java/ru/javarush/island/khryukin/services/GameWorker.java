@@ -22,16 +22,16 @@ public class GameWorker extends Thread {
 
         List<OrganismWorker> workers = game.getEntityFactory().getAllPrototypes()
                 .stream()
-                .map(p -> new OrganismWorker(p, game.getGameMap()))
+                .map(o -> new OrganismWorker(o, game.getGameMap()))
                 .toList();
         mainPool.scheduleAtFixedRate(() -> {
             ExecutorService servicePool = Executors.newFixedThreadPool(4);
             workers.forEach(servicePool::submit);
             servicePool.shutdown();
-            //TODO Code style. Needs reformat or extraction to methods / variables / constants
             try {
                 if (servicePool.awaitTermination(PERIOD, TimeUnit.MILLISECONDS)) {
                     game.getView().showMap();
+                    game.getView().showGeneralStatistics();
                     game.getView().showStatistics();
                 }
             } catch (InterruptedException e) {

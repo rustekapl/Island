@@ -40,12 +40,12 @@ public abstract class Carnivore extends Animal {
 
 
     public void move() {
-
+        //TODO --- ????
     }
 
     @Override
     public void reproduct() {
-
+        //TODO ---  ????
     }
 
 }

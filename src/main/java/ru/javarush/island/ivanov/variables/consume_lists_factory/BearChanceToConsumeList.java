@@ -4,11 +4,11 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class BearChanceToConsumeList extends ChanceToConsumeList {
-    private static Map<String, Integer> chanceToConsume = new HashMap<>();
+    private static final Map<String, Integer> chanceToConsume = new HashMap<>();
 
-    //TODO Coding. Hard code. Not flexible
-    //TODO Coding. Magic values or methods. Bad reading and understanding
     static {
+        //TODO Coding. Hard code. Not flexible
+        //TODO Coding. Need move to config or settings
         chanceToConsume.put("Bear", 0);
         chanceToConsume.put("Boar", 50);
         chanceToConsume.put("Buffalo", 20);

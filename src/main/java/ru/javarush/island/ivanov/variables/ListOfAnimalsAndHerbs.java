@@ -24,12 +24,12 @@ public enum ListOfAnimalsAndHerbs {
 
     final String currency;
 
-    ListOfAnimalsAndHerbs(String currency) {
-        this.currency = currency;
-    }
-
     public String getCurrency() {
         return currency;
+    }
+
+    ListOfAnimalsAndHerbs(String currency) {
+        this.currency = currency;
     }
 
     public static Set<String> getCurrencies() {

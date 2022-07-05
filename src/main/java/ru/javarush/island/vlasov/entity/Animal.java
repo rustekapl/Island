@@ -5,13 +5,13 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 
 public abstract class Animal implements Nature {
+    //TODO ---  flat package for entities
     private final float WEIGHT;
     private final int SPECIES_PER_SPOT;
     private final int TRAVEL_SPEED;
     private final float FOOD_LIMIT;
 
-    //TODO Code style. Many warnings. Skip or fix it.
-    private AtomicBoolean isDead = new AtomicBoolean(false);
+    private final AtomicBoolean isDead = new AtomicBoolean(false);
     private volatile float full = 0;
 
     public Animal(float weight, int speciesPerSpot, int travelSpeed, float foodLimit) {

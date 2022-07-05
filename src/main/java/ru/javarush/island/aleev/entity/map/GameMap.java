@@ -51,7 +51,7 @@ public class GameMap {
             }
         }
     }
-
+    //TODO Coding. System.out here? Need move the output to View layer
     public void printInfo() {
         Map<String, Integer> map = new HashMap<>();
         for (Cell[] row : cells) {
